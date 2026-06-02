@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Playbook 02 — The Hybrid Model | FR Advisory</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0e0e0e;--paper:#f5f2ec;--gold:#b8922a;--gold-lt:#f0e4c3;--gold-dk:#8a6a1a;
+  --dark:#1a1a1a;--darker:#111;--muted:#6b6459;--border:#d4c9b8;--white:#ffffff;
+  --green:#1D9E75;--green-lt:#E1F5EE;--green-dk:#085041;
+  --red:#D85A30;--red-lt:#FAECE7;--red-dk:#712B13;
+  --amber:#BA7517;--amber-lt:#FAEEDA;--amber-dk:#633806;
+  --blue:#185FA5;--blue-lt:#E6F1FB;--blue-dk:#0C447C;
+}
+
+body{font-family:'DM Sans',sans-serif;background:var(--darker);margin:0;color:var(--ink)}
+.page{max-width:780px;margin:0 auto;background:var(--paper)}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.anim-1{animation:fadeUp 0.5s ease both}
+.anim-2{animation:fadeUp 0.5s 0.1s ease both}
+.anim-3{animation:fadeUp 0.5s 0.2s ease both}
+.anim-4{animation:fadeUp 0.5s 0.3s ease both}
+.anim-5{animation:fadeUp 0.5s 0.4s ease both}
+
+/* ── COVER ── */
+.cover{background:var(--dark);padding:0;position:relative;overflow:hidden}
+.cover-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 20% 80%,rgba(184,146,42,0.07) 0%,transparent 60%)}
+.cover-ring1{position:absolute;bottom:-120px;left:-120px;width:420px;height:420px;border:1px solid rgba(184,146,42,0.05);border-radius:50%}
+.cover-ring2{position:absolute;bottom:-60px;left:-60px;width:260px;height:260px;border:1px solid rgba(184,146,42,0.08);border-radius:50%}
+.cover-inner{position:relative;z-index:1;padding:3.5rem 3.5rem 0}
+.pb-label{display:inline-flex;align-items:center;gap:8px;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:1.25rem}
+.pb-label::before{content:'';width:28px;height:1px;background:var(--gold)}
+.cover-kicker{font-size:12px;color:rgba(245,242,236,0.4);letter-spacing:0.06em;margin-bottom:0.6rem;text-transform:uppercase}
+.cover-title{font-family:'DM Serif Display',serif;font-size:44px;line-height:1.05;color:#f5f2ec;margin-bottom:0.75rem}
+.cover-title em{font-style:italic;color:var(--gold)}
+.cover-sub{font-size:14px;color:rgba(245,242,236,0.5);line-height:1.75;max-width:520px;margin-bottom:2.5rem}
+.cover-divider{height:1px;background:linear-gradient(to right,rgba(184,146,42,0.3),transparent);margin-bottom:1.75rem}
+.cover-meta{display:flex;gap:0;margin-bottom:0}
+.cover-meta-item{flex:1;padding:1.25rem 0;border-right:1px solid rgba(245,242,236,0.06)}
+.cover-meta-item:last-child{border-right:none}
+.cover-meta-n{font-family:'DM Serif Display',serif;font-size:26px;color:var(--gold);display:block;margin-bottom:2px}
+.cover-meta-l{font-size:10px;color:rgba(245,242,236,0.3);letter-spacing:0.08em;text-transform:uppercase}
+.cover-bar{height:3px;background:linear-gradient(to right,rgba(184,146,42,0.2),var(--gold),rgba(184,146,42,0.2))}
+
+/* ── TABS ── */
+.nav-tabs{background:var(--dark);border-bottom:1px solid rgba(245,242,236,0.06);display:flex;overflow-x:auto;scrollbar-width:none}
+.nav-tabs::-webkit-scrollbar{display:none}
+.nav-tab{flex-shrink:0;padding:1rem 1.5rem;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:rgba(245,242,236,0.35);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.2s ease;white-space:nowrap;font-weight:500}
+.nav-tab:hover{color:rgba(245,242,236,0.65)}
+.nav-tab.active{color:var(--gold);border-bottom-color:var(--gold)}
+
+/* ── SECTIONS ── */
+.section{display:none;padding:3rem 3.5rem;animation:fadeUp 0.3s ease}
+.section.active{display:block}
+
+/* ── TYPE ── */
+.section-eyebrow{font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:1rem;display:flex;align-items:center;gap:10px}
+.section-eyebrow::after{content:'';flex:1;height:1px;background:linear-gradient(to right,var(--border),transparent)}
+.section-title{font-family:'DM Serif Display',serif;font-size:28px;color:var(--ink);line-height:1.2;margin-bottom:0.6rem}
+.section-title em{font-style:italic;color:var(--gold)}
+.section-lead{font-size:14px;color:var(--muted);line-height:1.8;margin-bottom:2rem;max-width:580px}
+.body-text{font-size:13px;color:var(--ink);line-height:1.8;margin-bottom:1.25rem}
+.body-text strong{font-weight:600}
+
+/* ── CALLOUT ── */
+.callout{border-left:3px solid var(--gold);padding:1rem 1.25rem;background:var(--gold-lt);border-radius:0 5px 5px 0;margin:1.5rem 0}
+.callout-text{font-size:13px;color:var(--ink);line-height:1.7;font-style:italic}
+.callout-attr{font-size:10px;color:var(--muted);margin-top:6px;letter-spacing:0.06em;text-transform:uppercase}
+
+.dark-callout{background:var(--dark);border-radius:6px;padding:1.5rem 1.75rem;margin:1.75rem 0}
+.dark-callout-title{font-family:'DM Serif Display',serif;font-size:18px;color:#f5f2ec;margin-bottom:0.5rem}
+.dark-callout-text{font-size:12px;color:rgba(245,242,236,0.55);line-height:1.75}
+
+/* ── CARDS ── */
+.card-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:1.75rem 0}
+.card-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:1.75rem 0}
+.card{background:var(--white);border:1px solid var(--border);border-radius:6px;padding:1.25rem}
+.card.gold-border{border-color:var(--gold);border-width:2px}
+.card.dark-card{background:var(--dark);border-color:rgba(184,146,42,0.2)}
+.card-num{font-family:'DM Serif Display',serif;font-size:32px;color:var(--gold);margin-bottom:0.35rem;line-height:1}
+.card-title{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:0.4rem}
+.card.dark-card .card-title{color:#f5f2ec}
+.card-text{font-size:12px;color:var(--muted);line-height:1.65}
+.card.dark-card .card-text{color:rgba(245,242,236,0.5)}
+.card-tag{display:inline-block;font-size:9px;letter-spacing:0.08em;text-transform:uppercase;padding:2px 8px;border-radius:3px;margin-bottom:0.6rem;font-weight:500}
+.tag-green{background:var(--green-lt);color:var(--green-dk)}
+.tag-red{background:var(--red-lt);color:var(--red-dk)}
+.tag-amber{background:var(--amber-lt);color:var(--amber-dk)}
+.tag-gold{background:var(--gold-lt);color:var(--gold-dk)}
+.tag-blue{background:var(--blue-lt);color:var(--blue-dk)}
+
+/* ── MODEL DIAGRAM ── */
+.model-diagram{margin:1.75rem 0;border:1px solid var(--border);border-radius:6px;overflow:hidden}
+.md-header{background:var(--dark);padding:1rem 1.5rem;display:flex;justify-content:space-between;align-items:center}
+.md-header-title{font-family:'DM Serif Display',serif;font-size:16px;color:#f5f2ec}
+.md-header-sub{font-size:11px;color:rgba(245,242,236,0.35)}
+.md-body{padding:1.5rem}
+.md-layers{display:flex;flex-direction:column;gap:10px}
+.md-layer{border-radius:5px;padding:1rem 1.25rem;position:relative;overflow:hidden}
+.md-layer-base{background:var(--dark);border:1px solid rgba(184,146,42,0.25)}
+.md-layer-commit{background:var(--blue-lt);border:1px solid #B5D4F4}
+.md-layer-consume{background:var(--green-lt);border:1px solid #A3DFC8}
+.md-layer-overage{background:var(--amber-lt);border:1px solid #E8C87A}
+.md-layer-label{font-size:9px;letter-spacing:0.12em;text-transform:uppercase;font-weight:500;margin-bottom:4px}
+.md-layer-base .md-layer-label{color:var(--gold)}
+.md-layer-commit .md-layer-label{color:var(--blue-dk)}
+.md-layer-consume .md-layer-label{color:var(--green-dk)}
+.md-layer-overage .md-layer-label{color:var(--amber-dk)}
+.md-layer-title{font-size:13px;font-weight:600;margin-bottom:3px}
+.md-layer-base .md-layer-title{color:#f5f2ec}
+.md-layer-commit .md-layer-title{color:var(--blue-dk)}
+.md-layer-consume .md-layer-title{color:var(--green-dk)}
+.md-layer-overage .md-layer-title{color:var(--amber-dk)}
+.md-layer-desc{font-size:11px;line-height:1.6}
+.md-layer-base .md-layer-desc{color:rgba(245,242,236,0.5)}
+.md-layer-commit .md-layer-desc{color:var(--blue)}
+.md-layer-consume .md-layer-desc{color:var(--green-dk)}
+.md-layer-overage .md-layer-desc{color:var(--amber-dk)}
+.md-arrow{text-align:center;font-size:16px;color:var(--border);margin:-2px 0}
+
+/* ── TIER BUILDER (Interactive) ── */
+.tier-builder{margin:1.75rem 0}
+.tb-controls{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1.25rem}
+.tb-control{background:var(--white);border:1px solid var(--border);border-radius:5px;padding:0.85rem 1rem}
+.tb-control-label{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.tb-control-val{font-family:'DM Serif Display',serif;font-size:22px;color:var(--ink);margin-bottom:4px}
+.tb-slider{width:100%;accent-color:var(--gold);cursor:pointer}
+.tb-preview{background:var(--dark);border-radius:6px;padding:1.25rem 1.5rem}
+.tb-preview-title{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(245,242,236,0.35);margin-bottom:1rem}
+.tb-tiers{display:flex;flex-direction:column;gap:8px}
+.tb-tier{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-radius:4px;border:1px solid rgba(245,242,236,0.08)}
+.tb-tier-name{font-size:12px;font-weight:500;color:#f5f2ec}
+.tb-tier-details{font-size:11px;color:rgba(245,242,236,0.4);margin-top:2px}
+.tb-tier-price{font-family:'DM Serif Display',serif;font-size:18px;color:var(--gold);text-align:right}
+.tb-tier-price-sub{font-size:10px;color:rgba(245,242,236,0.35);text-align:right;margin-top:1px}
+
+/* ── COMPARE TABLE ── */
+.compare-table{width:100%;border-collapse:collapse;margin:1.75rem 0;font-size:12px}
+.compare-table th{background:var(--dark);color:rgba(245,242,236,0.6);font-weight:500;padding:10px 14px;text-align:left;font-size:10px;letter-spacing:0.1em;text-transform:uppercase}
+.compare-table th:first-child{border-radius:5px 0 0 0}
+.compare-table th:last-child{border-radius:0 5px 0 0}
+.compare-table td{padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.55;color:var(--ink)}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table tr:nth-child(even) td{background:rgba(245,242,236,0.5)}
+.col-good{color:var(--green-dk);font-weight:500}
+.col-bad{color:var(--red-dk)}
+.col-neutral{color:var(--amber-dk)}
+
+/* ── STEPS ── */
+.steps{display:flex;flex-direction:column;gap:0;margin:1.75rem 0;position:relative}
+.steps::before{content:'';position:absolute;left:19px;top:40px;bottom:40px;width:1px;background:var(--border)}
+.step{display:flex;gap:16px;padding:1rem 0;position:relative}
+.step-num{width:38px;height:38px;border-radius:50%;background:var(--dark);color:var(--gold);font-family:'DM Serif Display',serif;font-size:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0;position:relative;z-index:1;border:2px solid rgba(184,146,42,0.3)}
+.step-title{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:4px;padding-top:6px}
+.step-text{font-size:12px;color:var(--muted);line-height:1.7}
+
+/* ── MIGRATION TRACK ── */
+.migration-track{margin:1.75rem 0}
+.mt-row{display:flex;gap:0;margin-bottom:10px}
+.mt-seg{flex:1;padding:0.85rem 1rem;border:1px solid var(--border);border-right:none;background:var(--white);position:relative}
+.mt-seg:last-child{border-right:1px solid var(--border);border-radius:0 5px 5px 0}
+.mt-seg:first-child{border-radius:5px 0 0 5px}
+.mt-seg-label{font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;font-weight:500}
+.mt-seg-title{font-size:12px;font-weight:600;color:var(--ink);margin-bottom:2px}
+.mt-seg-text{font-size:11px;color:var(--muted);line-height:1.5}
+.mt-arrow{display:flex;align-items:center;padding:0 6px;color:var(--gold);font-size:14px;flex-shrink:0;background:var(--white);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.mt-header{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:0.5rem;font-weight:500}
+
+/* ── CHECKLIST ── */
+.pl-checklist{list-style:none;display:flex;flex-direction:column;gap:8px;margin:1.25rem 0}
+.pl-checklist li{display:flex;gap:10px;font-size:13px;color:var(--ink);line-height:1.6;padding:10px 12px;background:var(--white);border:1px solid var(--border);border-radius:4px;cursor:pointer;transition:all 0.15s ease;align-items:flex-start}
+.pl-checklist li:hover{border-color:var(--gold)}
+.pl-checklist li.checked{background:var(--green-lt);border-color:var(--green)}
+.pl-checklist li.checked .pl-check{background:var(--green);border-color:var(--green);color:#fff}
+.pl-check{width:20px;height:20px;border-radius:4px;border:1.5px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;color:transparent;margin-top:1px;transition:all 0.15s ease}
+
+/* ── OBJECTION CARDS ── */
+.objection-set{display:flex;flex-direction:column;gap:10px;margin:1.75rem 0}
+.obj-card{border:1px solid var(--border);border-radius:5px;overflow:hidden;cursor:pointer}
+.obj-header{display:flex;justify-content:space-between;align-items:center;padding:0.85rem 1.1rem;background:var(--white);transition:background 0.15s}
+.obj-header:hover{background:var(--gold-lt)}
+.obj-card.open .obj-header{background:var(--dark)}
+.obj-q{font-size:13px;font-weight:500;color:var(--ink)}
+.obj-card.open .obj-q{color:#f5f2ec}
+.obj-toggle{font-size:16px;color:var(--muted);transition:transform 0.2s ease;flex-shrink:0}
+.obj-card.open .obj-toggle{transform:rotate(45deg);color:var(--gold)}
+.obj-body{display:none;padding:1rem 1.1rem;background:var(--gold-lt);border-top:1px solid var(--gold)}
+.obj-card.open .obj-body{display:block}
+.obj-answer{font-size:12px;color:var(--ink);line-height:1.75}
+.obj-talk-track{background:var(--white);border:1px solid var(--border);border-radius:4px;padding:0.85rem;margin-top:0.75rem}
+.obj-talk-label{font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;font-weight:500}
+.obj-talk-text{font-size:12px;color:var(--ink);line-height:1.7;font-style:italic}
+
+/* ── DIVIDER ── */
+.divider{height:1px;background:var(--border);margin:2rem 0}
+
+/* ── NEXT SECTION ── */
+.next-section{background:var(--dark);margin:0 -3.5rem -3rem;padding:2rem 3.5rem;border-top:1px solid rgba(184,146,42,0.15)}
+.next-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:1.25rem}
+.next-card{border:1px solid rgba(245,242,236,0.08);border-radius:5px;padding:1.1rem}
+.next-card.highlight{border-color:var(--gold)}
+.next-card-label{font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(245,242,236,0.3);margin-bottom:4px}
+.next-card-title{font-size:13px;font-weight:500;color:#f5f2ec;margin-bottom:4px}
+.next-card-desc{font-size:11px;color:rgba(245,242,236,0.4);line-height:1.6;margin-bottom:0.85rem}
+.btn-gold{display:block;background:var(--gold);color:#fff;text-align:center;padding:9px;border-radius:4px;font-size:11px;font-weight:500;text-decoration:none;cursor:pointer;border:none;width:100%;font-family:'DM Sans',sans-serif;transition:background 0.15s}
+.btn-gold:hover{background:var(--gold-dk)}
+.btn-outline{display:block;background:transparent;color:rgba(245,242,236,0.6);text-align:center;padding:9px;border-radius:4px;font-size:11px;font-weight:500;text-decoration:none;cursor:pointer;border:1px solid rgba(245,242,236,0.15);width:100%;font-family:'DM Sans',sans-serif;transition:all 0.15s}
+.btn-outline:hover{border-color:rgba(245,242,236,0.35);color:#f5f2ec}
+
+.print-bar{text-align:center;padding:0.85rem;font-size:10px;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;border-top:1px solid var(--border);background:var(--paper)}
+.print-bar a{color:var(--gold);text-decoration:none;cursor:pointer}
+
+@media(max-width:620px){
+  .cover-inner{padding:2.5rem 1.75rem 0}
+  .section{padding:2rem 1.75rem}
+  .cover-title{font-size:32px}
+  .card-grid,.card-grid-3,.next-cards,.tb-controls{grid-template-columns:1fr}
+  .next-section{margin:0 -1.75rem -2rem;padding:1.75rem}
+  .mt-row{flex-direction:column}
+  .mt-seg{border-right:1px solid var(--border)!important;border-radius:5px!important;margin-bottom:4px}
+  .mt-arrow{display:none}
+}
+@media print{
+  .nav-tabs,.next-section,.print-bar{display:none}
+  .section{display:block!important}
+  body{background:#fff}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-bg"></div>
+  <div class="cover-ring1"></div>
+  <div class="cover-ring2"></div>
+  <div class="cover-inner">
+    <div class="pb-label anim-1">FR Advisory · Playbook 02</div>
+    <div class="cover-kicker anim-2">Revenue Architecture</div>
+    <div class="cover-title anim-3">The <em>Hybrid</em><br>Model Playbook</div>
+    <div class="cover-sub anim-4">How to design a base + consumption revenue architecture that protects ARR predictability, captures agentic upside, and survives the transition from a legacy seat model.</div>
+    <div class="cover-divider anim-5"></div>
+    <div class="cover-meta anim-5">
+      <div class="cover-meta-item">
+        <span class="cover-meta-n">6</span>
+        <span class="cover-meta-l">Chapters</span>
+      </div>
+      <div class="cover-meta-item">
+        <span class="cover-meta-n">4</span>
+        <span class="cover-meta-l">Model layers</span>
+      </div>
+      <div class="cover-meta-item">
+        <span class="cover-meta-n">3</span>
+        <span class="cover-meta-l">Migration paths</span>
+      </div>
+      <div class="cover-meta-item">
+        <span class="cover-meta-n">CPO</span>
+        <span class="cover-meta-l">CFO · CRO</span>
+      </div>
+    </div>
+  </div>
+  <div class="cover-bar" style="margin-top:1.75rem"></div>
+</div>
+
+<!-- TABS -->
+<div class="nav-tabs">
+  <div class="nav-tab active" onclick="showSection('s1',this)">01 · Why Hybrid</div>
+  <div class="nav-tab" onclick="showSection('s2',this)">02 · The Four Layers</div>
+  <div class="nav-tab" onclick="showSection('s3',this)">03 · Tier Design</div>
+  <div class="nav-tab" onclick="showSection('s4',this)">04 · Legacy Migration</div>
+  <div class="nav-tab" onclick="showSection('s5',this)">05 · Objection Handling</div>
+  <div class="nav-tab" onclick="showSection('s6',this)">06 · Action Plan</div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- S1: WHY HYBRID -->
+<!-- ══════════════════════════════════════════ -->
+<div class="section active" id="s1">
+
+  <div class="section-eyebrow">Chapter 01</div>
+  <div class="section-title">Why pure consumption<br><em>isn't the answer either</em></div>
+  <div class="section-lead">The mistake most SaaS businesses make when they decide to move away from seats is swinging to pure consumption. It solves the upside problem — but creates a new one: revenue volatility that destroys the ARR multiple that made you valuable in the first place.</div>
+
+  <div class="body-text">Your investors, your board, and your finance team have built their models on Annual Recurring Revenue. ARR is predictable by definition — it recurs. The moment you shift to pure consumption, revenue becomes a function of how much your customers use the product each month. In a slow month, a slow quarter, a macro headwind — you find out how fragile that is.</div>
+
+  <div class="body-text">Pure seat pricing caps your upside as agents displace human users. Pure consumption pricing destroys your floor. <strong>The hybrid model holds both.</strong> A platform base fee that protects your ARR floor and a consumption layer that captures upside as agentic usage grows.</div>
+
+  <div class="callout">
+    <div class="callout-text">"The hybrid model is not a compromise. It's the structural answer to a pricing problem that pure models — seat or consumption — cannot solve on their own."</div>
+    <div class="callout-attr">FR Advisory</div>
+  </div>
+
+  <div class="section-eyebrow">The three failure modes</div>
+
+  <div class="card-grid-3">
+    <div class="card">
+      <div class="card-tag tag-red">Failure mode 1</div>
+      <div class="card-title">Pure seats</div>
+      <div class="card-text">Revenue decouples from value as agents displace users. NRR caps out. Expansion motion dies. Competitors who price on consumption eat your growth accounts.</div>
+    </div>
+    <div class="card">
+      <div class="card-tag tag-red">Failure mode 2</div>
+      <div class="card-title">Pure consumption</div>
+      <div class="card-text">Revenue becomes volatile. Finance can't forecast. Investors reprice on a lower multiple. Enterprise buyers resist without budget certainty. ARR narrative collapses.</div>
+    </div>
+    <div class="card gold-border">
+      <div class="card-tag tag-green">The answer</div>
+      <div class="card-title">Hybrid model</div>
+      <div class="card-text">Base fee = ARR floor + customer budget certainty. Consumption layer = upside capture + revenue that scales with value delivered.</div>
+    </div>
+  </div>
+
+  <div class="section-eyebrow">What the market data shows</div>
+
+  <div class="body-text">The SaaS businesses that have navigated this transition most successfully share a common architecture: a platform or access fee set at a level that covers their cost-to-serve and locks in a minimum ARR commitment, layered with a consumption tier that activates as agent usage crosses a defined threshold. The base is non-negotiable. The consumption is automatic.</div>
+
+  <div class="dark-callout">
+    <div class="dark-callout-title">The investor framing</div>
+    <div class="dark-callout-text">When you present a hybrid model to a board or investor, lead with the base ARR floor — it protects the multiple. Then position consumption revenue as a new growth vector that didn't exist under the seat model. You're not replacing predictable revenue; you're adding a consumption layer on top of it. That's the story that gets funded.</div>
+  </div>
+
+  <div class="next-section">
+    <div style="font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(245,242,236,0.35);margin-bottom:0.5rem">Up next</div>
+    <div style="font-family:'DM Serif Display',serif;font-size:18px;color:#f5f2ec;margin-bottom:0.5rem">The four layers of a well-designed hybrid model</div>
+    <button class="btn-gold" style="max-width:220px;margin-top:0.85rem" onclick="showSection('s2',document.querySelectorAll('.nav-tab')[1])">Chapter 02 →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- S2: FOUR LAYERS -->
+<!-- ══════════════════════════════════════════ -->
+<div class="section" id="s2">
+
+  <div class="section-eyebrow">Chapter 02</div>
+  <div class="section-title">The four layers of a<br><em>well-designed hybrid model</em></div>
+  <div class="section-lead">A hybrid model isn't a single pricing decision — it's a stack of four design choices that need to work together. Getting one layer wrong undermines the others.</div>
+
+  <div class="model-diagram">
+    <div class="md-header">
+      <div class="md-header-title">The Hybrid Revenue Stack</div>
+      <div class="md-header-sub">Base → Commit → Consume → Overage</div>
+    </div>
+    <div class="md-body">
+      <div class="md-layers">
+
+        <div class="md-layer md-layer-overage">
+          <div class="md-layer-label">Layer 4 — Overage</div>
+          <div class="md-layer-title">Usage above commitment ceiling</div>
+          <div class="md-layer-desc">Priced at a premium rate above the included consumption allowance. Triggers automatic billing or prompts an upsell conversation. This is your highest-margin revenue — protect the rate.</div>
+        </div>
+
+        <div class="md-arrow">↓</div>
+
+        <div class="md-layer md-layer-consume">
+          <div class="md-layer-label">Layer 3 — Consumption allowance</div>
+          <div class="md-layer-title">Included usage within the commitment tier</div>
+          <div class="md-layer-desc">Each tier includes a defined consumption allowance — tasks, runs, outcomes — priced into the tier fee. Customers know what they're getting and can plan against it. Drives natural tier-up at renewal.</div>
+        </div>
+
+        <div class="md-arrow">↓</div>
+
+        <div class="md-layer md-layer-commit">
+          <div class="md-layer-label">Layer 2 — Minimum commitment</div>
+          <div class="md-layer-title">Annual or quarterly ARR floor per tier</div>
+          <div class="md-layer-desc">The commitment floor that makes revenue recurring. Customers commit to a minimum annual spend regardless of actual consumption. This is the ARR number you can take to the board.</div>
+        </div>
+
+        <div class="md-arrow">↓</div>
+
+        <div class="md-layer md-layer-base">
+          <div class="md-layer-label">Layer 1 — Platform base</div>
+          <div class="md-layer-title">Access fee covering core product + infrastructure</div>
+          <div class="md-layer-desc">A non-negotiable platform fee covering product access, infrastructure, support, and onboarding. This covers your cost-to-serve and anchors the pricing conversation away from pure consumption.</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="section-eyebrow">Layer design principles</div>
+
+  <table class="compare-table">
+    <thead>
+      <tr><th>Layer</th><th>Design principle</th><th>Common mistake</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Platform base</strong></td>
+        <td class="col-good">Set at or above cost-to-serve. Non-negotiable. Covers access regardless of usage.</td>
+        <td class="col-bad">Setting it too low to win deals — creates a cost-to-serve problem at scale</td>
+      </tr>
+      <tr>
+        <td><strong>Minimum commitment</strong></td>
+        <td class="col-good">Expressed as an annual number. Tier-differentiated. Includes the consumption allowance.</td>
+        <td class="col-bad">Making it negotiable in early deals — destroys pricing integrity for future accounts</td>
+      </tr>
+      <tr>
+        <td><strong>Consumption allowance</strong></td>
+        <td class="col-good">Generous enough that most customers don't overage. Creates value perception, not bill shock.</td>
+        <td class="col-bad">Setting allowances too tight — customers feel nickelled and dimed, trust erodes</td>
+      </tr>
+      <tr>
+        <td><strong>Overage rate</strong></td>
+        <td class="col-good">Premium to per-unit tier cost. Triggers upgrade conversation at ~80% utilisation.</td>
+        <td class="col-bad">Discounting overage to win deals — trains customers not to upgrade tiers</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="dark-callout">
+    <div class="dark-callout-title">The commitment floor is non-negotiable</div>
+    <div class="dark-callout-text">The most common execution failure in hybrid model rollouts is negotiating away the minimum commitment in the first few enterprise deals. It feels like a short-term win — you close faster, the customer feels like they won. But you've just trained your entire sales team that the floor is a starting position, not a principle. Every deal after that starts with a floor negotiation. Protect it.</div>
+  </div>
+
+  <div class="next-section">
+    <div style="font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(245,242,236,0.35);margin-bottom:0.5rem">Up next</div>
+    <div style="font-family:'DM Serif Display',serif;font-size:18px;color:#f5f2ec;margin-bottom:0.5rem">Designing your tier structure — with an interactive model builder</div>
+    <button class="btn-gold" style="max-width:220px;margin-top:0.85rem" onclick="showSection('s3',document.querySelectorAll('.nav-tab')[2])">Chapter 03 →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- S3: TIER DESIGN -->
+<!-- ══════════════════════════════════════════ -->
+<div class="section" id="s3">
+
+  <div class="section-eyebrow">Chapter 03</div>
+  <div class="section-title">Tier structure design:<br><em>the three decisions</em></div>
+  <div class="section-lead">Most SaaS businesses default to three tiers because that's what they see everywhere. Three is often right — but the tier boundaries, allowances, and price points are decisions that need to be built from your usage data, not copied from a competitor.</div>
+
+  <div class="body-text">Tier design has three core decisions: how many tiers, where to draw the boundaries, and how to price the gaps between them. Get the gaps wrong and you'll find customers stuck in the middle tier forever — no natural trigger to upgrade, no overage pressure, no expansion motion.</div>
+
+  <div class="section-eyebrow">The three tier decisions</div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <div class="step-title">Tier count: almost always three</div>
+        <div class="step-text">Two tiers force binary decisions — customers either fit or they don't. Four or more creates cognitive overload in the buying process. Three gives you a natural anchor (top), a natural default (middle), and a natural entry point (bottom). The exceptions: developer tools (more granular tiers work) and enterprise-only products (one tier, one price, custom).</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <div class="step-title">Tier boundaries: set from usage distribution, not instinct</div>
+        <div class="step-text">Pull your usage data and plot consumption distribution across your customer base. Your tier boundaries should sit at natural clustering points — not arbitrary round numbers. The goal: roughly 30% of customers in the bottom tier, 50% in the middle, 20% in the top. If your top tier is below 15%, it's priced too high. Above 30%, too low.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <div class="step-title">Price gaps: 2.5–3x between tiers, never less than 2x</div>
+        <div class="step-text">The gap between tiers needs to be large enough to create a real decision moment. A 30% uplift between starter and growth doesn't justify the customer's internal approval process to upgrade. A 2.5–3x step creates a meaningful value proposition — and keeps your middle tier as the default anchor that most customers choose.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-eyebrow">Model builder — preview your tier structure</div>
+  <div class="body-text" style="margin-bottom:0.75rem">Adjust the inputs to see a preview of how your tier structure might look. Use as a starting point, not a final model.</div>
+
+  <div class="tier-builder">
+    <div class="tb-controls">
+      <div class="tb-control">
+        <div class="tb-control-label">Base platform fee (£/mo)</div>
+        <div class="tb-control-val" id="tb-base-val">£500</div>
+        <input type="range" class="tb-slider" min="200" max="5000" step="100" value="500" oninput="updateTiers()" id="tb-base">
+      </div>
+      <div class="tb-control">
+        <div class="tb-control-label">Starter consumption allowance (units/mo)</div>
+        <div class="tb-control-val" id="tb-units-val">500 units</div>
+        <input type="range" class="tb-slider" min="100" max="5000" step="100" value="500" oninput="updateTiers()" id="tb-units">
+      </div>
+      <div class="tb-control">
+        <div class="tb-control-label">Overage rate (£ per unit above allowance)</div>
+        <div class="tb-control-val" id="tb-over-val">£0.50</div>
+        <input type="range" class="tb-slider" min="10" max="500" step="5" value="50" oninput="updateTiers()" id="tb-over">
+      </div>
+      <div class="tb-control">
+        <div class="tb-control-label">Tier price multiplier</div>
+        <div class="tb-control-val" id="tb-mult-val">3×</div>
+        <input type="range" class="tb-slider" min="20" max="40" step="1" value="30" oninput="updateTiers()" id="tb-mult">
+      </div>
+    </div>
+    <div class="tb-preview">
+      <div class="tb-preview-title">Illustrative tier structure</div>
+      <div class="tb-tiers" id="tb-tiers"></div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="callout-text">Tiers are a hypothesis until customers validate them. Build the model, then take it to 5 accounts — ask them which tier they'd land in and whether the step-up feels proportionate to the value increase.</div>
+  </div>
+
+  <div class="next-section">
+    <div style="font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(245,242,236,0.35);margin-bottom:0.5rem">Up next</div>
+    <div style="font-family:'DM Serif Display',serif;font-size:18px;color:#f5f2ec;margin-bottom:0.5rem">The three migration paths for legacy customers</div>
+    <button class="btn-gold" style="max-width:220px;margin-top:0.85rem" onclick="showSection('s4',document.querySelectorAll('.nav-tab')[3])">Chapter 04 →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- S4: LEGACY MIGRATION -->
+<!-- ══════════════════════════════════════════ -->
+<div class="section" id="s4">
+
+  <div class="section-eyebrow">Chapter 04</div>
+  <div class="section-title">The legacy migration:<br><em>the hardest part of the transition</em></div>
+  <div class="section-lead">New logos are easy. You introduce the hybrid model, it's the only option, customers accept it or they don't. The hard problem is your existing base — customers who bought on a seat model and have no contractual obligation to move.</div>
+
+  <div class="body-text">Migration failures follow a predictable pattern: a company launches a new pricing model for new business, leaves the legacy base untouched, and ends up with two parallel commercial architectures indefinitely. The new model never reaches critical mass. The sales team sells both. CS manages both. Finance reports both. The transition never actually happens.</div>
+
+  <div class="body-text">Successful migrations are deliberate. They segment the base, define a migration timeline, and design a different path for each cohort — with clear commercial incentives to move before the deadline.</div>
+
+  <div class="section-eyebrow">The three migration paths</div>
+
+  <div class="migration-track" style="margin-bottom:0.5rem">
+    <div class="mt-header">Path A — High value, high agentic adoption</div>
+    <div class="mt-row">
+      <div class="mt-seg">
+        <div class="mt-seg-label">Who</div>
+        <div class="mt-seg-title">Top 20% accounts</div>
+        <div class="mt-seg-text">Heavy AI users, strong ROI evidence</div>
+      </div>
+      <div class="mt-arrow">→</div>
+      <div class="mt-seg">
+        <div class="mt-seg-label">Approach</div>
+        <div class="mt-seg-title">White-glove migration</div>
+        <div class="mt-seg-text">CSM-led, exec-sponsored conversation</div>
+      </div>
+      <div class="mt-arrow">→</div>
+      <div class="mt-seg">
+        <div class="mt-seg-label">Incentive</div>
+        <div class="mt-seg-title">Grandfathered rate</div>
+        <div class="mt-seg-text">Lock in today's pricing before list price increases</div>
+      </div>
+      <div class="mt-arrow">→</div>
+      <div class="mt-seg">
+        <div class="mt-seg-label">Timeline</div>
+        <div class="mt-seg-title">Next renewal</div>
+        <div class="mt-seg-text">No forced migration — deadline is natural renewal date</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="migration-track" style="margin-bottom:0.5rem">
+    <div class="mt-header">Path B — Mid-market, moderate agentic adoption</div>
+    <div class="mt-row">
+      <div class="mt-seg">
+        <div class="mt-seg-label">Who</div>
+        <div class="mt-seg-title">Middle 60% accounts</div>
+        <div class="mt-seg-text">Growing AI usage, mixed ROI evidence</div>
+      </div>
+      <div class="mt-arrow">→</div>
+      <div class="mt-seg">
+        <div class="mt-seg-label">Approach</div>
+        <div class="mt-seg-title">Digital-led migration</div>
+        <div class="mt-seg-text">In-product prompts + email sequence</div>
+      </div>
+      <div class="mt-arrow">→</div>
+      <div class="mt-seg">
+        <div class="mt-seg-label">Incentive</div>
+        <div class="mt-seg-title">Free consumption credits</div>
+        <div class="mt-seg-text">First 3 months of consumption included at no cost</div>
+      </div>
+      <div class="mt-arrow">→</div>
+      <div class="mt-seg">
+        <div class="mt-seg-label">Timeline</div>
+        <div class="mt-seg-title">12-month window</div>
+        <div class="mt-seg-text">Sunset notice at month 9, forced migration at 12</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="migration-track">
+    <div class="mt-header">Path C — Low usage, low agentic adoption</div>
+    <div class="mt-row">
+      <div class="mt-seg">
+        <div class="mt-seg-label">Who</div>
+        <div class="mt-seg-title">Bottom 20% accounts</div>
+        <div class="mt-seg-text">Minimal AI usage, at-risk accounts</div>
+      </div>
+      <div class="mt-arrow">→</div>
+      <div class="mt-seg">
+        <div class="mt-seg-label">Approach</div>
+        <div class="mt-seg-title">Assess before migrating</div>
+        <div class="mt-seg-text">Understand why adoption is low before pricing conversation</div>
+      </div>
+      <div class="mt-arrow">→</div>
+      <div class="mt-seg">
+        <div class="mt-seg-label">Decision</div>
+        <div class="mt-seg-title">Migrate or churn</div>
+        <div class="mt-seg-text">Low-adoption accounts may not be worth retaining at new model economics</div>
+      </div>
+      <div class="mt-arrow">→</div>
+      <div class="mt-seg">
+        <div class="mt-seg-label">Timeline</div>
+        <div class="mt-seg-title">18-month window</div>
+        <div class="mt-seg-text">Longer runway — but don't extend indefinitely</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dark-callout">
+    <div class="dark-callout-title">The migration communication framework</div>
+    <div class="dark-callout-text">Every migration communication should lead with value, not mechanics. Don't open with "we're changing our pricing model." Open with "here's how your usage has grown and what that means for you." The commercial change is the second paragraph — and it comes with an incentive, not an ultimatum. Customers who feel rewarded for their loyalty migrate. Customers who feel ambushed churn.</div>
+  </div>
+
+  <div class="next-section">
+    <div style="font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(245,242,236,0.35);margin-bottom:0.5rem">Up next</div>
+    <div style="font-family:'DM Serif Display',serif;font-size:18px;color:#f5f2ec;margin-bottom:0.5rem">The five objections you'll hear — and exactly how to handle them</div>
+    <button class="btn-gold" style="max-width:220px;margin-top:0.85rem" onclick="showSection('s5',document.querySelectorAll('.nav-tab')[4])">Chapter 05 →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- S5: OBJECTION HANDLING -->
+<!-- ══════════════════════════════════════════ -->
+<div class="section" id="s5">
+
+  <div class="section-eyebrow">Chapter 05</div>
+  <div class="section-title">The five objections —<br><em>and how to answer them</em></div>
+  <div class="section-lead">Every consumption model transition surfaces the same five objections. They're not irrational — they represent real concerns from buyers who've been burned by unpredictable cloud billing. Here's how to address each one.</div>
+
+  <div class="objection-set">
+
+    <div class="obj-card" id="obj-0">
+      <div class="obj-header" onclick="toggleObj('obj-0')">
+        <div class="obj-q">"I can't predict what I'll spend — I need a fixed budget."</div>
+        <div class="obj-toggle">+</div>
+      </div>
+      <div class="obj-body">
+        <div class="obj-answer">This is the most common objection and the most legitimate. Enterprise buyers have budget cycles. Finance teams hate variance. The answer is in your model design — not your talk track. If your minimum commitment and consumption allowance are well-designed, 80%+ of customers should never overage. The bill is predictable because the model is designed for predictability.</div>
+        <div class="obj-talk-track">
+          <div class="obj-talk-label">Talk track</div>
+          <div class="obj-talk-text">"Your minimum commitment covers [X] units per month — based on your current usage patterns, that's [Y]% more than you're consuming today. You can plan against a fixed number. If you grow beyond that, you'll see it coming in your dashboard weeks before it hits the invoice, and you'll have the option to upgrade your tier rather than absorb overage."</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="obj-card" id="obj-1">
+      <div class="obj-header" onclick="toggleObj('obj-1')">
+        <div class="obj-q">"I don't know what counts as a billable action."</div>
+        <div class="obj-toggle">+</div>
+      </div>
+      <div class="obj-body">
+        <div class="obj-answer">Audit anxiety is a trust problem, not an education problem. Customers who ask this question don't need a longer explanation — they need a shorter, clearer definition. Your billable unit taxonomy should fit on one page, surfaced in-product, in onboarding, and in the contract. Binary definitions (did the agent complete the task? yes/no) beat nuanced ones every time.</div>
+        <div class="obj-talk-track">
+          <div class="obj-talk-label">Talk track</div>
+          <div class="obj-talk-text">"A billable action is [one sentence definition]. Nothing else counts. You can see every billable event in your admin dashboard in real time, with a complete audit log. If you ever see something you don't recognise, there's a one-click dispute process — and we'll review it within 24 hours."</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="obj-card" id="obj-2">
+      <div class="obj-header" onclick="toggleObj('obj-2')">
+        <div class="obj-q">"We were on a better deal before — why are we paying more?"</div>
+        <div class="obj-toggle">+</div>
+      </div>
+      <div class="obj-body">
+        <div class="obj-answer">This objection usually comes from legacy accounts being migrated, not new buyers. The mistake is treating it as a pricing negotiation — it's actually a value conversation. If the customer is running more agent workflows than they were when they signed their original deal, the value exchange has already shifted. Your job is to make that visible before you make the commercial ask.</div>
+        <div class="obj-talk-track">
+          <div class="obj-talk-label">Talk track</div>
+          <div class="obj-talk-text">"Since you signed your original agreement, your team has automated [X workflows], which our data shows has saved approximately [Y hours/outcomes]. The new model is designed to reflect that value exchange — you pay more when we deliver more. And you have a grandfathered rate available if you move before [date] that locks you in at below our current list price."</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="obj-card" id="obj-3">
+      <div class="obj-header" onclick="toggleObj('obj-3')">
+        <div class="obj-q">"What happens if our usage drops — do we still pay the minimum?"</div>
+        <div class="obj-toggle">+</div>
+      </div>
+      <div class="obj-body">
+        <div class="obj-answer">Yes — and that's by design. The minimum commitment is the ARR floor, not a consumption estimate. Frame it correctly: the commitment covers access to the platform and the infrastructure to run agents at scale. It's not a pay-per-use model for the platform itself — it's a subscription with a consumption upside layer. The minimum is what the subscription costs.</div>
+        <div class="obj-talk-track">
+          <div class="obj-talk-label">Talk track</div>
+          <div class="obj-talk-text">"The minimum covers your platform access — the same way your SaaS licences today don't refund unused seats at year end. Think of it as the infrastructure commitment; the consumption layer is the upside when your usage grows. Based on your current run rate, you're tracking to [X]% above your minimum, so this isn't a theoretical concern for your business."</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="obj-card" id="obj-4">
+      <div class="obj-header" onclick="toggleObj('obj-4')">
+        <div class="obj-q">"Our finance team won't approve a variable cost line."</div>
+        <div class="obj-toggle">+</div>
+      </div>
+      <div class="obj-body">
+        <div class="obj-answer">Finance teams approve variable costs all the time — cloud infrastructure, advertising spend, professional services. The issue is variance, not variability. Give them the tools to cap and forecast it: a hard spend cap in the admin console, monthly consumption alerts at 70% and 90% of allowance, and a historical usage report they can use to build the budget line in their model.</div>
+        <div class="obj-talk-track">
+          <div class="obj-talk-label">Talk track</div>
+          <div class="obj-talk-text">"Your finance team can set a hard cap at any level in the admin console — we will never charge above it without explicit approval. Your cost line is bounded. We'll also send a monthly forecast based on your usage trajectory, so the number in their model is always current. Would it help to set up a 30-minute session with your finance lead and our commercial team to walk through the controls?"</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="next-section">
+    <div style="font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(245,242,236,0.35);margin-bottom:0.5rem">Up next</div>
+    <div style="font-family:'DM Serif Display',serif;font-size:18px;color:#f5f2ec;margin-bottom:0.5rem">Your 60-day action plan to design and launch the hybrid model</div>
+    <button class="btn-gold" style="max-width:220px;margin-top:0.85rem" onclick="showSection('s6',document.querySelectorAll('.nav-tab')[5])">Chapter 06 →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- S6: ACTION PLAN -->
+<!-- ══════════════════════════════════════════ -->
+<div class="section" id="s6">
+
+  <div class="section-eyebrow">Chapter 06</div>
+  <div class="section-title">Your 60-day<br><em>hybrid model action plan</em></div>
+  <div class="section-lead">Designing a hybrid model is a 60-day process if done with urgency. The first 30 days are internal — data, design, alignment. The second 30 days are external — validation, testing, rollout planning.</div>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-num">W1–2</div>
+      <div class="card-title">Revenue architecture audit</div>
+      <div class="card-text">Model GRR and NRR risk under continued seat pricing. Build the scenario analysis that justifies the transition to leadership. This is your mandate document.</div>
+    </div>
+    <div class="card">
+      <div class="card-num">W3–4</div>
+      <div class="card-title">Model design</div>
+      <div class="card-text">Define the four layers: platform base, commitment tiers, consumption allowances, overage rates. Use the tier builder as a starting point. Design three tier options to test.</div>
+    </div>
+    <div class="card">
+      <div class="card-num">W5–6</div>
+      <div class="card-title">Customer validation</div>
+      <div class="card-text">Test the model with 5–8 accounts across adoption tiers. Validate tier fit, commitment levels, and objection patterns. Adjust allowances based on usage data.</div>
+    </div>
+    <div class="card">
+      <div class="card-num">W7–8</div>
+      <div class="card-title">Migration planning</div>
+      <div class="card-text">Segment the legacy base into three paths. Design the migration communication sequence. Brief CS and Sales. Set the rollout timeline and sunset dates.</div>
+    </div>
+  </div>
+
+  <div class="section-eyebrow" style="margin-top:0.5rem">60-day checklist</div>
+
+  <ul class="pl-checklist">
+    <li onclick="toggleCheck(this)"><div class="pl-check">✓</div>Model GRR and NRR risk under continued seat pricing — present to leadership</li>
+    <li onclick="toggleCheck(this)"><div class="pl-check">✓</div>Define platform base fee: covers cost-to-serve, non-negotiable</li>
+    <li onclick="toggleCheck(this)"><div class="pl-check">✓</div>Design three consumption tier options with allowances and overage rates</li>
+    <li onclick="toggleCheck(this)"><div class="pl-check">✓</div>Set minimum commitment floors for each tier — protect and document them</li>
+    <li onclick="toggleCheck(this)"><div class="pl-check">✓</div>Plot usage distribution across customer base — identify natural tier boundary points</li>
+    <li onclick="toggleCheck(this)"><div class="pl-check">✓</div>Validate model with 5–8 customers across adoption tiers</li>
+    <li onclick="toggleCheck(this)"><div class="pl-check">✓</div>Adjust allowances based on actual usage data — not assumptions</li>
+    <li onclick="toggleCheck(this)"><div class="pl-check">✓</div>Confirm billing infrastructure can handle variable consumption charges</li>
+    <li onclick="toggleCheck(this)"><div class="pl-check">✓</div>Segment legacy base into three migration paths (A, B, C)</li>
+    <li onclick="toggleCheck(this)"><div class="pl-check">✓</div>Write migration communication sequence — value-first, mechanics second</li>
+    <li onclick="toggleCheck(this)"><div class="pl-check">✓</div>Brief Sales and CS on objection handling frameworks</li>
+    <li onclick="toggleCheck(this)"><div class="pl-check">✓</div>Set rollout date, sunset dates, and board communication timeline</li>
+  </ul>
+
+  <div class="divider"></div>
+
+  <div class="section-eyebrow">What comes after this playbook</div>
+  <div class="body-text">Revenue architecture sets the model. The next layer is operational infrastructure — the billing systems, telemetry pipelines, and CPQ structures that make consumption pricing operationally viable at scale. That's Playbook 03.</div>
+
+  <div class="dark-callout">
+    <div class="dark-callout-title">The window is shorter than it feels</div>
+    <div class="dark-callout-text">The companies that transition their commercial model before the market forces them to do it retain pricing power. The ones that wait until seat growth has already collapsed are transitioning from a position of weakness — lower NRR, fewer expansion accounts, a legacy base that's already begun to erode. The hybrid model is not a future project. It's a current competitive decision.</div>
+  </div>
+
+  <div class="next-section">
+    <div style="font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(245,242,236,0.35);margin-bottom:0.5rem">Ready to build your model?</div>
+    <div style="font-family:'DM Serif Display',serif;font-size:18px;color:#f5f2ec;margin-bottom:1.25rem">Get a custom hybrid model designed for your product</div>
+    <div class="next-cards">
+      <div class="next-card">
+        <div class="next-card-label">Full Assessment</div>
+        <div class="next-card-title">5-dimension diagnostic report</div>
+        <div class="next-card-desc">Scored across all five dimensions including Revenue Architecture. Prioritised roadmap and PDF report within 48 hours.</div>
+        <div style="font-family:'DM Serif Display',serif;font-size:22px;color:var(--gold);margin-bottom:0.85rem">£995</div>
+        <button class="btn-outline" onclick="window.open('https://checkout.revolut.com/pay/5573f7d4-dd93-4f77-945b-42b90c28e058','_blank')">Get full report →</button>
+      </div>
+      <div class="next-card highlight">
+        <div class="next-card-label">Most valuable</div>
+        <div class="next-card-title">Assessment + Advisor session</div>
+        <div class="next-card-desc">Full report plus 2-hour 1:1 with Fessal. Live model design for your specific product, pricing, and customer base.</div>
+        <div style="font-family:'DM Serif Display',serif;font-size:22px;color:var(--gold);margin-bottom:0.85rem">£2,495</div>
+        <button class="btn-gold" onclick="window.location.href='mailto:fragenticadvisor@gmail.com?subject=Assessment + Advisor Package&body=Hi Fessal, I have read Playbook 02 and would like to book the Assessment + Advisor package.'">Book session →</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="print-bar">
+  <a onclick="window.print()">Save as PDF</a> &nbsp;·&nbsp; FR Advisory · Playbook 02 &nbsp;·&nbsp; fragenticadvisor@gmail.com
+</div>
+
+</div>
+
+<script>
+function showSection(id, tab) {
+  document.querySelectorAll('.section').forEach(function(s){ s.classList.remove('active'); });
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.nav-tab').forEach(function(t){ t.classList.remove('active'); });
+  if(tab) tab.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function toggleCheck(el) { el.classList.toggle('checked'); }
+
+function toggleObj(id) {
+  var card = document.getElementById(id);
+  var wasOpen = card.classList.contains('open');
+  document.querySelectorAll('.obj-card').forEach(function(c){ c.classList.remove('open'); });
+  if(!wasOpen) card.classList.add('open');
+}
+
+function updateTiers() {
+  var base = parseInt(document.getElementById('tb-base').value);
+  var units = parseInt(document.getElementById('tb-units').value);
+  var overRaw = parseInt(document.getElementById('tb-over').value);
+  var multRaw = parseInt(document.getElementById('tb-mult').value);
+  var over = overRaw / 100;
+  var mult = multRaw / 10;
+
+  document.getElementById('tb-base-val').textContent = '£' + base.toLocaleString();
+  document.getElementById('tb-units-val').textContent = units.toLocaleString() + ' units';
+  document.getElementById('tb-over-val').textContent = '£' + over.toFixed(2);
+  document.getElementById('tb-mult-val').textContent = mult.toFixed(1) + '×';
+
+  var tiers = [
+    { name: 'Starter', mult: 1, unitMult: 1, color: '#185FA5' },
+    { name: 'Growth', mult: mult, unitMult: mult, color: '#1D9E75' },
+    { name: 'Scale', mult: mult * mult, unitMult: mult * mult, color: '#b8922a' }
+  ];
+
+  var html = '';
+  tiers.forEach(function(t) {
+    var price = Math.round(base * t.mult / 100) * 100;
+    var allowance = Math.round(units * t.unitMult / 100) * 100;
+    html += '<div class="tb-tier">'
+      + '<div><div class="tb-tier-name" style="color:' + t.color + '">' + t.name + '</div>'
+      + '<div class="tb-tier-details">' + allowance.toLocaleString() + ' units/mo included · £' + over.toFixed(2) + ' per overage unit</div></div>'
+      + '<div><div class="tb-tier-price">£' + price.toLocaleString() + '</div>'
+      + '<div class="tb-tier-price-sub">/ month · billed annually</div></div>'
+      + '</div>';
+  });
+  document.getElementById('tb-tiers').innerHTML = html;
+}
+
+updateTiers();
+</script>
+</body>
+</html>

@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Playbook 01 — From Seats to Signals | FR Advisory</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0e0e0e;--paper:#f5f2ec;--gold:#b8922a;--gold-lt:#f0e4c3;--gold-dk:#8a6a1a;
+  --dark:#1a1a1a;--darker:#111;--muted:#6b6459;--border:#d4c9b8;--white:#ffffff;
+  --green:#1D9E75;--green-lt:#E1F5EE;--green-dk:#085041;
+  --red:#D85A30;--red-lt:#FAECE7;--red-dk:#712B13;
+  --amber:#BA7517;--amber-lt:#FAEEDA;--amber-dk:#633806;
+  --blue:#185FA5;--blue-lt:#E6F1FB;--blue-dk:#0C447C;
+}
+
+body{font-family:'DM Sans',sans-serif;background:var(--darker);margin:0;color:var(--ink)}
+.page{max-width:780px;margin:0 auto;background:var(--paper)}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes lineGrow{from{width:0}to{width:100%}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
+.anim-1{animation:fadeUp 0.5s ease both}
+.anim-2{animation:fadeUp 0.5s 0.1s ease both}
+.anim-3{animation:fadeUp 0.5s 0.2s ease both}
+.anim-4{animation:fadeUp 0.5s 0.3s ease both}
+.anim-5{animation:fadeUp 0.5s 0.4s ease both}
+
+/* ── COVER ── */
+.cover{background:var(--dark);padding:0;position:relative;overflow:hidden}
+.cover-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 80% 20%, rgba(184,146,42,0.06) 0%, transparent 60%)}
+.cover-ring1{position:absolute;top:-100px;right:-100px;width:400px;height:400px;border:1px solid rgba(184,146,42,0.06);border-radius:50%}
+.cover-ring2{position:absolute;top:-50px;right:-50px;width:250px;height:250px;border:1px solid rgba(184,146,42,0.08);border-radius:50%}
+.cover-inner{position:relative;z-index:1;padding:3.5rem 3.5rem 0}
+.pb-label{display:inline-flex;align-items:center;gap:8px;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:1.25rem}
+.pb-label::before{content:'';width:28px;height:1px;background:var(--gold)}
+.cover-kicker{font-size:12px;color:rgba(245,242,236,0.4);letter-spacing:0.06em;margin-bottom:0.6rem;text-transform:uppercase}
+.cover-title{font-family:'DM Serif Display',serif;font-size:44px;line-height:1.05;color:#f5f2ec;margin-bottom:0.75rem}
+.cover-title em{font-style:italic;color:var(--gold)}
+.cover-sub{font-size:14px;color:rgba(245,242,236,0.5);line-height:1.75;max-width:520px;margin-bottom:2.5rem}
+.cover-divider{height:1px;background:linear-gradient(to right,rgba(184,146,42,0.3),transparent);margin-bottom:1.75rem}
+.cover-meta{display:flex;gap:0;margin-bottom:0}
+.cover-meta-item{flex:1;padding:1.25rem 0;border-right:1px solid rgba(245,242,236,0.06)}
+.cover-meta-item:last-child{border-right:none}
+.cover-meta-n{font-family:'DM Serif Display',serif;font-size:26px;color:var(--gold);display:block;margin-bottom:2px}
+.cover-meta-l{font-size:10px;color:rgba(245,242,236,0.3);letter-spacing:0.08em;text-transform:uppercase}
+.cover-bar{height:3px;background:linear-gradient(to right,var(--gold),rgba(184,146,42,0.2))}
+
+/* ── NAV TABS ── */
+.nav-tabs{background:var(--dark);border-bottom:1px solid rgba(245,242,236,0.06);display:flex;overflow-x:auto;scrollbar-width:none}
+.nav-tabs::-webkit-scrollbar{display:none}
+.nav-tab{flex-shrink:0;padding:1rem 1.5rem;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:rgba(245,242,236,0.35);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.2s ease;white-space:nowrap;font-weight:500}
+.nav-tab:hover{color:rgba(245,242,236,0.65)}
+.nav-tab.active{color:var(--gold);border-bottom-color:var(--gold)}
+
+/* ── SECTIONS ── */
+.section{display:none;padding:3rem 3.5rem;animation:fadeUp 0.3s ease}
+.section.active{display:block}
+
+/* ── TYPOGRAPHY ── */
+.section-eyebrow{font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:1rem;display:flex;align-items:center;gap:10px}
+.section-eyebrow::after{content:'';flex:1;height:1px;background:linear-gradient(to right,var(--border),transparent)}
+.section-title{font-family:'DM Serif Display',serif;font-size:28px;color:var(--ink);line-height:1.2;margin-bottom:0.6rem}
+.section-title em{font-style:italic;color:var(--gold)}
+.section-lead{font-size:14px;color:var(--muted);line-height:1.8;margin-bottom:2rem;max-width:580px}
+.body-text{font-size:13px;color:var(--ink);line-height:1.8;margin-bottom:1.25rem}
+.body-text strong{font-weight:600;color:var(--ink)}
+
+/* ── CALLOUT ── */
+.callout{border-left:3px solid var(--gold);padding:1rem 1.25rem;background:var(--gold-lt);border-radius:0 5px 5px 0;margin:1.5rem 0}
+.callout-text{font-size:13px;color:var(--ink);line-height:1.7;font-style:italic}
+.callout-attr{font-size:10px;color:var(--muted);margin-top:6px;letter-spacing:0.06em;text-transform:uppercase}
+
+/* ── DARK CALLOUT ── */
+.dark-callout{background:var(--dark);border-radius:6px;padding:1.5rem 1.75rem;margin:1.75rem 0}
+.dark-callout-title{font-family:'DM Serif Display',serif;font-size:18px;color:#f5f2ec;margin-bottom:0.5rem}
+.dark-callout-text{font-size:12px;color:rgba(245,242,236,0.55);line-height:1.75}
+
+/* ── GRID CARDS ── */
+.card-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:1.75rem 0}
+.card{background:var(--white);border:1px solid var(--border);border-radius:6px;padding:1.25rem}
+.card.gold-border{border-color:var(--gold);border-width:2px}
+.card-num{font-family:'DM Serif Display',serif;font-size:32px;color:var(--gold);margin-bottom:0.35rem;line-height:1}
+.card-title{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:0.4rem}
+.card-text{font-size:12px;color:var(--muted);line-height:1.65}
+.card-tag{display:inline-block;font-size:9px;letter-spacing:0.08em;text-transform:uppercase;padding:2px 8px;border-radius:3px;margin-bottom:0.6rem;font-weight:500}
+.tag-green{background:var(--green-lt);color:var(--green-dk)}
+.tag-red{background:var(--red-lt);color:var(--red-dk)}
+.tag-amber{background:var(--amber-lt);color:var(--amber-dk)}
+.tag-gold{background:var(--gold-lt);color:var(--gold-dk)}
+.tag-blue{background:var(--blue-lt);color:var(--blue-dk)}
+
+/* ── COMPARISON TABLE ── */
+.compare-table{width:100%;border-collapse:collapse;margin:1.75rem 0;font-size:12px}
+.compare-table th{background:var(--dark);color:rgba(245,242,236,0.6);font-weight:500;padding:10px 14px;text-align:left;font-size:10px;letter-spacing:0.1em;text-transform:uppercase}
+.compare-table th:first-child{border-radius:5px 0 0 0}
+.compare-table th:last-child{border-radius:0 5px 0 0}
+.compare-table td{padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.55;color:var(--ink)}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table tr:nth-child(even) td{background:rgba(245,242,236,0.5)}
+.compare-table .col-good{color:var(--green-dk);font-weight:500}
+.compare-table .col-bad{color:var(--red-dk)}
+.compare-table .col-neutral{color:var(--amber-dk)}
+
+/* ── STEP PROCESS ── */
+.steps{display:flex;flex-direction:column;gap:0;margin:1.75rem 0;position:relative}
+.steps::before{content:'';position:absolute;left:19px;top:40px;bottom:40px;width:1px;background:var(--border)}
+.step{display:flex;gap:16px;padding:1rem 0;position:relative}
+.step-num{width:38px;height:38px;border-radius:50%;background:var(--dark);color:var(--gold);font-family:'DM Serif Display',serif;font-size:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0;position:relative;z-index:1;border:2px solid rgba(184,146,42,0.3)}
+.step-content{}
+.step-title{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:4px;padding-top:6px}
+.step-text{font-size:12px;color:var(--muted);line-height:1.7}
+
+/* ── METRIC SELECTOR (Interactive) ── */
+.metric-selector{margin:1.75rem 0}
+.ms-label{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:0.75rem;font-weight:500}
+.ms-options{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:1.25rem}
+.ms-opt{border:1px solid var(--border);border-radius:5px;padding:0.85rem;cursor:pointer;background:var(--white);transition:all 0.2s ease;text-align:center}
+.ms-opt:hover{border-color:var(--gold);background:var(--gold-lt)}
+.ms-opt.sel{border-color:var(--gold);background:var(--gold-lt);box-shadow:inset 0 2px 0 var(--gold)}
+.ms-opt-icon{font-size:20px;margin-bottom:6px}
+.ms-opt-name{font-size:11px;font-weight:600;color:var(--ink);margin-bottom:2px}
+.ms-opt-eg{font-size:10px;color:var(--muted)}
+.ms-result{background:var(--dark);border-radius:6px;padding:1.25rem 1.5rem;display:none}
+.ms-result.show{display:block;animation:fadeUp 0.3s ease}
+.ms-result-title{font-family:'DM Serif Display',serif;font-size:17px;color:#f5f2ec;margin-bottom:0.5rem}
+.ms-result-text{font-size:12px;color:rgba(245,242,236,0.55);line-height:1.75;margin-bottom:0.85rem}
+.ms-result-tags{display:flex;gap:6px;flex-wrap:wrap}
+.ms-tag{font-size:10px;padding:3px 9px;border-radius:3px;border:1px solid rgba(184,146,42,0.3);color:var(--gold)}
+
+/* ── CHECKLIST ── */
+.pl-checklist{list-style:none;display:flex;flex-direction:column;gap:8px;margin:1.25rem 0}
+.pl-checklist li{display:flex;gap:10px;font-size:13px;color:var(--ink);line-height:1.6;padding:10px 12px;background:var(--white);border:1px solid var(--border);border-radius:4px;cursor:pointer;transition:all 0.15s ease}
+.pl-checklist li:hover{border-color:var(--gold)}
+.pl-checklist li.checked{background:var(--green-lt);border-color:var(--green);text-decoration:none}
+.pl-checklist li.checked .pl-check{background:var(--green);border-color:var(--green);color:#fff}
+.pl-check{width:20px;height:20px;border-radius:4px;border:1.5px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;color:transparent;margin-top:1px;transition:all 0.15s ease}
+
+/* ── SIGNAL TABLE ── */
+.signal-grid{display:flex;flex-direction:column;gap:10px;margin:1.75rem 0}
+.signal-row{display:flex;gap:14px;align-items:flex-start;padding:1rem 1.25rem;background:var(--white);border:1px solid var(--border);border-radius:5px}
+.signal-icon{font-size:20px;flex-shrink:0;margin-top:2px}
+.signal-title{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:3px}
+.signal-text{font-size:12px;color:var(--muted);line-height:1.6}
+.signal-tag{display:inline-block;font-size:9px;padding:2px 7px;border-radius:3px;margin-left:6px;vertical-align:middle;font-weight:500}
+
+/* ── DIVIDER ── */
+.divider{height:1px;background:var(--border);margin:2rem 0}
+
+/* ── NEXT STEPS ── */
+.next-section{background:var(--dark);margin:0 -3.5rem -3rem;padding:2rem 3.5rem;border-top:1px solid rgba(184,146,42,0.15)}
+.next-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:1.25rem}
+.next-card{border:1px solid rgba(245,242,236,0.08);border-radius:5px;padding:1.1rem}
+.next-card.highlight{border-color:var(--gold)}
+.next-card-label{font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(245,242,236,0.3);margin-bottom:4px}
+.next-card-title{font-size:13px;font-weight:500;color:#f5f2ec;margin-bottom:4px}
+.next-card-desc{font-size:11px;color:rgba(245,242,236,0.4);line-height:1.6;margin-bottom:0.85rem}
+.btn-gold{display:block;background:var(--gold);color:#fff;text-align:center;padding:9px;border-radius:4px;font-size:11px;font-weight:500;text-decoration:none;cursor:pointer;border:none;width:100%;font-family:'DM Sans',sans-serif;transition:background 0.15s}
+.btn-gold:hover{background:var(--gold-dk)}
+.btn-outline{display:block;background:transparent;color:rgba(245,242,236,0.6);text-align:center;padding:9px;border-radius:4px;font-size:11px;font-weight:500;text-decoration:none;cursor:pointer;border:1px solid rgba(245,242,236,0.15);width:100%;font-family:'DM Sans',sans-serif;transition:all 0.15s}
+.btn-outline:hover{border-color:rgba(245,242,236,0.35);color:#f5f2ec}
+
+/* ── PRINT ── */
+.print-bar{text-align:center;padding:0.85rem;font-size:10px;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;border-top:1px solid var(--border);background:var(--paper)}
+.print-bar a{color:var(--gold);text-decoration:none;cursor:pointer}
+
+@media(max-width:620px){
+  .cover-inner{padding:2.5rem 1.75rem 0}
+  .section{padding:2rem 1.75rem}
+  .cover-title{font-size:32px}
+  .card-grid,.ms-options,.next-cards{grid-template-columns:1fr}
+  .next-section{margin:0 -1.75rem -2rem;padding:1.75rem}
+  .compare-table{font-size:11px}
+  .compare-table td,.compare-table th{padding:8px 10px}
+}
+@media print{
+  .nav-tabs{display:none}
+  .section{display:block!important}
+  .next-section{display:none}
+  .print-bar{display:none}
+  body{background:#fff}
+  .page{max-width:100%}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-bg"></div>
+  <div class="cover-ring1"></div>
+  <div class="cover-ring2"></div>
+  <div class="cover-inner">
+    <div class="pb-label anim-1">FR Advisory · Playbook 01</div>
+    <div class="cover-kicker anim-2">Value Metric Alignment</div>
+    <div class="cover-title anim-3">From Seats<br>to <em>Signals</em></div>
+    <div class="cover-sub anim-4">How to choose the right value metric for an agentic pricing model — and stop leaving revenue on the table with every AI feature you ship.</div>
+    <div class="cover-divider anim-5"></div>
+    <div class="cover-meta anim-5">
+      <div class="cover-meta-item">
+        <span class="cover-meta-n">5</span>
+        <span class="cover-meta-l">Chapters</span>
+      </div>
+      <div class="cover-meta-item">
+        <span class="cover-meta-n">3</span>
+        <span class="cover-meta-l">Metric types</span>
+      </div>
+      <div class="cover-meta-item">
+        <span class="cover-meta-n">1</span>
+        <span class="cover-meta-l">Decision framework</span>
+      </div>
+      <div class="cover-meta-item">
+        <span class="cover-meta-n">CPO</span>
+        <span class="cover-meta-l">CFO · CRO</span>
+      </div>
+    </div>
+  </div>
+  <div class="cover-bar" style="margin-top:1.75rem"></div>
+</div>
+
+<!-- NAV TABS -->
+<div class="nav-tabs">
+  <div class="nav-tab active" onclick="showSection('s1',this)">01 · The Problem</div>
+  <div class="nav-tab" onclick="showSection('s2',this)">02 · Three Metric Types</div>
+  <div class="nav-tab" onclick="showSection('s3',this)">03 · The Signals</div>
+  <div class="nav-tab" onclick="showSection('s4',this)">04 · Decision Framework</div>
+  <div class="nav-tab" onclick="showSection('s5',this)">05 · Your Action Plan</div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- SECTION 1: THE PROBLEM -->
+<!-- ══════════════════════════════════════════ -->
+<div class="section active" id="s1">
+
+  <div class="section-eyebrow">Chapter 01</div>
+  <div class="section-title">The seat model is<br><em>structurally broken</em> for agentic AI</div>
+  <div class="section-lead">Seat-based pricing was built for a world where software required a human to operate it. Agentic AI inverts that assumption entirely — and most SaaS pricing models haven't caught up.</div>
+
+  <div class="body-text">For two decades, the logic held: more users meant more value. You charged per seat, per site, per entity — firmographic proxies that tracked organisational growth. When a customer hired more people, they bought more licences. The model was simple, predictable, and defensible.</div>
+
+  <div class="body-text">Agentic AI breaks this logic at the foundation. <strong>Agents don't have seats.</strong> A single agent can do the work of ten users — or a hundred. Customers who deploy AI heavily can now extract dramatically more value from your product while their headcount stays flat or shrinks. Under a seat model, they pay the same. Or less.</div>
+
+  <div class="callout">
+    <div class="callout-text">"Every agentic feature you ship without a matching commercial model trains your customers to expect AI for free."</div>
+    <div class="callout-attr">FR Advisory</div>
+  </div>
+
+  <div class="body-text">This isn't a future risk. It's happening now in the cohort data of every SaaS business shipping AI features. Seat growth is flattening among your most agentic customers — not because they're churning, but because they're getting more value without adding headcount. Your GRR looks fine. Your NRR looks fine. But the structural decoupling is underway.</div>
+
+  <div class="section-eyebrow" style="margin-top:2rem">The core tension</div>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-tag tag-red">Old world</div>
+      <div class="card-title">Value tracked headcount</div>
+      <div class="card-text">More users → more licences → more revenue. The pricing metric and the value delivery mechanism were the same thing: people using software.</div>
+    </div>
+    <div class="card">
+      <div class="card-tag tag-gold">Agentic world</div>
+      <div class="card-title">Value tracks outcomes</div>
+      <div class="card-text">Agents execute workflows, make decisions, and complete tasks autonomously. Value is delivered per action, per outcome, per workflow — not per seat.</div>
+    </div>
+    <div class="card">
+      <div class="card-tag tag-amber">The gap</div>
+      <div class="card-title">Pricing hasn't moved</div>
+      <div class="card-text">Most SaaS products now have agentic capabilities. Most SaaS pricing models are still priced on seats, sites, or entities built for 2012.</div>
+    </div>
+    <div class="card gold-border">
+      <div class="card-tag tag-green">The opportunity</div>
+      <div class="card-title">Capture value as it scales</div>
+      <div class="card-text">A well-designed value metric means revenue grows with AI usage. Customers who extract more value, pay more. Automatically. Without a sales conversation.</div>
+    </div>
+  </div>
+
+  <div class="dark-callout">
+    <div class="dark-callout-title">What this playbook gives you</div>
+    <div class="dark-callout-text">A clear framework for identifying the right value metric for your product — one that's transparent to customers, auditable by finance, and capable of capturing revenue as agentic AI usage scales. By the end, you'll know what to measure, how to validate it, and what to do next.</div>
+  </div>
+
+  <div class="next-section">
+    <div style="font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(245,242,236,0.35);margin-bottom:0.5rem">Up next</div>
+    <div style="font-family:'DM Serif Display',serif;font-size:18px;color:#f5f2ec;margin-bottom:0.5rem">The three metric types — and what each one costs you</div>
+    <button class="btn-gold" style="max-width:220px;margin-top:0.85rem" onclick="showSection('s2',document.querySelectorAll('.nav-tab')[1])">Chapter 02 →</button>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- SECTION 2: THREE METRIC TYPES -->
+<!-- ══════════════════════════════════════════ -->
+<div class="section" id="s2">
+
+  <div class="section-eyebrow">Chapter 02</div>
+  <div class="section-title">The three types of<br><em>agentic value metric</em></div>
+  <div class="section-lead">Not all consumption metrics are equal. The right one for your product depends on what your agents actually do, what customers can observe, and what your infrastructure can meter.</div>
+
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th>Metric type</th>
+        <th>What it measures</th>
+        <th>Best for</th>
+        <th>Risk</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Action / Task</strong><br><span style="font-size:10px;color:var(--muted)">e.g. agent runs, API calls, tasks completed</span></td>
+        <td>Volume of AI activity</td>
+        <td class="col-good">High-frequency, process-heavy workflows</td>
+        <td class="col-bad">Customers can't control spend easily — triggers anxiety</td>
+      </tr>
+      <tr>
+        <td><strong>Outcome / Result</strong><br><span style="font-size:10px;color:var(--muted)">e.g. deals closed, tickets resolved, docs generated</span></td>
+        <td>Business results delivered</td>
+        <td class="col-good">Products with clear, measurable end-states</td>
+        <td class="col-bad">Hard to define, attribute, and audit at scale</td>
+      </tr>
+      <tr>
+        <td><strong>Compute / Resource</strong><br><span style="font-size:10px;color:var(--muted)">e.g. tokens, credits, processing time</span></td>
+        <td>Infrastructure consumed</td>
+        <td class="col-neutral">Technical buyers, developer-facing products</td>
+        <td class="col-bad">Opaque to business buyers — feels like a cloud bill</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="section-eyebrow">Deep dive: Action / Task metrics</div>
+  <div class="body-text">The most common starting point. You charge per agent run, per workflow execution, per task completed. It's transparent, easy to meter, and customers can see exactly what they're paying for. The challenge is spend predictability — enterprise buyers hate open-ended consumption without caps or commit floors.</div>
+  <div class="callout">
+    <div class="callout-text">The fix: pair action-based pricing with a minimum commitment floor and self-serve spend caps. Customers get predictability; you get upside.</div>
+  </div>
+
+  <div class="section-eyebrow">Deep dive: Outcome / Result metrics</div>
+  <div class="body-text">The most defensible model when you can pull it off. You charge for the result — a resolved ticket, a qualified lead, a completed document. Revenue scales with the value delivered. The problem is attribution: customers will argue about what counts, edge cases multiply, and your audit trail needs to be bulletproof.</div>
+  <div class="callout">
+    <div class="callout-text">The fix: define a narrow, unambiguous outcome definition in the contract. Binary is better than nuanced — "ticket closed by agent with no human escalation" beats "ticket resolved satisfactorily."</div>
+  </div>
+
+  <div class="section-eyebrow">Deep dive: Compute / Resource metrics</div>
+  <div class="body-text">The natural fit for developer tools and API-first products. Technical buyers understand token costs. Business buyers don't — and won't. If your ICP is a CPO or CFO rather than an engineering team, resource-based pricing creates a translation problem that erodes perceived value.</div>
+
+  <div class="dark-callout">
+    <div class="dark-callout-title">The hybrid answer</div>
+    <div class="dark-callout-text">Most mature agentic pricing models blend a base platform fee (predictability for the customer, ARR floor for you) with a consumption layer (upside capture as usage grows). The metric type you choose governs the consumption layer — not the entire model. Chapter 04 walks through the decision framework for picking the right one.</div>
+  </div>
+
+  <div class="next-section">
+    <div style="font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(245,242,236,0.35);margin-bottom:0.5rem">Up next</div>
+    <div style="font-family:'DM Serif Display',serif;font-size:18px;color:#f5f2ec;margin-bottom:0.5rem">The signals that tell you your current metric is failing</div>
+    <button class="btn-gold" style="max-width:220px;margin-top:0.85rem" onclick="showSection('s3',document.querySelectorAll('.nav-tab')[2])">Chapter 03 →</button>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- SECTION 3: THE SIGNALS -->
+<!-- ══════════════════════════════════════════ -->
+<div class="section" id="s3">
+
+  <div class="section-eyebrow">Chapter 03</div>
+  <div class="section-title">Five signals your<br>metric is <em>decoupling from value</em></div>
+  <div class="section-lead">The seat model doesn't collapse overnight. It decouples slowly — first in your most agentic accounts, then across the base. These are the early warning signs.</div>
+
+  <div class="signal-grid">
+    <div class="signal-row">
+      <div class="signal-icon">📉</div>
+      <div>
+        <div class="signal-title">Seat growth flattening in your AI-heaviest accounts <span class="signal-tag tag-red">High urgency</span></div>
+        <div class="signal-text">Your top 20% of accounts by AI usage are no longer expanding headcount — but they're running more workflows than ever. They're getting more value and paying the same. This is the structural decoupling in its earliest form. Check it by filtering NRR by agentic adoption tier.</div>
+      </div>
+    </div>
+    <div class="signal-row">
+      <div class="signal-icon">🔇</div>
+      <div>
+        <div class="signal-title">Customers not mentioning headcount when describing ROI <span class="signal-tag tag-amber">Medium urgency</span></div>
+        <div class="signal-text">Listen to how customers talk about value in QBRs and renewal conversations. If they're citing tasks automated, time saved, or outcomes achieved — not users enabled — their mental model of value has already shifted away from seats.</div>
+      </div>
+    </div>
+    <div class="signal-row">
+      <div class="signal-icon">💬</div>
+      <div>
+        <div class="signal-title">Sales team selling on ROI but billing on headcount <span class="signal-tag tag-amber">Medium urgency</span></div>
+        <div class="signal-text">When your AEs pitch "10x productivity per employee" but invoice on seat count, you've created a value-price mismatch your customers will eventually act on. Expect pushback at renewal — or worse, a competitor who prices on the ROI story you're already telling.</div>
+      </div>
+    </div>
+    <div class="signal-row">
+      <div class="signal-icon">🔄</div>
+      <div>
+        <div class="signal-title">Expansion conversations stalling despite rising usage <span class="signal-tag tag-red">High urgency</span></div>
+        <div class="signal-text">If customers are running 3x more agent workflows than last year but the expansion conversation goes nowhere — because there are no more seats to sell — your revenue architecture has structurally capped your NRR upside.</div>
+      </div>
+    </div>
+    <div class="signal-row">
+      <div class="signal-icon">⚠️</div>
+      <div>
+        <div class="signal-title">Competitors launching consumption tiers <span class="signal-tag tag-gold">Strategic signal</span></div>
+        <div class="signal-text">When your category's pricing language shifts from "per seat" to "per run" or "per outcome," buyer expectations shift with it. You don't need to be first — but you can't be last. A competitor's consumption launch is your 12-month clock.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-eyebrow" style="margin-top:2rem">How to check your own data right now</div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <div class="step-title">Segment customers by agentic adoption tier</div>
+        <div class="step-text">Cut your customer base into three groups: high AI usage (top 20%), medium (middle 60%), low or none (bottom 20%). Use agent runs, workflow completions, or active agent count as the proxy.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <div class="step-title">Compare NRR across the three tiers</div>
+        <div class="step-text">If NRR is flat or declining in your high-usage tier despite rising consumption, your metric is decoupling. This is your board-level data point.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <div class="step-title">Map the last 5 renewal conversations in each tier</div>
+        <div class="step-text">What did customers cite as value? If the high-usage tier talked outcomes and the low-usage tier talked users, the language gap confirms the decoupling.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <div class="step-title">Document and present to leadership</div>
+        <div class="step-text">Data beats opinion in pricing discussions. A three-slide summary showing the decoupling pattern by cohort is enough to move this from product team concern to board-level priority.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="next-section">
+    <div style="font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(245,242,236,0.35);margin-bottom:0.5rem">Up next</div>
+    <div style="font-family:'DM Serif Display',serif;font-size:18px;color:#f5f2ec;margin-bottom:0.5rem">The four-question framework for choosing your metric</div>
+    <button class="btn-gold" style="max-width:220px;margin-top:0.85rem" onclick="showSection('s4',document.querySelectorAll('.nav-tab')[3])">Chapter 04 →</button>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- SECTION 4: DECISION FRAMEWORK -->
+<!-- ══════════════════════════════════════════ -->
+<div class="section" id="s4">
+
+  <div class="section-eyebrow">Chapter 04</div>
+  <div class="section-title">The four-question<br><em>metric selection framework</em></div>
+  <div class="section-lead">There is no universally correct agentic value metric. The right one depends on your product, your buyers, and your operational infrastructure. These four questions narrow the field.</div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <div class="step-title">Can the customer directly observe it?</div>
+        <div class="step-text">A good value metric must be visible and intuitive to the buyer. If your CPO or CFO can't open a dashboard and understand what they're being charged for, the metric fails the transparency test. Tokens and API calls fail for most business buyers. Tasks completed and outcomes delivered usually pass.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <div class="step-title">Can you meter it reliably and in real time?</div>
+        <div class="step-text">Consumption pricing without robust telemetry is a commercial promise you can't keep. Before committing to a metric, confirm you can track it at the action or task level, feed it to billing without manual intervention, and surface it to customers in their own dashboard.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <div class="step-title">Does it scale with the value the customer receives?</div>
+        <div class="step-text">The ideal metric grows when customers get more value and stays flat when they don't. Test this by asking: if a customer doubles their agent usage and doubles their business outcomes, does the metric double too? If yes, it's a strong candidate. If not, you've introduced a mismatch.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <div class="step-title">Can customers predict and control their spend?</div>
+        <div class="step-text">Unpredictable spend is the primary objection to consumption pricing. Your metric needs to be forecastable — customers should be able to model their expected bill based on planned usage. Pair it with commitment floors and spend caps to address the budget anxiety that will come up in every enterprise deal.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-eyebrow" style="margin-top:0.5rem">Try it: metric explorer</div>
+  <div class="body-text">Select the primary type of work your agents do. The framework will surface the strongest candidate metric and the key validation questions to test it with customers.</div>
+
+  <div class="metric-selector">
+    <div class="ms-label">What do your agents primarily do?</div>
+    <div class="ms-options">
+      <div class="ms-opt" onclick="selectMetric('process',this)">
+        <div class="ms-opt-icon">⚙️</div>
+        <div class="ms-opt-name">Process work</div>
+        <div class="ms-opt-eg">Data entry, routing, classification</div>
+      </div>
+      <div class="ms-opt" onclick="selectMetric('decision',this)">
+        <div class="ms-opt-icon">🧠</div>
+        <div class="ms-opt-name">Decision work</div>
+        <div class="ms-opt-eg">Approvals, recommendations, analysis</div>
+      </div>
+      <div class="ms-opt" onclick="selectMetric('generation',this)">
+        <div class="ms-opt-icon">✍️</div>
+        <div class="ms-opt-name">Generation work</div>
+        <div class="ms-opt-eg">Docs, code, content, communications</div>
+      </div>
+      <div class="ms-opt" onclick="selectMetric('resolution',this)">
+        <div class="ms-opt-icon">✅</div>
+        <div class="ms-opt-name">Resolution work</div>
+        <div class="ms-opt-eg">Tickets, queries, cases, requests</div>
+      </div>
+      <div class="ms-opt" onclick="selectMetric('research',this)">
+        <div class="ms-opt-icon">🔍</div>
+        <div class="ms-opt-name">Research work</div>
+        <div class="ms-opt-eg">Prospecting, monitoring, synthesis</div>
+      </div>
+      <div class="ms-opt" onclick="selectMetric('orchestration',this)">
+        <div class="ms-opt-icon">🔀</div>
+        <div class="ms-opt-name">Orchestration work</div>
+        <div class="ms-opt-eg">Multi-step workflows, agent coordination</div>
+      </div>
+    </div>
+    <div class="ms-result" id="ms-result">
+      <div class="ms-result-title" id="ms-title"></div>
+      <div class="ms-result-text" id="ms-text"></div>
+      <div class="ms-result-tags" id="ms-tags"></div>
+    </div>
+  </div>
+
+  <div class="next-section">
+    <div style="font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(245,242,236,0.35);margin-bottom:0.5rem">Up next</div>
+    <div style="font-family:'DM Serif Display',serif;font-size:18px;color:#f5f2ec;margin-bottom:0.5rem">Your 30-day action plan to validate and move forward</div>
+    <button class="btn-gold" style="max-width:220px;margin-top:0.85rem" onclick="showSection('s5',document.querySelectorAll('.nav-tab')[4])">Chapter 05 →</button>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- SECTION 5: ACTION PLAN -->
+<!-- ══════════════════════════════════════════ -->
+<div class="section" id="s5">
+
+  <div class="section-eyebrow">Chapter 05</div>
+  <div class="section-title">Your 30-day<br><em>action plan</em></div>
+  <div class="section-lead">Choosing a value metric is a decision, not a project. This plan gives you a structured 30-day path from hypothesis to validated candidate — without derailing your roadmap.</div>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-num">W1</div>
+      <div class="card-title">Internal audit</div>
+      <div class="card-text">Map your agentic workflows, segment customers by adoption tier, and pull NRR by tier. Document the decoupling signal for leadership.</div>
+    </div>
+    <div class="card">
+      <div class="card-num">W2</div>
+      <div class="card-title">Hypothesis definition</div>
+      <div class="card-text">Apply the four-question framework. Define two or three candidate metrics. Score each against: observable, meterable, value-correlated, forecastable.</div>
+    </div>
+    <div class="card">
+      <div class="card-num">W3</div>
+      <div class="card-title">Customer validation</div>
+      <div class="card-text">Run structured conversations with 5 accounts — mix of high and medium agentic adoption. Test the metric hypotheses directly. Listen for confusion and resistance.</div>
+    </div>
+    <div class="card">
+      <div class="card-num">W4</div>
+      <div class="card-title">Recommendation build</div>
+      <div class="card-text">Synthesise findings into a one-page recommendation: candidate metric, validation evidence, infrastructure requirements, and proposed next step for leadership approval.</div>
+    </div>
+  </div>
+
+  <div class="section-eyebrow" style="margin-top:0.5rem">30-day action checklist</div>
+  <div class="body-text" style="margin-bottom:0.5rem">Mark off each item as you complete it.</div>
+
+  <ul class="pl-checklist" id="action-checklist">
+    <li onclick="toggleCheck(this)"><div class="pl-check">✓</div>Segment customers into high / medium / low agentic adoption tiers</li>
+    <li onclick="toggleCheck(this)"><div class="pl-check">✓</div>Pull NRR and seat growth data by tier — identify the decoupling signal</li>
+    <li onclick="toggleCheck(this)"><div class="pl-check">✓</div>Map top 5 agent workflows: what action does the agent take? What outcome does it deliver?</li>
+    <li onclick="toggleCheck(this)"><div class="pl-check">✓</div>Score 2–3 candidate metrics against the four-question framework</li>
+    <li onclick="toggleCheck(this)"><div class="pl-check">✓</div>Book 5 structured customer discovery calls (mix of high and medium adoption)</li>
+    <li onclick="toggleCheck(this)"><div class="pl-check">✓</div>Test metric hypotheses in each call — document reactions to each candidate</li>
+    <li onclick="toggleCheck(this)"><div class="pl-check">✓</div>Check infrastructure: can you meter your top candidate in real time?</li>
+    <li onclick="toggleCheck(this)"><div class="pl-check">✓</div>Build one-page recommendation deck for leadership</li>
+    <li onclick="toggleCheck(this)"><div class="pl-check">✓</div>Present decoupling data + metric recommendation to CPO / CFO / CRO</li>
+    <li onclick="toggleCheck(this)"><div class="pl-check">✓</div>Agree on next step: model design, pricing audit, or advisor session</li>
+  </ul>
+
+  <div class="divider"></div>
+
+  <div class="section-eyebrow">What comes after this playbook</div>
+  <div class="body-text">Choosing the right value metric is the foundation. The next layer is revenue architecture — how you structure the hybrid model (platform base + consumption tier), set minimum commitments, and design the transition path for legacy customers. That's covered in Playbook 02.</div>
+
+  <div class="dark-callout">
+    <div class="dark-callout-title">The compounding problem</div>
+    <div class="dark-callout-text">Every sprint you ship agentic features without a matching commercial model widens the gap between value delivered and revenue captured. The companies winning in the agentic era aren't those with the best AI — they're those who know how to price it. The metric is where that work starts.</div>
+  </div>
+
+  <div class="next-section">
+    <div style="font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(245,242,236,0.35);margin-bottom:0.5rem">Ready to go deeper?</div>
+    <div style="font-family:'DM Serif Display',serif;font-size:18px;color:#f5f2ec;margin-bottom:1.25rem">Turn this playbook into a custom pricing model</div>
+    <div class="next-cards">
+      <div class="next-card">
+        <div class="next-card-label">Full Assessment</div>
+        <div class="next-card-title">5-dimension diagnostic report</div>
+        <div class="next-card-desc">All five scored dimensions, prioritised transformation roadmap, and PDF report within 48 hours.</div>
+        <div style="font-family:'DM Serif Display',serif;font-size:22px;color:var(--gold);margin-bottom:0.85rem">£995</div>
+        <button class="btn-outline" onclick="window.open('https://checkout.revolut.com/pay/5573f7d4-dd93-4f77-945b-42b90c28e058','_blank')">Get full report →</button>
+      </div>
+      <div class="next-card highlight">
+        <div class="next-card-label">Most valuable</div>
+        <div class="next-card-title">Assessment + Advisor session</div>
+        <div class="next-card-desc">Full report plus 2-hour 1:1 with Fessal. Live results walkthrough and custom pricing model design.</div>
+        <div style="font-family:'DM Serif Display',serif;font-size:22px;color:var(--gold);margin-bottom:0.85rem">£2,495</div>
+        <button class="btn-gold" onclick="window.location.href='mailto:fragenticadvisor@gmail.com?subject=Assessment + Advisor Package&body=Hi Fessal, I have read Playbook 01 and would like to book the Assessment + Advisor package.'">Book session →</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="print-bar">
+  <a onclick="window.print()">Save as PDF</a> &nbsp;·&nbsp; FR Advisory · Playbook 01 &nbsp;·&nbsp; fragenticadvisor@gmail.com
+</div>
+
+</div>
+
+<script>
+function showSection(id, tab) {
+  document.querySelectorAll('.section').forEach(function(s){ s.classList.remove('active'); });
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.nav-tab').forEach(function(t){ t.classList.remove('active'); });
+  if(tab) tab.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function toggleCheck(el) {
+  el.classList.toggle('checked');
+}
+
+var METRIC_DATA = {
+  process: {
+    title: 'Recommended metric: Tasks completed',
+    text: 'Process work is high-frequency and repetitive — ideal for task-based pricing. Each workflow execution is a clear, auditable unit. Customers can observe it, you can meter it, and it scales directly with the volume of work automated. Key validation question: "If we charged per task completed by the agent, what would you need to see in your dashboard to trust that number?"',
+    tags: ['Tasks completed','Workflow runs','Records processed']
+  },
+  decision: {
+    title: 'Recommended metric: Decisions made or recommendations served',
+    text: 'Decision work is where outcome pricing is most defensible — because the output is discrete and measurable. Each approved, recommended, or flagged item is a billing unit. The risk is attribution: define "decision" narrowly in the contract. Key validation question: "What would constitute a decision for billing purposes — and what would you dispute?"',
+    tags: ['Decisions made','Recommendations served','Approvals processed']
+  },
+  generation: {
+    title: 'Recommended metric: Assets generated (with a credit model)',
+    text: 'Generation work varies widely in complexity — a 500-word email and a 50-page report are both "documents generated." Consider a credit model where different asset types consume different credit volumes. This preserves simplicity for customers while capturing the value differential. Key validation: test the credit ratios with actual usage data before pricing.',
+    tags: ['Assets generated','Credits consumed','Pages / outputs']
+  },
+  resolution: {
+    title: 'Recommended metric: Resolutions (agent-only, no human escalation)',
+    text: 'Resolution pricing is the most powerful outcome model — you only charge when the agent fully resolves the issue without human intervention. This aligns incentives perfectly: you\'re paid for deflection, customers see ROI immediately. The challenge is defining "resolved" without ambiguity. Binary definitions outperform nuanced ones at scale.',
+    tags: ['Cases resolved','Tickets deflected','Queries closed']
+  },
+  research: {
+    title: 'Recommended metric: Research outputs or monitored signals',
+    text: 'Research work is well-suited to a subscription tier with consumption overage — a flat base for a defined volume of outputs (prospect profiles, monitoring alerts, synthesis reports) with overages above a threshold. This gives customers predictability while capturing upside for heavy users. Key question: what\'s the natural usage rhythm — daily, weekly, per project?',
+    tags: ['Profiles generated','Signals monitored','Reports produced']
+  },
+  orchestration: {
+    title: 'Recommended metric: Workflow runs or agent-hours',
+    text: 'Orchestration work — multi-step, multi-agent workflows — is best metered at the workflow level rather than the individual step. Charging per agent-run inside a workflow creates unpredictability; charging per completed orchestration run is transparent and forecastable. Consider tiering by workflow complexity for higher-value sequences.',
+    tags: ['Workflow runs','Orchestrations completed','Agent-hours']
+  }
+};
+
+function selectMetric(type, el) {
+  document.querySelectorAll('.ms-opt').forEach(function(o){ o.classList.remove('sel'); });
+  el.classList.add('sel');
+  var data = METRIC_DATA[type];
+  document.getElementById('ms-title').textContent = data.title;
+  document.getElementById('ms-text').textContent = data.text;
+  var tagsEl = document.getElementById('ms-tags');
+  tagsEl.innerHTML = data.tags.map(function(t){ return '<span class="ms-tag">'+t+'</span>'; }).join('');
+  var result = document.getElementById('ms-result');
+  result.classList.add('show');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Playbook 05 — The Transparency Stack | FR Advisory</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0e0e0e;--paper:#f5f2ec;--gold:#b8922a;--gold-lt:#f0e4c3;--gold-dk:#8a6a1a;
+  --dark:#1a1a1a;--muted:#6b6459;--border:#d4c9b8;--white:#ffffff;
+  --green:#1D9E75;--green-lt:#E1F5EE;--green-dk:#085041;
+  --red:#D85A30;--red-lt:#FAECE7;--red-dk:#712B13;
+  --amber:#BA7517;--amber-lt:#FAEEDA;--amber-dk:#633806;
+  --blue:#185FA5;--blue-lt:#E6F1FB;--blue-dk:#0C447C;
+}
+body{font-family:'DM Sans',sans-serif;background:#111;margin:0;color:var(--ink)}
+.page{max-width:780px;margin:0 auto;background:var(--paper)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.a1{animation:fadeUp .5s ease both}.a2{animation:fadeUp .5s .1s ease both}.a3{animation:fadeUp .5s .2s ease both}.a4{animation:fadeUp .5s .3s ease both}.a5{animation:fadeUp .5s .4s ease both}
+
+.cover{background:var(--dark);padding:0;position:relative;overflow:hidden}
+.cover-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(184,146,42,0.08) 0%,transparent 55%)}
+.cr1{position:absolute;left:-100px;top:50%;transform:translateY(-50%);width:380px;height:380px;border:1px solid rgba(184,146,42,0.06);border-radius:50%}
+.cr2{position:absolute;left:-50px;top:50%;transform:translateY(-50%);width:220px;height:220px;border:1px solid rgba(184,146,42,0.09);border-radius:50%}
+.ci{position:relative;z-index:1;padding:3.5rem 3.5rem 0}
+.pb-lbl{display:inline-flex;align-items:center;gap:8px;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:1.25rem}
+.pb-lbl::before{content:'';width:28px;height:1px;background:var(--gold)}
+.ck{font-size:12px;color:rgba(245,242,236,.4);letter-spacing:.06em;margin-bottom:.6rem;text-transform:uppercase}
+.ct{font-family:'DM Serif Display',serif;font-size:44px;line-height:1.05;color:#f5f2ec;margin-bottom:.75rem}
+.ct em{font-style:italic;color:var(--gold)}
+.cs2{font-size:14px;color:rgba(245,242,236,.5);line-height:1.75;max-width:520px;margin-bottom:2.5rem}
+.cdiv{height:1px;background:linear-gradient(to right,rgba(184,146,42,.3),transparent);margin-bottom:1.75rem}
+.cmeta{display:flex;gap:0}
+.cmi{flex:1;padding:1.25rem 0;border-right:1px solid rgba(245,242,236,.06)}
+.cmi:last-child{border-right:none}
+.cmn{font-family:'DM Serif Display',serif;font-size:26px;color:var(--gold);display:block;margin-bottom:2px}
+.cml{font-size:10px;color:rgba(245,242,236,.3);letter-spacing:.08em;text-transform:uppercase}
+.cbar{height:3px;background:linear-gradient(to right,var(--gold),rgba(184,146,42,.1),var(--gold))}
+
+.nav-tabs{background:var(--dark);border-bottom:1px solid rgba(245,242,236,.06);display:flex;overflow-x:auto;scrollbar-width:none}
+.nav-tabs::-webkit-scrollbar{display:none}
+.nt{flex-shrink:0;padding:1rem 1.5rem;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:rgba(245,242,236,.35);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap;font-weight:500}
+.nt:hover{color:rgba(245,242,236,.65)}
+.nt.active{color:var(--gold);border-bottom-color:var(--gold)}
+
+.sec{display:none;padding:3rem 3.5rem;animation:fadeUp .3s ease}
+.sec.active{display:block}
+
+.ey{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:1rem;display:flex;align-items:center;gap:10px}
+.ey::after{content:'';flex:1;height:1px;background:linear-gradient(to right,var(--border),transparent)}
+.st{font-family:'DM Serif Display',serif;font-size:28px;color:var(--ink);line-height:1.2;margin-bottom:.6rem}
+.st em{font-style:italic;color:var(--gold)}
+.sl{font-size:14px;color:var(--muted);line-height:1.8;margin-bottom:2rem;max-width:580px}
+.bt{font-size:13px;color:var(--ink);line-height:1.8;margin-bottom:1.25rem}
+.bt strong{font-weight:600}
+
+.callout{border-left:3px solid var(--gold);padding:1rem 1.25rem;background:var(--gold-lt);border-radius:0 5px 5px 0;margin:1.5rem 0}
+.callout p{font-size:13px;color:var(--ink);line-height:1.7;font-style:italic}
+.callout span{font-size:10px;color:var(--muted);margin-top:6px;display:block;letter-spacing:.06em;text-transform:uppercase}
+
+.dc{background:var(--dark);border-radius:6px;padding:1.5rem 1.75rem;margin:1.75rem 0}
+.dc-t{font-family:'DM Serif Display',serif;font-size:18px;color:#f5f2ec;margin-bottom:.5rem}
+.dc-s{font-size:12px;color:rgba(245,242,236,.55);line-height:1.75}
+
+.cg{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:1.75rem 0}
+.cg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:1.75rem 0}
+.card{background:var(--white);border:1px solid var(--border);border-radius:6px;padding:1.25rem}
+.card.gb{border-color:var(--gold);border-width:2px}
+.cn3{font-family:'DM Serif Display',serif;font-size:32px;color:var(--gold);margin-bottom:.35rem;line-height:1}
+.ctit{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:.4rem}
+.ctx{font-size:12px;color:var(--muted);line-height:1.65}
+.tag{display:inline-block;font-size:9px;letter-spacing:.08em;text-transform:uppercase;padding:2px 8px;border-radius:3px;margin-bottom:.6rem;font-weight:500}
+.tg{background:var(--green-lt);color:var(--green-dk)}
+.tr{background:var(--red-lt);color:var(--red-dk)}
+.ta{background:var(--amber-lt);color:var(--amber-dk)}
+.to{background:var(--gold-lt);color:var(--gold-dk)}
+.tb{background:var(--blue-lt);color:var(--blue-dk)}
+
+/* TRANSPARENCY STACK */
+.t-stack{margin:1.75rem 0;display:flex;flex-direction:column;gap:8px}
+.t-layer{border-radius:5px;padding:1.1rem 1.25rem;cursor:pointer;border:1px solid;transition:all .2s;position:relative;overflow:hidden}
+.t-layer::after{content:'';position:absolute;left:0;top:0;bottom:0;width:3px}
+.tl-1{background:var(--blue-lt);border-color:#B5D4F4}.tl-1::after{background:var(--blue)}
+.tl-2{background:var(--green-lt);border-color:#A3DFC8}.tl-2::after{background:var(--green)}
+.tl-3{background:var(--amber-lt);border-color:#E8C87A}.tl-3::after{background:var(--amber)}
+.tl-4{background:var(--gold-lt);border-color:rgba(184,146,42,.4)}.tl-4::after{background:var(--gold)}
+.tl-5{background:var(--paper);border-color:var(--border)}.tl-5::after{background:var(--muted)}
+.t-row{display:flex;justify-content:space-between;align-items:center}
+.t-num{font-family:'DM Serif Display',serif;font-size:22px;line-height:1}
+.tl-1 .t-num{color:var(--blue-dk)}.tl-2 .t-num{color:var(--green-dk)}.tl-3 .t-num{color:var(--amber-dk)}.tl-4 .t-num{color:var(--gold-dk)}.tl-5 .t-num{color:var(--muted)}
+.t-name{font-size:13px;font-weight:600;margin-bottom:3px}
+.tl-1 .t-name{color:var(--blue-dk)}.tl-2 .t-name{color:var(--green-dk)}.tl-3 .t-name{color:var(--amber-dk)}.tl-4 .t-name{color:var(--gold-dk)}.tl-5 .t-name{color:var(--ink)}
+.t-desc{font-size:11px;line-height:1.6}
+.tl-1 .t-desc{color:var(--blue)}.tl-2 .t-desc{color:var(--green-dk)}.tl-3 .t-desc{color:var(--amber-dk)}.tl-4 .t-desc{color:var(--gold-dk)}.tl-5 .t-desc{color:var(--muted)}
+.t-status{font-size:10px;padding:3px 9px;border-radius:20px;font-weight:500;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;transition:all .15s;white-space:nowrap}
+.ts-none{background:rgba(0,0,0,.08);color:var(--muted)}
+.ts-done{background:var(--green);color:#fff}
+
+/* COMMS BUILDER */
+.comms-builder{margin:1.75rem 0}
+.cb-tabs{display:flex;gap:6px;margin-bottom:1rem;flex-wrap:wrap}
+.cb-tab{padding:6px 12px;border:1px solid var(--border);border-radius:3px;font-size:10px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;background:var(--white);color:var(--muted);transition:all .15s;white-space:nowrap}
+.cb-tab.active{background:var(--dark);color:var(--gold);border-color:var(--gold)}
+.cb-content{background:var(--white);border:1px solid var(--border);border-radius:6px;overflow:hidden}
+.cb-header{background:var(--dark);padding:.75rem 1.25rem;display:flex;justify-content:space-between;align-items:center}
+.cb-header-t{font-size:11px;font-weight:500;color:#f5f2ec}
+.cb-header-tag{font-size:9px;padding:2px 8px;border-radius:3px;letter-spacing:.08em;text-transform:uppercase;font-weight:500}
+.cb-body{padding:1.25rem}
+.cb-subject{font-size:11px;color:var(--muted);margin-bottom:.5rem;letter-spacing:.04em}
+.cb-subject strong{color:var(--ink)}
+.cb-text{font-size:12px;color:var(--ink);line-height:1.8;white-space:pre-line}
+.cb-note{font-size:11px;color:var(--muted);margin-top:.85rem;padding-top:.85rem;border-top:1px solid var(--border);line-height:1.6;font-style:italic}
+
+/* CASE STUDY BUILDER */
+.case-builder{margin:1.75rem 0;background:var(--white);border:1px solid var(--border);border-radius:6px;padding:1.25rem}
+.case-title{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:.85rem}
+.case-fields{display:flex;flex-direction:column;gap:8px;margin-bottom:1.25rem}
+.cf-row{display:flex;gap:8px}
+.cf-label{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;font-weight:500}
+.cf-input{width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:4px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--ink);background:var(--paper);outline:none;transition:border .15s}
+.cf-input:focus{border-color:var(--gold)}
+.cf-input::placeholder{color:var(--border)}
+.case-output{background:var(--paper);border:1px solid var(--border);border-radius:5px;padding:1rem;display:none}
+.case-output.show{display:block}
+.co-eyebrow{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:.4rem;font-weight:500}
+.co-title{font-family:'DM Serif Display',serif;font-size:17px;color:var(--ink);margin-bottom:.6rem}
+.co-text{font-size:12px;color:var(--ink);line-height:1.75}
+.co-metric{display:inline-block;background:var(--dark);color:var(--gold);font-family:'DM Serif Display',serif;font-size:18px;padding:4px 12px;border-radius:4px;margin:0 2px}
+.btn-gen{background:var(--dark);color:var(--gold);border:1px solid rgba(184,146,42,.3);border-radius:4px;padding:8px 16px;font-size:11px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .15s;letter-spacing:.04em}
+.btn-gen:hover{background:#333}
+
+.ctable{width:100%;border-collapse:collapse;margin:1.75rem 0;font-size:12px}
+.ctable th{background:var(--dark);color:rgba(245,242,236,.6);font-weight:500;padding:10px 14px;text-align:left;font-size:10px;letter-spacing:.1em;text-transform:uppercase}
+.ctable th:first-child{border-radius:5px 0 0 0}.ctable th:last-child{border-radius:0 5px 0 0}
+.ctable td{padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.55;color:var(--ink)}
+.ctable tr:last-child td{border-bottom:none}
+.ctable tr:nth-child(even) td{background:rgba(245,242,236,.5)}
+
+.pl-cl{list-style:none;display:flex;flex-direction:column;gap:8px;margin:1.25rem 0}
+.pl-cl li{display:flex;gap:10px;font-size:13px;color:var(--ink);line-height:1.6;padding:10px 12px;background:var(--white);border:1px solid var(--border);border-radius:4px;cursor:pointer;transition:all .15s;align-items:flex-start}
+.pl-cl li:hover{border-color:var(--gold)}
+.pl-cl li.checked{background:var(--green-lt);border-color:var(--green)}
+.pl-cl li.checked .chk{background:var(--green);border-color:var(--green);color:#fff}
+.chk{width:20px;height:20px;border-radius:4px;border:1.5px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;color:transparent;margin-top:1px;transition:all .15s}
+
+.divider{height:1px;background:var(--border);margin:2rem 0}
+
+.ns{background:var(--dark);margin:0 -3.5rem -3rem;padding:2rem 3.5rem;border-top:1px solid rgba(184,146,42,.15)}
+.ncs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:1.25rem}
+.nc{border:1px solid rgba(245,242,236,.08);border-radius:5px;padding:1.1rem}
+.nc.hl{border-color:var(--gold)}
+.nc-lbl{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:rgba(245,242,236,.3);margin-bottom:4px}
+.nc-t{font-size:13px;font-weight:500;color:#f5f2ec;margin-bottom:4px}
+.nc-d{font-size:11px;color:rgba(245,242,236,.4);line-height:1.6;margin-bottom:.85rem}
+.bg{display:block;background:var(--gold);color:#fff;text-align:center;padding:9px;border-radius:4px;font-size:11px;font-weight:500;cursor:pointer;border:none;width:100%;font-family:'DM Sans',sans-serif;transition:background .15s}
+.bg:hover{background:var(--gold-dk)}
+.bo{display:block;background:transparent;color:rgba(245,242,236,.6);text-align:center;padding:9px;border-radius:4px;font-size:11px;cursor:pointer;border:1px solid rgba(245,242,236,.15);width:100%;font-family:'DM Sans',sans-serif;transition:all .15s}
+.bo:hover{border-color:rgba(245,242,236,.35);color:#f5f2ec}
+
+.pb3{text-align:center;padding:.85rem;font-size:10px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;border-top:1px solid var(--border)}
+.pb3 a{color:var(--gold);text-decoration:none;cursor:pointer}
+
+@media(max-width:620px){
+  .ci{padding:2.5rem 1.75rem 0}.sec{padding:2rem 1.75rem}.ct{font-size:30px}
+  .cg,.cg3,.ncs,.cf-row{grid-template-columns:1fr;flex-direction:column}
+  .ns{margin:0 -1.75rem -2rem;padding:1.75rem}
+}
+@media print{.nav-tabs,.ns,.pb3{display:none}.sec{display:block!important}body{background:#fff}}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="cover">
+  <div class="cover-bg"></div><div class="cr1"></div><div class="cr2"></div>
+  <div class="ci">
+    <div class="pb-lbl a1">FR Advisory · Playbook 05</div>
+    <div class="ck a2">Customer &amp; Value Communications</div>
+    <div class="ct a3">The <em>Transparency</em><br>Stack</div>
+    <div class="cs2 a4">How to build the spend visibility, ROI dashboards, and proactive communication frameworks that make customers trust — and advocate for — your consumption pricing model.</div>
+    <div class="cdiv a5"></div>
+    <div class="cmeta a5">
+      <div class="cmi"><span class="cmn">5</span><span class="cml">Chapters</span></div>
+      <div class="cmi"><span class="cmn">5</span><span class="cml">Transparency layers</span></div>
+      <div class="cmi"><span class="cmn">3</span><span class="cml">Comms templates</span></div>
+      <div class="cmi"><span class="cmn">CPO</span><span class="cml">CS · Marketing</span></div>
+    </div>
+  </div>
+  <div class="cbar" style="margin-top:1.75rem"></div>
+</div>
+
+<div class="nav-tabs">
+  <div class="nt active" onclick="ss('s1',this)">01 · Trust as Infrastructure</div>
+  <div class="nt" onclick="ss('s2',this)">02 · Visibility &amp; Control</div>
+  <div class="nt" onclick="ss('s3',this)">03 · ROI Dashboards</div>
+  <div class="nt" onclick="ss('s4',this)">04 · Comms Framework</div>
+  <div class="nt" onclick="ss('s5',this)">05 · Proof Points</div>
+</div>
+
+<!-- S1 -->
+<div class="sec active" id="s1">
+  <div class="ey">Chapter 01</div>
+  <div class="st">Trust is not a soft metric. <em>It's commercial infrastructure.</em></div>
+  <div class="sl">Consumption pricing fails in the field not because it's economically wrong, but because customers don't trust it. They can't see what they're being charged for. They can't control their spend. They don't know if they're getting value. Every one of those gaps is a commercial risk you can engineer away.</div>
+
+  <div class="bt">The companies running successful consumption models have treated customer trust as a product capability — not a relationship gesture. They've built real-time dashboards, hard spend caps, in-product audit logs, and ROI evidence that customers can point to in their internal approval conversations. Trust at scale is a design problem, not a charm problem.</div>
+
+  <div class="callout"><p>"Visibility without control is anxiety. Control without ROI evidence is permission. ROI evidence without proactive communication is a missed renewal opportunity. The transparency stack needs all five layers."</p><span>FR Advisory</span></div>
+
+  <div class="ey">The five transparency layers — mark your status</div>
+  <div class="bt" style="margin-bottom:.75rem">Click each layer to toggle its status. Use as your product and comms gap analysis.</div>
+
+  <div class="t-stack">
+    <div class="t-layer tl-1" id="tl-0">
+      <div class="t-row">
+        <div><div class="t-name">Real-time consumption dashboard</div><div class="t-desc">Customers see their usage as it happens — tasks run, allowance consumed, projected spend — without waiting for a monthly statement.</div></div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;margin-left:1rem;flex-shrink:0">
+          <div class="t-num">01</div>
+          <button class="t-status ts-none" id="ts-0" onclick="toggleLayer(0)">Not built</button>
+        </div>
+      </div>
+    </div>
+    <div class="t-layer tl-2" id="tl-1">
+      <div class="t-row">
+        <div><div class="t-name">Granular spend controls</div><div class="t-desc">Admins can set hard caps at the user, team, and workflow level on daily, weekly, or monthly cycles. Nothing charges above the cap without explicit approval.</div></div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;margin-left:1rem;flex-shrink:0">
+          <div class="t-num">02</div>
+          <button class="t-status ts-none" id="ts-1" onclick="toggleLayer(1)">Not built</button>
+        </div>
+      </div>
+    </div>
+    <div class="t-layer tl-3" id="tl-2">
+      <div class="t-row">
+        <div><div class="t-name">Billable action taxonomy (in-product)</div><div class="t-desc">A clear, customer-facing definition of exactly what constitutes a billable action — surfaced in-product, in onboarding docs, and in the contract. Not buried in terms.</div></div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;margin-left:1rem;flex-shrink:0">
+          <div class="t-num">03</div>
+          <button class="t-status ts-none" id="ts-2" onclick="toggleLayer(2)">Not built</button>
+        </div>
+      </div>
+    </div>
+    <div class="t-layer tl-4" id="tl-3">
+      <div class="t-row">
+        <div><div class="t-name">In-product ROI dashboard</div><div class="t-desc">Customers can see the business outcomes their agents have delivered — not just the usage volume. Time saved, tasks automated, outcomes achieved — connected to the consumption data.</div></div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;margin-left:1rem;flex-shrink:0">
+          <div class="t-num">04</div>
+          <button class="t-status ts-none" id="ts-3" onclick="toggleLayer(3)">Not built</button>
+        </div>
+      </div>
+    </div>
+    <div class="t-layer tl-5" id="tl-4">
+      <div class="t-row">
+        <div><div class="t-name">Proactive communication framework</div><div class="t-desc">Customers receive proactive alerts, value updates, and model change communications before they ask. They are never surprised by a charge or a policy change.</div></div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;margin-left:1rem;flex-shrink:0">
+          <div class="t-num">05</div>
+          <button class="t-status ts-none" id="ts-4" onclick="toggleLayer(4)">Not built</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="stack-score" style="display:none;margin-top:1rem"></div>
+
+  <div class="ns">
+    <div style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:rgba(245,242,236,.35);margin-bottom:.5rem">Up next</div>
+    <div style="font-family:'DM Serif Display',serif;font-size:18px;color:#f5f2ec;margin-bottom:.5rem">Building the spend visibility and control layer</div>
+    <button class="bg" style="max-width:220px;margin-top:.85rem" onclick="ss('s2',document.querySelectorAll('.nt')[1])">Chapter 02 →</button>
+  </div>
+</div>
+
+<!-- S2 -->
+<div class="sec" id="s2">
+  <div class="ey">Chapter 02</div>
+  <div class="st">Visibility and control: <em>the trust foundation</em></div>
+  <div class="sl">Real-time consumption visibility is the minimum viable trust layer. Without it, every invoice is a surprise and every surprise is a churn risk. Spend controls turn visibility into empowerment — customers who can govern their spend adopt consumption pricing faster and renew more reliably.</div>
+
+  <div class="ey">The consumption dashboard — what it must show</div>
+  <div class="cg3">
+    <div class="card"><div class="tag tb">Real-time</div><div class="ctit">Current period usage</div><div class="ctx">Tasks completed this period vs allowance. Visual progress bar. Updates within minutes of each billable event — not at end of day.</div></div>
+    <div class="card"><div class="tag tb">Real-time</div><div class="ctit">Projected spend</div><div class="ctx">Based on current run rate, what will this period's invoice be? Shown prominently — not hidden. Customers who can see the forecast don't feel surprised.</div></div>
+    <div class="card"><div class="tag to">History</div><div class="ctit">Usage trend (12 months)</div><div class="ctx">Month-by-month consumption history. Helps customers plan. Helps CSMs identify accounts approaching tier upgrade thresholds.</div></div>
+    <div class="card"><div class="tag tg">Control</div><div class="ctit">Spend caps by team / workflow</div><div class="ctx">Admin console where spend limits can be set at any granularity. Hard stops, not soft warnings. The cap that gets set in procurement is the cap that gets enforced.</div></div>
+    <div class="card"><div class="tag tg">Control</div><div class="ctit">Alert thresholds</div><div class="ctx">Configurable alerts at 50%, 70%, 90% of allowance. Delivered by email and in-product notification. Customers set their own thresholds.</div></div>
+    <div class="card"><div class="tag ta">Audit</div><div class="ctit">Full event audit log</div><div class="ctx">Every billable event, timestamped, with workflow context and completion status. Downloadable as CSV. One-click dispute submission. Available to admin users at all times.</div></div>
+  </div>
+
+  <div class="callout"><p>The spend control layer is not a customer-facing nice-to-have. It's the feature that gets consumption pricing approved by procurement. Build it before the sales team tries to close enterprise deals.</p></div>
+
+  <div class="ey">Spend control granularity — what enterprise buyers need</div>
+  <table class="ctable">
+    <thead><tr><th>Control level</th><th>What it governs</th><th>Who sets it</th><th>Priority</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Account-level cap</strong></td><td>Total spend across entire customer account</td><td>Finance team</td><td class="tg" style="color:var(--green-dk);font-weight:500">Must have</td></tr>
+      <tr><td><strong>Team-level cap</strong></td><td>Spend by department or business unit</td><td>Department head / admin</td><td class="tg" style="color:var(--green-dk);font-weight:500">Must have</td></tr>
+      <tr><td><strong>User-level cap</strong></td><td>Spend per individual user or agent instance</td><td>IT admin</td><td style="color:var(--amber-dk);font-weight:500">Important</td></tr>
+      <tr><td><strong>Workflow-level cap</strong></td><td>Spend per specific agent workflow or use case</td><td>Operations lead</td><td style="color:var(--amber-dk);font-weight:500">Important</td></tr>
+      <tr><td><strong>Time-period cap</strong></td><td>Daily, weekly, or monthly spend ceiling</td><td>Finance / admin</td><td style="color:var(--blue-dk);font-weight:500">Good to have</td></tr>
+    </tbody>
+  </table>
+
+  <div class="dc"><div class="dc-t">The cap that gets set is the cap that gets trusted</div><div class="dc-s">Enterprise procurement teams will test your spend controls before signing. If the cap can be overridden, they'll find out. If it can't be set granularly enough for their org structure, they'll ask for bespoke contractual limits instead. Build the controls so they work — and test them before a sales engineer demos them in a procurement meeting.</div></div>
+
+  <div class="ns">
+    <div style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:rgba(245,242,236,.35);margin-bottom:.5rem">Up next</div>
+    <div style="font-family:'DM Serif Display',serif;font-size:18px;color:#f5f2ec;margin-bottom:.5rem">Building ROI dashboards that justify the consumption model</div>
+    <button class="bg" style="max-width:220px;margin-top:.85rem" onclick="ss('s3',document.querySelectorAll('.nt')[2])">Chapter 03 →</button>
+  </div>
+</div>
+
+<!-- S3 -->
+<div class="sec" id="s3">
+  <div class="ey">Chapter 03</div>
+  <div class="st">ROI dashboards: turning <em>usage into evidence</em></div>
+  <div class="sl">Consumption data without ROI context is a cost. Consumption data connected to business outcomes is an investment. The ROI dashboard is what converts your most important customers from buyers into advocates.</div>
+
+  <div class="bt">The critical insight: customers don't renew based on what they paid. They renew based on what they got. If they can see — in your product — exactly what their agents delivered, how much work was automated, and what that was worth in their own terms, the renewal conversation starts from a completely different place.</div>
+
+  <div class="ey">What the ROI dashboard must connect</div>
+  <div class="cg">
+    <div class="card"><div class="tag tb">Input</div><div class="ctit">Consumption data</div><div class="ctx">Agent tasks run, workflows completed, outcomes delivered. The raw usage data from your telemetry layer — by period, by workflow, by team.</div></div>
+    <div class="card gb"><div class="tag tg">Output</div><div class="ctit">Business outcome translation</div><div class="ctx">What that consumption means in the customer's language: hours saved, cost avoided, revenue influenced, capacity created. Configurable by the customer to match their internal KPIs.</div></div>
+  </div>
+
+  <div class="ey">The four ROI metrics that land in QBRs</div>
+  <div class="cg">
+    <div class="card"><div class="cn3">01</div><div class="ctit">Hours automated</div><div class="ctx">Tasks completed by agents × average time-per-task for a human. Customer-adjustable time estimate. Simple, intuitive, and always credible.</div></div>
+    <div class="card"><div class="cn3">02</div><div class="ctit">Cost equivalent</div><div class="ctx">Hours automated × fully-loaded hourly cost of the relevant role. Converts time into money in the customer's own currency. Use their cost data, not your estimates.</div></div>
+    <div class="card"><div class="cn3">03</div><div class="ctit">Capacity created</div><div class="ctx">The inverse framing: how much additional work your team could now do with the time freed up. Reframes from cost reduction to growth enablement.</div></div>
+    <div class="card"><div class="cn3">04</div><div class="ctit">Outcomes delivered</div><div class="ctx">For outcome-based models: tickets resolved, deals qualified, documents generated. The binary count that your billing is already tracking — now surfaced as business value.</div></div>
+  </div>
+
+  <div class="ey">Try it: ROI case study generator</div>
+  <div class="bt" style="margin-bottom:.75rem">Fill in a customer's data to generate a shareable ROI proof point.</div>
+  <div class="case-builder">
+    <div class="case-title">Case study outline generator</div>
+    <div class="case-fields">
+      <div class="cf-row">
+        <div style="flex:1"><div class="cf-label">Company / customer type</div><input class="cf-input" id="cf-co" placeholder="e.g. Mid-market SaaS, 200 employees"></div>
+        <div style="flex:1"><div class="cf-label">Primary use case</div><input class="cf-input" id="cf-uc" placeholder="e.g. Support ticket resolution"></div>
+      </div>
+      <div class="cf-row">
+        <div style="flex:1"><div class="cf-label">Agent tasks per month</div><input class="cf-input" id="cf-tasks" placeholder="e.g. 2,400" type="text"></div>
+        <div style="flex:1"><div class="cf-label">Minutes saved per task</div><input class="cf-input" id="cf-mins" placeholder="e.g. 12" type="text"></div>
+      </div>
+      <div class="cf-row">
+        <div style="flex:1"><div class="cf-label">Outcome achieved</div><input class="cf-input" id="cf-outcome" placeholder="e.g. 78% tickets resolved without escalation"></div>
+        <div style="flex:1"><div class="cf-label">Timeframe</div><input class="cf-input" id="cf-time" placeholder="e.g. 90 days"></div>
+      </div>
+    </div>
+    <button class="btn-gen" onclick="generateCase()">Generate case study outline →</button>
+    <div class="case-output" id="case-output" style="margin-top:1rem">
+      <div class="co-eyebrow">FR Advisory · ROI Proof Point</div>
+      <div class="co-title" id="co-title"></div>
+      <div class="co-text" id="co-text"></div>
+    </div>
+  </div>
+
+  <div class="ns">
+    <div style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:rgba(245,242,236,.35);margin-bottom:.5rem">Up next</div>
+    <div style="font-family:'DM Serif Display',serif;font-size:18px;color:#f5f2ec;margin-bottom:.5rem">The proactive communications framework</div>
+    <button class="bg" style="max-width:220px;margin-top:.85rem" onclick="ss('s4',document.querySelectorAll('.nt')[3])">Chapter 04 →</button>
+  </div>
+</div>
+
+<!-- S4 -->
+<div class="sec" id="s4">
+  <div class="ey">Chapter 04</div>
+  <div class="st">The comms framework: <em>never let a customer be surprised</em></div>
+  <div class="sl">Trust erodes the moment a customer feels surprised by a charge or left in the dark about a change. Proactive communication is a commercial capability — not a courtesy. Here are the three communication types that matter most, with templates.</div>
+
+  <div class="comms-builder">
+    <div class="cb-tabs">
+      <div class="cb-tab active" onclick="showComms('model-change',this)">Model change announcement</div>
+      <div class="cb-tab" onclick="showComms('usage-alert',this)">Usage alert (80%)</div>
+      <div class="cb-tab" onclick="showComms('value-update',this)">Monthly value update</div>
+    </div>
+    <div class="cb-content">
+
+      <div id="comms-model-change">
+        <div class="cb-header">
+          <div class="cb-header-t">Model change announcement — 60 days before transition</div>
+          <div class="cb-header-tag" style="background:var(--blue-lt);color:var(--blue-dk)">Email · CSM-led</div>
+        </div>
+        <div class="cb-body">
+          <div class="cb-subject"><strong>Subject:</strong> How [Product] is evolving — and what it means for your account</div>
+          <div class="cb-text">Hi [Name],
+
+I wanted to reach out personally before you hear about this more broadly.
+
+Over the last [X months], your team has automated [N] workflows and completed [X] agent tasks — that's the equivalent of [Y hours] your team didn't have to spend on manual work.
+
+As [Product] has become more central to how your team works, we've been thinking carefully about how to price it in a way that reflects that value more accurately. Starting [date], we're moving to a model that combines a base platform commitment with a consumption layer — meaning you pay more when we deliver more, and your base commitment stays fixed.
+
+For your account specifically, based on current usage, here's what this looks like:
+— Base commitment: £[X]/year (fixed)
+— Included consumption: [N] tasks/month
+— If your usage stays where it is today: no change to your total cost
+
+I'd love to walk you through this in a 30-minute call before the transition date. I'll have a full breakdown of how your specific usage maps to the new model.
+
+[Name]
+[CSM]</div>
+          <div class="cb-note">This template leads with value delivered before introducing the commercial change. The customer's ROI data comes first — the pricing change is framed as a consequence of that value, not a price increase.</div>
+        </div>
+      </div>
+
+      <div id="comms-usage-alert" style="display:none">
+        <div class="cb-header">
+          <div class="cb-header-t">Usage alert — 80% of allowance consumed</div>
+          <div class="cb-header-tag" style="background:var(--amber-lt);color:var(--amber-dk)">Automated · In-product + email</div>
+        </div>
+        <div class="cb-body">
+          <div class="cb-subject"><strong>Subject:</strong> You've used 80% of your [Product] allowance this month</div>
+          <div class="cb-text">Hi [Name],
+
+Your team has completed [X] agent tasks this month — you're at 80% of your [tier] allowance of [N] tasks.
+
+At your current pace, you'll reach your allowance limit around [date].
+
+Here's what happens next:
+— Tasks above your allowance are billed at £[rate] per task
+— You can upgrade to [next tier] now to include [N+X] tasks at £[price]/month
+— Or set a hard cap in your admin console to pause agent tasks at the limit
+
+Your usage this month has automated approximately [Y hours] of work. If you're seeing this growth, it usually means your team has found workflows worth expanding — which is exactly when an upgrade conversation makes sense.
+
+[Link to upgrade] · [Link to admin console]
+
+[Name]
+[CSM]</div>
+          <div class="cb-note">This alert frames the usage milestone positively — growth is good. It gives three clear options with no urgency pressure, and the upgrade option is contextualised with the value the usage has delivered.</div>
+        </div>
+      </div>
+
+      <div id="comms-value-update" style="display:none">
+        <div class="cb-header">
+          <div class="cb-header-t">Monthly value update — sent on the 1st</div>
+          <div class="cb-header-tag" style="background:var(--green-lt);color:var(--green-dk)">Automated · Email</div>
+        </div>
+        <div class="cb-body">
+          <div class="cb-subject"><strong>Subject:</strong> Your [Product] impact summary — [Month]</div>
+          <div class="cb-text">Hi [Name],
+
+Here's what your agents delivered in [Month]:
+
+🤖 [X] tasks completed autonomously
+⏱ ~[Y] hours of work automated
+✅ [Z]% of workflows resolved without human escalation
+📈 [N]% more than last month
+
+Your team is currently using [X]% of your [tier] allowance. At this growth rate, you'll reach 100% around [date] — we'll send an alert when you hit 90%.
+
+Your top workflows this month:
+1. [Workflow A] — [N] tasks
+2. [Workflow B] — [N] tasks
+3. [Workflow C] — [N] tasks
+
+Is there a new workflow your team has been doing manually that might be worth automating? Reply to this email and I'll set up 20 minutes to explore it.
+
+[Name]
+[CSM]</div>
+          <div class="cb-note">The monthly value update keeps the customer's ROI visible between QBRs, surfaces the consumption trajectory proactively, and opens the door to a new use case conversation — which is the expansion pipeline.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="ns">
+    <div style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:rgba(245,242,236,.35);margin-bottom:.5rem">Up next</div>
+    <div style="font-family:'DM Serif Display',serif;font-size:18px;color:#f5f2ec;margin-bottom:.5rem">Building your proof point library and action plan</div>
+    <button class="bg" style="max-width:220px;margin-top:.85rem" onclick="ss('s5',document.querySelectorAll('.nt')[4])">Chapter 05 →</button>
+  </div>
+</div>
+
+<!-- S5 -->
+<div class="sec" id="s5">
+  <div class="ey">Chapter 05</div>
+  <div class="st">Proof points and the <em>30-day action plan</em></div>
+  <div class="sl">Social proof is the fastest way to shift buyer psychology from cost-anxiety to value-confidence. A library of customer ROI proof points — deployed consistently across sales and marketing — does more for consumption adoption than any objection handling framework.</div>
+
+  <div class="bt">The proof point problem is a prioritisation problem. Most SaaS businesses have customer success stories — they just aren't being captured, formalised, and deployed systematically. Building the library is a 30-day project, not a 6-month one.</div>
+
+  <div class="ey">The proof point hierarchy</div>
+  <div class="cg3">
+    <div class="card"><div class="tag tb">Tier 1</div><div class="ctit">Named case study</div><div class="ctx">Customer approved, co-branded, with quantified ROI. Deployed in late-stage sales. 1–2 pages. Worth more than 10 testimonials.</div></div>
+    <div class="card"><div class="tag to">Tier 2</div><div class="ctit">Anonymous ROI snapshot</div><div class="ctx">Outcome data without customer name. Useful when tier 1 isn't available. "A mid-market SaaS in [vertical] automated X tasks, saving Y hours." Faster to produce.</div></div>
+    <div class="card"><div class="tag tg">Tier 3</div><div class="ctit">In-product social proof</div><div class="ctx">Aggregate stats surfaced in-product: "Customers using [workflow] complete X% more tasks per quarter." Creates peer-comparison pressure that drives adoption.</div></div>
+  </div>
+
+  <div class="ey">30-day transparency action plan</div>
+  <ul class="pl-cl">
+    <li onclick="tc(this)"><div class="chk">✓</div>Audit current customer-facing usage visibility — what can customers see today?</li>
+    <li onclick="tc(this)"><div class="chk">✓</div>Build real-time consumption dashboard: current usage, projected spend, 12-month trend</li>
+    <li onclick="tc(this)"><div class="chk">✓</div>Implement granular spend caps: account, team, and workflow level</li>
+    <li onclick="tc(this)"><div class="chk">✓</div>Write and publish billable action taxonomy — in-product, in docs, in onboarding</li>
+    <li onclick="tc(this)"><div class="chk">✓</div>Build ROI dashboard connecting consumption to outcome metrics</li>
+    <li onclick="tc(this)"><div class="chk">✓</div>Set up automated usage alerts at 70% and 90% of allowance</li>
+    <li onclick="tc(this)"><div class="chk">✓</div>Launch monthly value update email — automate from consumption data</li>
+    <li onclick="tc(this)"><div class="chk">✓</div>Identify 3 customers for Tier 1 case studies — approach for approval</li>
+    <li onclick="tc(this)"><div class="chk">✓</div>Build 5 anonymous Tier 2 ROI snapshots from existing customer data</li>
+    <li onclick="tc(this)"><div class="chk">✓</div>Deploy proof points in sales deck, one-pagers, and AE talk tracks</li>
+  </ul>
+
+  <div class="divider"></div>
+
+  <div class="dc"><div class="dc-t">The transparency stack is the model's immune system</div><div class="dc-s">Every consumption pricing failure has a transparency failure underneath it. Customers who feel informed, empowered, and evidenced don't churn over billing surprises. They upgrade because they can see the value. They renew because they trust the model. They advocate because they have proof points to share. The transparency stack isn't a nice-to-have layer on top of your pricing model — it's the layer that makes the model sustainable.</div></div>
+
+  <div class="ns">
+    <div style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:rgba(245,242,236,.35);margin-bottom:.5rem">Complete the full assessment</div>
+    <div style="font-family:'DM Serif Display',serif;font-size:18px;color:#f5f2ec;margin-bottom:1.25rem">You've read all five playbooks. Now score your readiness.</div>
+    <div class="ncs">
+      <div class="nc"><div class="nc-lbl">Full Assessment</div><div class="nc-t">5-dimension diagnostic</div><div class="nc-d">All five dimensions scored — including Customer & Value Comms. Prioritised roadmap and PDF report within 48 hours.</div><div style="font-family:'DM Serif Display',serif;font-size:22px;color:var(--gold);margin-bottom:.85rem">£995</div><button class="bo" onclick="window.open('https://checkout.revolut.com/pay/5573f7d4-dd93-4f77-945b-42b90c28e058','_blank')">Get full report →</button></div>
+      <div class="nc hl"><div class="nc-lbl">Most valuable</div><div class="nc-t">Assessment + Advisor</div><div class="nc-d">Full report plus 2-hour 1:1 with Fessal. Everything across all five dimensions designed for your product.</div><div style="font-family:'DM Serif Display',serif;font-size:22px;color:var(--gold);margin-bottom:.85rem">£2,495</div><button class="bg" onclick="window.location.href='mailto:fragenticadvisor@gmail.com?subject=Assessment + Advisor Package&body=Hi Fessal, I have read all five FR Advisory playbooks and would like to book the Assessment + Advisor package.'">Book session →</button></div>
+    </div>
+  </div>
+</div>
+
+<div class="pb3"><a onclick="window.print()">Save as PDF</a> &nbsp;·&nbsp; FR Advisory · Playbook 05 &nbsp;·&nbsp; fragenticadvisor@gmail.com</div>
+</div>
+
+<script>
+function ss(id,tab){
+  document.querySelectorAll('.sec').forEach(function(s){s.classList.remove('active')});
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.nt').forEach(function(t){t.classList.remove('active')});
+  if(tab)tab.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function tc(el){el.classList.toggle('checked')}
+
+var layerStatus=[false,false,false,false,false];
+function toggleLayer(idx){
+  layerStatus[idx]=!layerStatus[idx];
+  var btn=document.getElementById('ts-'+idx);
+  btn.className='t-status '+(layerStatus[idx]?'ts-done':'ts-none');
+  btn.textContent=layerStatus[idx]?'✓ Built':'Not built';
+  var done=layerStatus.filter(Boolean).length;
+  var sc=document.getElementById('stack-score');
+  if(done>0){
+    sc.style.display='block';
+    var pct=Math.round(done/5*100);
+    var col=pct>=80?'var(--green)':pct>=60?'var(--amber)':'var(--red)';
+    var msg=pct>=80?'Strong transparency stack. Customers have the visibility and control to trust your model.'
+      :pct>=60?'Partial transparency. The missing layers are your highest-priority build items.'
+      :'Significant gaps. Consumption pricing will face trust objections until these are built.';
+    sc.innerHTML='<div style="background:var(--dark);border-radius:5px;padding:1rem 1.25rem;display:flex;align-items:center;gap:1rem">'
+      +'<div style="font-family:\'DM Serif Display\',serif;font-size:28px;color:'+col+'">'+done+'/5</div>'
+      +'<div style="font-size:12px;color:rgba(245,242,236,.55);line-height:1.6">'+msg+'</div></div>';
+  } else { sc.style.display='none'; }
+}
+
+function showComms(id,btn){
+  document.querySelectorAll('[id^="comms-"]').forEach(function(el){el.style.display='none'});
+  document.getElementById('comms-'+id).style.display='block';
+  document.querySelectorAll('.cb-tab').forEach(function(b){b.classList.remove('active')});
+  btn.classList.add('active');
+}
+
+function generateCase(){
+  var co=document.getElementById('cf-co').value||'A mid-market SaaS company';
+  var uc=document.getElementById('cf-uc').value||'workflow automation';
+  var tasks=document.getElementById('cf-tasks').value||'2,000';
+  var mins=document.getElementById('cf-mins').value||'10';
+  var outcome=document.getElementById('cf-outcome').value||'significant efficiency gains';
+  var time=document.getElementById('cf-time').value||'90 days';
+  var hours=Math.round(parseInt(tasks.replace(/,/g,''))*parseInt(mins)/60);
+  document.getElementById('co-title').textContent=co+' — '+uc+' Case Study';
+  document.getElementById('co-text').innerHTML='<strong>The challenge:</strong> '+co+' was handling '+uc+' manually, creating bottlenecks and limiting the team\'s capacity to focus on higher-value work.<br><br>'
+    +'<strong>The solution:</strong> By deploying agents to handle '+uc+', the team automated the majority of this work without adding headcount.<br><br>'
+    +'<strong>The results ('+time+'):</strong><br>'
+    +'— <span class="co-metric">'+tasks+'</span> agent tasks completed per month<br>'
+    +'— <span class="co-metric">~'+hours+' hrs</span> of manual work automated per month<br>'
+    +'— '+outcome+'<br><br>'
+    +'<strong>Commercial outcome:</strong> The team expanded from Starter to Growth tier within 60 days of onboarding as consumption grew — demonstrating that the hybrid model captured value as it scaled.';
+  document.getElementById('case-output').className='case-output show';
+}
+</script>
+</body>
+</html>

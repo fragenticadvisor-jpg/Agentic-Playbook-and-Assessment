@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Playbook 04 — Selling Consumption | FR Advisory</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0e0e0e;--paper:#f5f2ec;--gold:#b8922a;--gold-lt:#f0e4c3;--gold-dk:#8a6a1a;
+  --dark:#1a1a1a;--muted:#6b6459;--border:#d4c9b8;--white:#ffffff;
+  --green:#1D9E75;--green-lt:#E1F5EE;--green-dk:#085041;
+  --red:#D85A30;--red-lt:#FAECE7;--red-dk:#712B13;
+  --amber:#BA7517;--amber-lt:#FAEEDA;--amber-dk:#633806;
+  --blue:#185FA5;--blue-lt:#E6F1FB;--blue-dk:#0C447C;
+}
+body{font-family:'DM Sans',sans-serif;background:#111;margin:0;color:var(--ink)}
+.page{max-width:780px;margin:0 auto;background:var(--paper)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.a1{animation:fadeUp .5s ease both}.a2{animation:fadeUp .5s .1s ease both}.a3{animation:fadeUp .5s .2s ease both}.a4{animation:fadeUp .5s .3s ease both}.a5{animation:fadeUp .5s .4s ease both}
+
+.cover{background:var(--dark);padding:0;position:relative;overflow:hidden}
+.cover-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 100%,rgba(184,146,42,0.09) 0%,transparent 60%)}
+.cr1{position:absolute;bottom:-100px;left:50%;transform:translateX(-50%);width:500px;height:500px;border:1px solid rgba(184,146,42,0.05);border-radius:50%}
+.cr2{position:absolute;bottom:-50px;left:50%;transform:translateX(-50%);width:300px;height:300px;border:1px solid rgba(184,146,42,0.07);border-radius:50%}
+.ci{position:relative;z-index:1;padding:3.5rem 3.5rem 0}
+.pb-lbl{display:inline-flex;align-items:center;gap:8px;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:1.25rem}
+.pb-lbl::before{content:'';width:28px;height:1px;background:var(--gold)}
+.ck{font-size:12px;color:rgba(245,242,236,.4);letter-spacing:.06em;margin-bottom:.6rem;text-transform:uppercase}
+.ct{font-family:'DM Serif Display',serif;font-size:44px;line-height:1.05;color:#f5f2ec;margin-bottom:.75rem}
+.ct em{font-style:italic;color:var(--gold)}
+.cs{font-size:14px;color:rgba(245,242,236,.5);line-height:1.75;max-width:520px;margin-bottom:2.5rem}
+.cdiv{height:1px;background:linear-gradient(to right,rgba(184,146,42,.3),transparent);margin-bottom:1.75rem}
+.cmeta{display:flex;gap:0}
+.cmi{flex:1;padding:1.25rem 0;border-right:1px solid rgba(245,242,236,.06)}
+.cmi:last-child{border-right:none}
+.cmn{font-family:'DM Serif Display',serif;font-size:26px;color:var(--gold);display:block;margin-bottom:2px}
+.cml{font-size:10px;color:rgba(245,242,236,.3);letter-spacing:.08em;text-transform:uppercase}
+.cbar{height:3px;background:linear-gradient(to right,rgba(184,146,42,.15),var(--gold),rgba(184,146,42,.15))}
+
+.nav-tabs{background:var(--dark);border-bottom:1px solid rgba(245,242,236,.06);display:flex;overflow-x:auto;scrollbar-width:none}
+.nav-tabs::-webkit-scrollbar{display:none}
+.nt{flex-shrink:0;padding:1rem 1.5rem;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:rgba(245,242,236,.35);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap;font-weight:500}
+.nt:hover{color:rgba(245,242,236,.65)}
+.nt.active{color:var(--gold);border-bottom-color:var(--gold)}
+
+.sec{display:none;padding:3rem 3.5rem;animation:fadeUp .3s ease}
+.sec.active{display:block}
+
+.ey{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:1rem;display:flex;align-items:center;gap:10px}
+.ey::after{content:'';flex:1;height:1px;background:linear-gradient(to right,var(--border),transparent)}
+.st{font-family:'DM Serif Display',serif;font-size:28px;color:var(--ink);line-height:1.2;margin-bottom:.6rem}
+.st em{font-style:italic;color:var(--gold)}
+.sl{font-size:14px;color:var(--muted);line-height:1.8;margin-bottom:2rem;max-width:580px}
+.bt{font-size:13px;color:var(--ink);line-height:1.8;margin-bottom:1.25rem}
+.bt strong{font-weight:600}
+
+.callout{border-left:3px solid var(--gold);padding:1rem 1.25rem;background:var(--gold-lt);border-radius:0 5px 5px 0;margin:1.5rem 0}
+.callout p{font-size:13px;color:var(--ink);line-height:1.7;font-style:italic}
+.callout span{font-size:10px;color:var(--muted);margin-top:6px;display:block;letter-spacing:.06em;text-transform:uppercase}
+
+.dc{background:var(--dark);border-radius:6px;padding:1.5rem 1.75rem;margin:1.75rem 0}
+.dc-t{font-family:'DM Serif Display',serif;font-size:18px;color:#f5f2ec;margin-bottom:.5rem}
+.dc-s{font-size:12px;color:rgba(245,242,236,.55);line-height:1.75}
+
+.cg{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:1.75rem 0}
+.cg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:1.75rem 0}
+.card{background:var(--white);border:1px solid var(--border);border-radius:6px;padding:1.25rem}
+.card.gb{border-color:var(--gold);border-width:2px}
+.cn2{font-family:'DM Serif Display',serif;font-size:32px;color:var(--gold);margin-bottom:.35rem;line-height:1}
+.ctit{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:.4rem}
+.ctx{font-size:12px;color:var(--muted);line-height:1.65}
+.tag{display:inline-block;font-size:9px;letter-spacing:.08em;text-transform:uppercase;padding:2px 8px;border-radius:3px;margin-bottom:.6rem;font-weight:500}
+.tg{background:var(--green-lt);color:var(--green-dk)}
+.tr{background:var(--red-lt);color:var(--red-dk)}
+.ta{background:var(--amber-lt);color:var(--amber-dk)}
+.to{background:var(--gold-lt);color:var(--gold-dk)}
+.tb{background:var(--blue-lt);color:var(--blue-dk)}
+
+/* DISCOVERY TOOL */
+.discovery-tool{margin:1.75rem 0}
+.dt-stages{display:flex;gap:6px;margin-bottom:1rem;overflow-x:auto;scrollbar-width:none}
+.dt-stages::-webkit-scrollbar{display:none}
+.dt-stage{flex-shrink:0;padding:6px 12px;border:1px solid var(--border);border-radius:3px;font-size:10px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;background:var(--white);color:var(--muted);transition:all .15s;white-space:nowrap}
+.dt-stage.active{background:var(--dark);color:var(--gold);border-color:var(--gold)}
+.dt-content{background:var(--white);border:1px solid var(--border);border-radius:6px;padding:1.25rem}
+.dt-questions{display:flex;flex-direction:column;gap:10px}
+.dt-q{padding:.85rem 1rem;background:var(--paper);border-radius:4px;border-left:3px solid var(--gold)}
+.dt-q-text{font-size:13px;color:var(--ink);font-weight:500;margin-bottom:4px}
+.dt-q-why{font-size:11px;color:var(--muted);line-height:1.6}
+
+/* COMP SCORE */
+.comp-scorer{margin:1.75rem 0;background:var(--white);border:1px solid var(--border);border-radius:6px;overflow:hidden}
+.cs-header{background:var(--dark);padding:1rem 1.25rem}
+.cs-header-t{font-size:13px;font-weight:500;color:#f5f2ec;margin-bottom:3px}
+.cs-header-s{font-size:11px;color:rgba(245,242,236,.4)}
+.cs-body{padding:1.25rem}
+.cs-row{display:flex;justify-content:space-between;align-items:center;padding:.7rem 0;border-bottom:1px solid var(--border)}
+.cs-row:last-child{border-bottom:none}
+.cs-label{font-size:12px;color:var(--ink);font-weight:500}
+.cs-sub{font-size:10px;color:var(--muted);margin-top:2px}
+.cs-btns{display:flex;gap:4px}
+.cs-btn{width:32px;height:28px;border-radius:3px;border:1px solid var(--border);background:var(--paper);cursor:pointer;font-size:11px;font-weight:600;font-family:'DM Sans',sans-serif;transition:all .15s;color:var(--muted)}
+.cs-btn:hover{border-color:var(--muted)}
+.cs-btn.active-r{background:var(--green);border-color:var(--green);color:#fff}
+.cs-btn.active-a{background:var(--amber);border-color:var(--amber);color:#fff}
+.cs-btn.active-n{background:var(--red);border-color:var(--red);color:#fff}
+.cs-result{padding:1rem 1.25rem;background:var(--paper);border-top:1px solid var(--border);display:none}
+.cs-result.show{display:block}
+.cs-score-row{display:flex;align-items:center;gap:1rem}
+.cs-ring{position:relative;flex-shrink:0}
+.cs-ring svg{display:block}
+.cs-num{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'DM Serif Display',serif;font-size:18px;color:var(--ink)}
+
+/* PLAYBOOK CARDS */
+.pb-cards{display:flex;flex-direction:column;gap:10px;margin:1.75rem 0}
+.pbc{border:1px solid var(--border);border-radius:5px;background:var(--white);overflow:hidden}
+.pbc-header{display:flex;justify-content:space-between;align-items:center;padding:1rem 1.25rem;cursor:pointer;transition:background .15s}
+.pbc-header:hover{background:var(--gold-lt)}
+.pbc.open .pbc-header{background:var(--dark)}
+.pbc-title{font-size:13px;font-weight:600;color:var(--ink)}
+.pbc.open .pbc-title{color:#f5f2ec}
+.pbc-role{font-size:10px;padding:2px 8px;border-radius:3px;font-weight:500}
+.pbc-toggle{font-size:16px;color:var(--muted);transition:transform .2s;flex-shrink:0}
+.pbc.open .pbc-toggle{transform:rotate(45deg);color:var(--gold)}
+.pbc-body{display:none;padding:1.25rem;border-top:1px solid var(--border)}
+.pbc.open .pbc-body{display:block}
+.pbc-section{margin-bottom:1rem}
+.pbc-section-label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;font-weight:500}
+.pbc-text{font-size:12px;color:var(--ink);line-height:1.75}
+.talk-track{background:var(--gold-lt);border:1px solid rgba(184,146,42,.2);border-radius:4px;padding:.85rem;margin-top:.5rem}
+.tt-label{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-dk);margin-bottom:5px;font-weight:500}
+.tt-text{font-size:12px;color:var(--ink);line-height:1.7;font-style:italic}
+
+.steps{display:flex;flex-direction:column;gap:0;margin:1.75rem 0;position:relative}
+.steps::before{content:'';position:absolute;left:19px;top:40px;bottom:40px;width:1px;background:var(--border)}
+.step{display:flex;gap:16px;padding:1rem 0}
+.sn{width:38px;height:38px;border-radius:50%;background:var(--dark);color:var(--gold);font-family:'DM Serif Display',serif;font-size:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0;position:relative;z-index:1;border:2px solid rgba(184,146,42,.3)}
+.s-title{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:4px;padding-top:6px}
+.s-text{font-size:12px;color:var(--muted);line-height:1.7}
+
+.pl-cl{list-style:none;display:flex;flex-direction:column;gap:8px;margin:1.25rem 0}
+.pl-cl li{display:flex;gap:10px;font-size:13px;color:var(--ink);line-height:1.6;padding:10px 12px;background:var(--white);border:1px solid var(--border);border-radius:4px;cursor:pointer;transition:all .15s;align-items:flex-start}
+.pl-cl li:hover{border-color:var(--gold)}
+.pl-cl li.checked{background:var(--green-lt);border-color:var(--green)}
+.pl-cl li.checked .chk{background:var(--green);border-color:var(--green);color:#fff}
+.chk{width:20px;height:20px;border-radius:4px;border:1.5px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;color:transparent;margin-top:1px;transition:all .15s}
+
+.divider{height:1px;background:var(--border);margin:2rem 0}
+
+.ns{background:var(--dark);margin:0 -3.5rem -3rem;padding:2rem 3.5rem;border-top:1px solid rgba(184,146,42,.15)}
+.ncs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:1.25rem}
+.nc{border:1px solid rgba(245,242,236,.08);border-radius:5px;padding:1.1rem}
+.nc.hl{border-color:var(--gold)}
+.nc-lbl{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:rgba(245,242,236,.3);margin-bottom:4px}
+.nc-t{font-size:13px;font-weight:500;color:#f5f2ec;margin-bottom:4px}
+.nc-d{font-size:11px;color:rgba(245,242,236,.4);line-height:1.6;margin-bottom:.85rem}
+.bg{display:block;background:var(--gold);color:#fff;text-align:center;padding:9px;border-radius:4px;font-size:11px;font-weight:500;cursor:pointer;border:none;width:100%;font-family:'DM Sans',sans-serif;transition:background .15s}
+.bg:hover{background:var(--gold-dk)}
+.bo{display:block;background:transparent;color:rgba(245,242,236,.6);text-align:center;padding:9px;border-radius:4px;font-size:11px;cursor:pointer;border:1px solid rgba(245,242,236,.15);width:100%;font-family:'DM Sans',sans-serif;transition:all .15s}
+.bo:hover{border-color:rgba(245,242,236,.35);color:#f5f2ec}
+
+.pb2{text-align:center;padding:.85rem;font-size:10px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;border-top:1px solid var(--border)}
+.pb2 a{color:var(--gold);text-decoration:none;cursor:pointer}
+
+@media(max-width:620px){
+  .ci{padding:2.5rem 1.75rem 0}.sec{padding:2rem 1.75rem}.ct{font-size:30px}
+  .cg,.cg3,.ncs{grid-template-columns:1fr}.ns{margin:0 -1.75rem -2rem;padding:1.75rem}
+}
+@media print{.nav-tabs,.ns,.pb2{display:none}.sec{display:block!important}body{background:#fff}}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="cover">
+  <div class="cover-bg"></div><div class="cr1"></div><div class="cr2"></div>
+  <div class="ci">
+    <div class="pb-lbl a1">FR Advisory · Playbook 04</div>
+    <div class="ck a2">Commercial Enablement</div>
+    <div class="ct a3"><em>Selling</em><br>Consumption</div>
+    <div class="cs a4">How to equip your sales and CS teams to sell, retain, and expand on a consumption model — with discovery frameworks, conversation guides, and comp design principles.</div>
+    <div class="cdiv a5"></div>
+    <div class="cmeta a5">
+      <div class="cmi"><span class="cmn">5</span><span class="cml">Chapters</span></div>
+      <div class="cmi"><span class="cmn">3</span><span class="cml">Buyer personas</span></div>
+      <div class="cmi"><span class="cmn">1</span><span class="cml">Comp framework</span></div>
+      <div class="cmi"><span class="cmn">AE</span><span class="cml">CSM · RevOps</span></div>
+    </div>
+  </div>
+  <div class="cbar" style="margin-top:1.75rem"></div>
+</div>
+
+<div class="nav-tabs">
+  <div class="nt active" onclick="ss('s1',this)">01 · The Shift</div>
+  <div class="nt" onclick="ss('s2',this)">02 · Discovery</div>
+  <div class="nt" onclick="ss('s3',this)">03 · Personas</div>
+  <div class="nt" onclick="ss('s4',this)">04 · CS Motion</div>
+  <div class="nt" onclick="ss('s5',this)">05 · Comp & Plan</div>
+</div>
+
+<!-- S1 -->
+<div class="sec active" id="s1">
+  <div class="ey">Chapter 01</div>
+  <div class="st">The selling shift: from <em>coverage to value</em></div>
+  <div class="sl">Seat-based selling is a coverage conversation: how many users, how many sites, how many licences. Consumption selling is a value conversation: how much work do your agents do, and what is that work worth? The commercial motion is fundamentally different — and most GTM teams aren't trained for it.</div>
+
+  <div class="bt">The shift isn't just in the pitch. It runs through the entire revenue motion — how reps discover, how they qualify, how CS defines health, how expansion gets triggered, and how commission plans incentivise behaviour. A well-designed hybrid pricing model deployed into an unreformed GTM motion will underperform. The commercial model and the GTM motion have to move together.</div>
+
+  <div class="callout"><p>"The companies that struggle with consumption pricing aren't failing at the model design. They're failing at the GTM transformation. Pricing changes without enablement changes don't land."</p><span>FR Advisory</span></div>
+
+  <div class="ey">What changes across the revenue motion</div>
+
+  <div class="cg">
+    <div class="card"><div class="tag tr">Old motion</div><div class="ctit">Discovery</div><div class="ctx">How many users? Which teams? How many sites? Firmographic qualification that produces a seat count and a licence price.</div></div>
+    <div class="card"><div class="card gb"><div class="tag tg">New motion</div></div><div class="ctit">Discovery</div><div class="ctx">What workflows do agents run? What outcomes do they deliver? What does the customer measure as success? Value-based discovery that produces an ROI narrative and a consumption forecast.</div></div>
+    <div class="card"><div class="tag tr">Old motion</div><div class="ctit">CS health</div><div class="ctx">Licence utilisation rate. Are seats being used? Renewal date. NPS score. Metrics that measure product adoption, not value delivery.</div></div>
+    <div class="card gb"><div class="tag tg">New motion</div><div class="ctit">CS health</div><div class="ctx">Agent adoption breadth, consumption growth, use case variety, customer-validated ROI. Metrics that measure whether the customer is extracting and recognising value.</div></div>
+    <div class="card"><div class="tag tr">Old motion</div><div class="ctit">Expansion trigger</div><div class="ctx">Contract renewal. Upsell new modules. Add users as team grows. Reactive and annual.</div></div>
+    <div class="card gb"><div class="tag tg">New motion</div><div class="ctit">Expansion trigger</div><div class="ctx">Usage approaching 80% of allowance. New agent use cases identified. ROI evidence ready for exec sponsor. Proactive and continuous.</div></div>
+  </div>
+
+  <div class="dc"><div class="dc-t">The enablement gap is a revenue risk</div><div class="dc-s">Most SaaS businesses launch their hybrid model with a product update and a pricing page change. They tell the sales team in an all-hands. They update the deck. But the discovery questions stay the same. The CS health metrics stay the same. The comp plan stays the same. Six months later, the model has launched but the GTM motion hasn't changed — and the consumption revenue never materialises.</div></div>
+
+  <div class="ns">
+    <div style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:rgba(245,242,236,.35);margin-bottom:.5rem">Up next</div>
+    <div style="font-family:'DM Serif Display',serif;font-size:18px;color:#f5f2ec;margin-bottom:.5rem">The discovery framework for consumption selling</div>
+    <button class="bg" style="max-width:220px;margin-top:.85rem" onclick="ss('s2',document.querySelectorAll('.nt')[1])">Chapter 02 →</button>
+  </div>
+</div>
+
+<!-- S2 -->
+<div class="sec" id="s2">
+  <div class="ey">Chapter 02</div>
+  <div class="st">Discovery: the <em>questions that unlock value conversations</em></div>
+  <div class="sl">Consumption selling starts in discovery. The questions you ask in the first two meetings determine whether the deal gets qualified on value or on headcount. Here's the framework by deal stage.</div>
+
+  <div class="discovery-tool">
+    <div class="dt-stages">
+      <div class="dt-stage active" onclick="showStage('workflow',this)">Workflow mapping</div>
+      <div class="dt-stage" onclick="showStage('displacement',this)">Displacement sizing</div>
+      <div class="dt-stage" onclick="showStage('value',this)">Value quantification</div>
+      <div class="dt-stage" onclick="showStage('forecast',this)">Spend forecasting</div>
+    </div>
+    <div class="dt-content">
+      <div id="stage-workflow" class="dt-questions">
+        <div class="bt" style="margin-bottom:1rem;font-size:12px">Use these questions to map which workflows in the customer's business are candidates for agent automation — before any pricing conversation begins.</div>
+        <div class="dt-q"><div class="dt-q-text">"Walk me through a typical day for the team using this product. What tasks are they doing manually that feel repetitive?"</div><div class="dt-q-why">Opens the workflow mapping without framing it as a cost conversation. Customers self-identify displacement candidates.</div></div>
+        <div class="dt-q"><div class="dt-q-text">"Which of those tasks would you most want an agent to handle autonomously — without a human in the loop?"</div><div class="dt-q-why">Separates automation candidates from tasks that require human judgment. Identifies the highest-value consumption units.</div></div>
+        <div class="dt-q"><div class="dt-q-text">"Are there workflows today that a human does once, but that you wish could run continuously or at much higher volume?"</div><div class="dt-q-why">Surfaces scale multiplier opportunities — where agents create value not by replacing humans but by doing what humans can't do at scale.</div></div>
+        <div class="dt-q"><div class="dt-q-text">"How do you currently measure whether those workflows are completing successfully?"</div><div class="dt-q-why">Identifies the customer's existing success metric — which often becomes the natural basis for an outcome-based billing unit.</div></div>
+      </div>
+      <div id="stage-displacement" class="dt-questions" style="display:none">
+        <div class="bt" style="margin-bottom:1rem;font-size:12px">Once workflows are mapped, quantify how much human effort the agents would displace. This builds the ROI numerator.</div>
+        <div class="dt-q"><div class="dt-q-text">"How long does a person typically spend on [mapped workflow] today? And how often does it happen?"</div><div class="dt-q-why">Builds the time-per-task and frequency data needed to calculate hours displaced. Keep it conversational — don't ask them to produce a spreadsheet.</div></div>
+        <div class="dt-q"><div class="dt-q-text">"If an agent could handle [workflow] autonomously, what would your team do with that time?"</div><div class="dt-q-why">Shifts the framing from cost reduction to capacity reallocation. More palatable to buyers who don't want to frame this as headcount reduction.</div></div>
+        <div class="dt-q"><div class="dt-q-text">"Are there workflows you're currently not doing — or doing too slowly — because you don't have enough people?"</div><div class="dt-q-why">Identifies the capacity-constrained demand. Agents don't just displace existing work — they unlock work that wasn't getting done. This is often the larger ROI number.</div></div>
+      </div>
+      <div id="stage-value" class="dt-questions" style="display:none">
+        <div class="bt" style="margin-bottom:1rem;font-size:12px">Quantify the value in the customer's own terms. This becomes the ROI evidence that justifies the consumption model in the procurement conversation.</div>
+        <div class="dt-q"><div class="dt-q-text">"If we could automate [workflow] fully — what would that be worth to your business in terms of time saved, revenue generated, or cost avoided?"</div><div class="dt-q-why">Ask them to put a number on it. Their number is always more credible in the internal approval process than your estimate.</div></div>
+        <div class="dt-q"><div class="dt-q-text">"How does your business measure the success of this team or function today? What's the metric your leadership tracks?"</div><div class="dt-q-why">Connects your ROI to their existing KPIs. Makes the business case easier for the buyer to take up the chain.</div></div>
+        <div class="dt-q"><div class="dt-q-text">"If you could point to one number — 6 months from now — that would tell you this investment paid off, what would it be?"</div><div class="dt-q-why">Identifies the success metric for the deal. This becomes the headline in your QBR, your renewal conversation, and your case study.</div></div>
+      </div>
+      <div id="stage-forecast" class="dt-questions" style="display:none">
+        <div class="bt" style="margin-bottom:1rem;font-size:12px">Help the customer forecast their expected consumption. This kills budget anxiety before it becomes an objection.</div>
+        <div class="dt-q"><div class="dt-q-text">"Based on what you've described, you'd probably run around [X] agent tasks per month. Does that feel roughly right?"</div><div class="dt-q-why">Give them a number first — anchors the conversation and invites correction. Customers who feel heard on the estimate are much more comfortable with variable billing.</div></div>
+        <div class="dt-q"><div class="dt-q-text">"Is there a budget owner who'd need to approve a variable cost line? What would they need to see to get comfortable?"</div><div class="dt-q-why">Surfaces the finance stakeholder before they become a deal blocker. Identifies what controls or reporting they'll need.</div></div>
+        <div class="dt-q"><div class="dt-q-text">"Would it help to run through a projection of your expected spend at current usage — and what a growth scenario might look like?"</div><div class="dt-q-why">Opens the door to the commitment calculator conversation. Customers who see a bounded forecast close faster.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ns">
+    <div style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:rgba(245,242,236,.35);margin-bottom:.5rem">Up next</div>
+    <div style="font-family:'DM Serif Display',serif;font-size:18px;color:#f5f2ec;margin-bottom:.5rem">The three buyer personas and how each one buys</div>
+    <button class="bg" style="max-width:220px;margin-top:.85rem" onclick="ss('s3',document.querySelectorAll('.nt')[2])">Chapter 03 →</button>
+  </div>
+</div>
+
+<!-- S3 -->
+<div class="sec" id="s3">
+  <div class="ey">Chapter 03</div>
+  <div class="st">The three personas — and <em>how each one buys</em></div>
+  <div class="sl">Consumption pricing is a multi-stakeholder sale. The CPO cares about roadmap alignment. The CFO cares about budget predictability. The CRO cares about revenue impact. Each needs a different conversation.</div>
+
+  <div class="pb-cards">
+    <div class="pbc" id="pb-0">
+      <div class="pbc-header" onclick="togglePBC('pb-0')">
+        <div><div class="pbc-title">The CPO — Product champion, roadmap owner</div><div style="font-size:11px;color:var(--muted);margin-top:3px">Primary concern: Does this model support our AI product strategy?</div></div>
+        <div class="pbc-toggle">+</div>
+      </div>
+      <div class="pbc-body">
+        <div class="pbc-section">
+          <div class="pbc-section-label">What they care about</div>
+          <div class="pbc-text">The CPO wants to know that the pricing model supports — not constrains — the product roadmap. They're asking: will customers adopt the new agentic features if they're priced on consumption? Will a usage-based model slow down experimentation? Will customers feel penalised for trying new workflows?</div>
+        </div>
+        <div class="pbc-section">
+          <div class="pbc-section-label">How to position</div>
+          <div class="pbc-text">Frame the consumption model as the commercial enabler of the product vision. Without it, AI features are undifferentiated add-ons in the base licence. With it, every new agent workflow becomes a revenue event. The product and the commercial model scale together.</div>
+        </div>
+        <div class="talk-track">
+          <div class="tt-label">Talk track</div>
+          <div class="tt-text">"Right now, every AI feature you ship goes into the base licence with no commercial signal. You can't tell which workflows are driving value and which aren't. With consumption pricing, usage data becomes your product signal — the workflows customers run most are the ones worth investing in. The model makes your roadmap decisions easier, not harder."</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pbc" id="pb-1">
+      <div class="pbc-header" onclick="togglePBC('pb-1')">
+        <div><div class="pbc-title">The CFO — Budget owner, risk manager</div><div style="font-size:11px;color:var(--muted);margin-top:3px">Primary concern: Can I predict and control this cost?</div></div>
+        <div class="pbc-toggle">+</div>
+      </div>
+      <div class="pbc-body">
+        <div class="pbc-section">
+          <div class="pbc-section-label">What they care about</div>
+          <div class="pbc-text">The CFO's objection isn't really about the model — it's about variance. They've seen cloud bills spiral and budget owners shrug. They need to know this is bounded, forecastable, and controllable. Show them the ceiling, not just the floor.</div>
+        </div>
+        <div class="pbc-section">
+          <div class="pbc-section-label">How to position</div>
+          <div class="pbc-text">Lead with the minimum commitment — that's a fixed, predictable number they can put in their model. Then show them the spend cap in the admin console. Then show them the consumption forecast based on current usage trajectory. Make the variance visible and bounded before they ask.</div>
+        </div>
+        <div class="talk-track">
+          <div class="tt-label">Talk track</div>
+          <div class="tt-text">"Your minimum commitment of £[X] per year is the number that goes into your budget model. It doesn't change unless you choose to upgrade. Above that, you have a hard cap in the admin console — nothing charges above it without your approval. Based on your current usage trajectory, you're tracking to about £[Y] this year. Would it help to send you a spend forecast you can use in your planning?"</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pbc" id="pb-2">
+      <div class="pbc-header" onclick="togglePBC('pb-2')">
+        <div><div class="pbc-title">The CRO — Revenue owner, GTM lead</div><div style="font-size:11px;color:var(--muted);margin-top:3px">Primary concern: What does this do to our team's quota and motion?</div></div>
+        <div class="pbc-toggle">+</div>
+      </div>
+      <div class="pbc-body">
+        <div class="pbc-section">
+          <div class="pbc-section-label">What they care about</div>
+          <div class="pbc-text">The CRO is thinking about their team. How does consumption pricing affect quota attainment? How does CS expansion get credited? Are reps going to resist selling a model they don't understand? This is an internal stakeholder conversation as much as a product one.</div>
+        </div>
+        <div class="pbc-section">
+          <div class="pbc-section-label">How to position</div>
+          <div class="pbc-text">Show them the expansion upside. Under a seat model, expansion is capped by headcount. Under a hybrid model, expansion is continuous — every new agent workflow is a tier upgrade conversation. Their team's NRR ceiling just got much higher. That's a good story for quota.</div>
+        </div>
+        <div class="talk-track">
+          <div class="tt-label">Talk track</div>
+          <div class="tt-text">"Under your current seat model, your reps can only expand when a customer hires more people. That's outside your control. With a consumption layer, every new agent use case is an expansion trigger your CSMs can actively drive. You're not waiting for headcount growth — you're creating your own expansion motion. Your NRR ceiling is significantly higher than it is today."</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ns">
+    <div style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:rgba(245,242,236,.35);margin-bottom:.5rem">Up next</div>
+    <div style="font-family:'DM Serif Display',serif;font-size:18px;color:#f5f2ec;margin-bottom:.5rem">The CS agentic health motion</div>
+    <button class="bg" style="max-width:220px;margin-top:.85rem" onclick="ss('s4',document.querySelectorAll('.nt')[3])">Chapter 04 →</button>
+  </div>
+</div>
+
+<!-- S4 -->
+<div class="sec" id="s4">
+  <div class="ey">Chapter 04</div>
+  <div class="st">The CS motion: from <em>renewal defence to expansion engine</em></div>
+  <div class="sl">Under a seat model, CS is primarily defensive — protect the renewal, prevent churn. Under a consumption model, CS becomes the expansion engine. Agentic health replaces licence utilisation as the primary health signal.</div>
+
+  <div class="bt">The shift is structural. CS teams trained on "are seats being used?" need to move to "are agents creating value?" Those are different questions, and they require different data, different conversations, and different playbooks.</div>
+
+  <div class="ey">The agentic health framework</div>
+
+  <div class="comp-scorer">
+    <div class="cs-header">
+      <div class="cs-header-t">Rate your CS team's current coverage</div>
+      <div class="cs-header-s">Score each dimension: ✓ Covered · ~ Partial · ✗ Not tracked</div>
+    </div>
+    <div class="cs-body">
+      <div class="cs-row">
+        <div><div class="cs-label">Consumption depth</div><div class="cs-sub">Volume of agent actions run per customer per period</div></div>
+        <div class="cs-btns">
+          <button class="cs-btn" onclick="scoreCS(0,'r',this)">✓</button>
+          <button class="cs-btn" onclick="scoreCS(0,'a',this)">~</button>
+          <button class="cs-btn" onclick="scoreCS(0,'n',this)">✗</button>
+        </div>
+      </div>
+      <div class="cs-row">
+        <div><div class="cs-label">Adoption breadth</div><div class="cs-sub">Number of teams / functions actively using agents</div></div>
+        <div class="cs-btns">
+          <button class="cs-btn" onclick="scoreCS(1,'r',this)">✓</button>
+          <button class="cs-btn" onclick="scoreCS(1,'a',this)">~</button>
+          <button class="cs-btn" onclick="scoreCS(1,'n',this)">✗</button>
+        </div>
+      </div>
+      <div class="cs-row">
+        <div><div class="cs-label">Use case variety</div><div class="cs-sub">Number of distinct agent workflows the customer has deployed</div></div>
+        <div class="cs-btns">
+          <button class="cs-btn" onclick="scoreCS(2,'r',this)">✓</button>
+          <button class="cs-btn" onclick="scoreCS(2,'a',this)">~</button>
+          <button class="cs-btn" onclick="scoreCS(2,'n',this)">✗</button>
+        </div>
+      </div>
+      <div class="cs-row">
+        <div><div class="cs-label">Customer-validated ROI</div><div class="cs-sub">Has the customer articulated the value in their own terms?</div></div>
+        <div class="cs-btns">
+          <button class="cs-btn" onclick="scoreCS(3,'r',this)">✓</button>
+          <button class="cs-btn" onclick="scoreCS(3,'a',this)">~</button>
+          <button class="cs-btn" onclick="scoreCS(3,'n',this)">✗</button>
+        </div>
+      </div>
+      <div class="cs-row">
+        <div><div class="cs-label">Consumption growth rate</div><div class="cs-sub">Month-over-month trend in agent usage</div></div>
+        <div class="cs-btns">
+          <button class="cs-btn" onclick="scoreCS(4,'r',this)">✓</button>
+          <button class="cs-btn" onclick="scoreCS(4,'a',this)">~</button>
+          <button class="cs-btn" onclick="scoreCS(4,'n',this)">✗</button>
+        </div>
+      </div>
+    </div>
+    <div class="cs-result" id="cs-result">
+      <div class="cs-score-row">
+        <div class="cs-ring">
+          <svg width="60" height="60" viewBox="0 0 80 80">
+            <circle cx="40" cy="40" r="34" fill="none" stroke="var(--border)" stroke-width="5"/>
+            <circle cx="40" cy="40" r="34" fill="none" id="cs-arc" stroke="var(--gold)" stroke-width="5" stroke-dasharray="0 213" stroke-linecap="round" transform="rotate(-90 40 40)"/>
+          </svg>
+          <div class="cs-num" id="cs-num">0%</div>
+        </div>
+        <div>
+          <div style="font-size:13px;font-weight:600;color:var(--ink);margin-bottom:4px" id="cs-verdict">—</div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.6" id="cs-desc">—</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ey">The QBR agenda for consumption models</div>
+  <div class="steps">
+    <div class="step"><div class="sn">1</div><div><div class="s-title">Open with consumption data, not NPS</div><div class="s-text">Show the customer their consumption trend — tasks completed, workflows run, outcomes delivered — before any relationship metrics. Lead with the value they've received.</div></div></div>
+    <div class="step"><div class="sn">2</div><div><div class="s-title">Connect consumption to business outcomes</div><div class="s-text">Translate the usage data into their language. "You ran 3,400 agent tasks last quarter — that's equivalent to approximately X hours of work your team didn't have to do." Ask them to validate or correct your estimate.</div></div></div>
+    <div class="step"><div class="sn">3</div><div><div class="s-title">Identify the next use case</div><div class="s-text">Always leave a QBR with a new agent workflow identified. This is your expansion pipeline — every new use case is a tier upgrade conversation 90 days later.</div></div></div>
+    <div class="step"><div class="sn">4</div><div><div class="s-title">Review consumption against allowance</div><div class="s-text">If they're above 70% of their allowance consistently, open the tier upgrade conversation now — before they hit overage and feel surprised. Proactive beats reactive every time.</div></div></div>
+  </div>
+
+  <div class="ns">
+    <div style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:rgba(245,242,236,.35);margin-bottom:.5rem">Up next</div>
+    <div style="font-family:'DM Serif Display',serif;font-size:18px;color:#f5f2ec;margin-bottom:.5rem">Comp design and the 30-day enablement plan</div>
+    <button class="bg" style="max-width:220px;margin-top:.85rem" onclick="ss('s5',document.querySelectorAll('.nt')[4])">Chapter 05 →</button>
+  </div>
+</div>
+
+<!-- S5 -->
+<div class="sec" id="s5">
+  <div class="ey">Chapter 05</div>
+  <div class="st">Comp design and the <em>30-day enablement plan</em></div>
+  <div class="sl">Commission plans optimised purely for ACV will produce the wrong commercial behaviours in a consumption model. If your reps are paid only on the commitment floor, they have no incentive to drive consumption growth — which is where the long-term revenue lives.</div>
+
+  <div class="ey">Comp design principles for hybrid models</div>
+
+  <div class="cg">
+    <div class="card"><div class="tag tb">Sales (AE)</div><div class="ctit">Split commission: floor + consumption</div><div class="ctx">70% of commission on the minimum commitment (ACV equivalent). 30% on a consumption accelerator — paid quarterly based on actual usage above the floor. Aligns AE incentive with long-term consumption growth.</div></div>
+    <div class="card"><div class="tag tg">CS (CSM)</div><div class="ctit">NRR-based with consumption bonus</div><div class="ctx">Base commission on NRR target. Bonus pool paid when accounts consistently hit 80%+ of consumption allowance — triggering upgrade conversations. Rewards health management, not just renewal defence.</div></div>
+    <div class="card"><div class="tag ta">RevOps</div><div class="ctit">Consumption forecast accuracy</div><div class="ctx">Add a consumption forecast metric to RevOps KPIs. Teams that can accurately forecast consumption growth 90 days out give finance the confidence to plan — and give leadership the visibility to invest.</div></div>
+    <div class="card gb"><div class="tag to">Leadership</div><div class="ctit">Consumption as % of total ARR</div><div class="ctx">The board-level metric: consumption revenue as a percentage of total ARR, growing toward a defined target (20–35% within 18 months of model launch).</div></div>
+  </div>
+
+  <div class="ey" style="margin-top:.5rem">30-day enablement checklist</div>
+  <ul class="pl-cl">
+    <li onclick="tc(this)"><div class="chk">✓</div>Run a full-day consumption selling workshop with the AE team — discovery questions, objection handling, commitment calculator</li>
+    <li onclick="tc(this)"><div class="chk">✓</div>Build the CS agentic health scorecard and integrate into CRM</li>
+    <li onclick="tc(this)"><div class="chk">✓</div>Update QBR template: lead with consumption data and outcome translation</li>
+    <li onclick="tc(this)"><div class="chk">✓</div>Redesign AE comp to include consumption accelerator (30% weighting)</li>
+    <li onclick="tc(this)"><div class="chk">✓</div>Redesign CSM comp to include consumption health bonus</li>
+    <li onclick="tc(this)"><div class="chk">✓</div>Add 80% allowance utilisation as an automatic CRM trigger for upgrade conversation</li>
+    <li onclick="tc(this)"><div class="chk">✓</div>Build and certify reps on objection handling playbook (5 core objections)</li>
+    <li onclick="tc(this)"><div class="chk">✓</div>Create CPO, CFO, and CRO persona talk tracks — certify the team on all three</li>
+    <li onclick="tc(this)"><div class="chk">✓</div>Set quarterly enablement cadence — consumption model knowledge decays fast</li>
+    <li onclick="tc(this)"><div class="chk">✓</div>Track win/loss on consumption deals for first 90 days — identify objection patterns</li>
+  </ul>
+
+  <div class="divider"></div>
+
+  <div class="dc"><div class="dc-t">The enablement clock starts at launch</div><div class="dc-s">Every week your GTM team operates under the new pricing model without proper enablement is a week of consumption revenue you won't recover. Discovery conversations revert to seat qualification. CS health metrics stay on licence utilisation. The model exists on the pricing page but not in the commercial motion. Enablement is not a follow-up activity — it's a launch requirement.</div></div>
+
+  <div class="ns">
+    <div style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:rgba(245,242,236,.35);margin-bottom:.5rem">Ready to transform your GTM?</div>
+    <div style="font-family:'DM Serif Display',serif;font-size:18px;color:#f5f2ec;margin-bottom:1.25rem">Get your Commercial Enablement dimension scored</div>
+    <div class="ncs">
+      <div class="nc"><div class="nc-lbl">Full Assessment</div><div class="nc-t">5-dimension diagnostic</div><div class="nc-d">Commercial Enablement scored alongside all five dimensions. Prioritised roadmap within 48 hours.</div><div style="font-family:'DM Serif Display',serif;font-size:22px;color:var(--gold);margin-bottom:.85rem">£995</div><button class="bo" onclick="window.open('https://checkout.revolut.com/pay/5573f7d4-dd93-4f77-945b-42b90c28e058','_blank')">Get full report →</button></div>
+      <div class="nc hl"><div class="nc-lbl">Most valuable</div><div class="nc-t">Assessment + Advisor</div><div class="nc-d">Full report plus 2-hour 1:1 with Fessal. GTM transformation designed for your team structure.</div><div style="font-family:'DM Serif Display',serif;font-size:22px;color:var(--gold);margin-bottom:.85rem">£2,495</div><button class="bg" onclick="window.location.href='mailto:fragenticadvisor@gmail.com?subject=Assessment + Advisor Package&body=Hi Fessal, I have read Playbook 04 and would like to book the Assessment + Advisor package.'">Book session →</button></div>
+    </div>
+  </div>
+</div>
+
+<div class="pb2"><a onclick="window.print()">Save as PDF</a> &nbsp;·&nbsp; FR Advisory · Playbook 04 &nbsp;·&nbsp; fragenticadvisor@gmail.com</div>
+</div>
+
+<script>
+function ss(id,tab){
+  document.querySelectorAll('.sec').forEach(function(s){s.classList.remove('active')});
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.nt').forEach(function(t){t.classList.remove('active')});
+  if(tab)tab.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function tc(el){el.classList.toggle('checked')}
+function togglePBC(id){
+  var c=document.getElementById(id);
+  var was=c.classList.contains('open');
+  document.querySelectorAll('.pbc').forEach(function(p){p.classList.remove('open')});
+  if(!was)c.classList.add('open');
+}
+function showStage(id,btn){
+  document.querySelectorAll('.dt-questions').forEach(function(q){q.style.display='none'});
+  document.getElementById('stage-'+id).style.display='flex';
+  document.querySelectorAll('.dt-stage').forEach(function(b){b.classList.remove('active')});
+  btn.classList.add('active');
+}
+var csScores=[null,null,null,null,null];
+function scoreCS(idx,val,btn){
+  csScores[idx]=val;
+  var row=btn.closest('.cs-row');
+  row.querySelectorAll('.cs-btn').forEach(function(b){b.className='cs-btn'});
+  btn.className='cs-btn active-'+val;
+  var filled=csScores.filter(function(s){return s!==null}).length;
+  if(filled===0)return;
+  var score=csScores.reduce(function(a,s){return a+(s==='r'?3:s==='a'?2:s==='n'?1:0)},0);
+  var max=filled*3;
+  var pct=Math.round(score/max*100);
+  var circ=2*Math.PI*34;
+  var dash=Math.round(pct/100*circ);
+  document.getElementById('cs-arc').setAttribute('stroke-dasharray',dash+' '+circ);
+  document.getElementById('cs-num').textContent=pct+'%';
+  var verdict,desc,col;
+  if(pct>=80){verdict='Strong agentic health coverage';desc='Your CS team has the data and frameworks to manage consumption health proactively.';col='var(--green)'}
+  else if(pct>=55){verdict='Partial coverage — gaps to close';desc='Key dimensions are tracked but use case variety and ROI validation need attention.';col='var(--amber)'}
+  else{verdict='Significant gaps — rebuild required';desc='CS is still in licence-utilisation mode. The agentic health framework needs to be built from scratch.';col='var(--red)'}
+  document.getElementById('cs-arc').setAttribute('stroke',col);
+  document.getElementById('cs-verdict').textContent=verdict;
+  document.getElementById('cs-desc').textContent=desc;
+  document.getElementById('cs-result').className='cs-result show';
+}
+</script>
+</body>
+</html>

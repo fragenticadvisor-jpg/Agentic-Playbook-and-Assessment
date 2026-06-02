@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Playbook 03 — Metering to Money | FR Advisory</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0e0e0e;--paper:#f5f2ec;--gold:#b8922a;--gold-lt:#f0e4c3;--gold-dk:#8a6a1a;
+  --dark:#1a1a1a;--muted:#6b6459;--border:#d4c9b8;--white:#ffffff;
+  --green:#1D9E75;--green-lt:#E1F5EE;--green-dk:#085041;
+  --red:#D85A30;--red-lt:#FAECE7;--red-dk:#712B13;
+  --amber:#BA7517;--amber-lt:#FAEEDA;--amber-dk:#633806;
+  --blue:#185FA5;--blue-lt:#E6F1FB;--blue-dk:#0C447C;
+}
+body{font-family:'DM Sans',sans-serif;background:#111;margin:0;color:var(--ink)}
+.page{max-width:780px;margin:0 auto;background:var(--paper)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.a1{animation:fadeUp .5s ease both}.a2{animation:fadeUp .5s .1s ease both}.a3{animation:fadeUp .5s .2s ease both}.a4{animation:fadeUp .5s .3s ease both}.a5{animation:fadeUp .5s .4s ease both}
+
+.cover{background:var(--dark);padding:0;position:relative;overflow:hidden}
+.cover-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 90% 10%,rgba(184,146,42,0.08) 0%,transparent 55%)}
+.cr1{position:absolute;top:-80px;right:-80px;width:350px;height:350px;border:1px solid rgba(184,146,42,0.06);border-radius:50%}
+.cr2{position:absolute;top:-30px;right:-30px;width:200px;height:200px;border:1px solid rgba(184,146,42,0.09);border-radius:50%}
+.ci{position:relative;z-index:1;padding:3.5rem 3.5rem 0}
+.pb-lbl{display:inline-flex;align-items:center;gap:8px;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:1.25rem}
+.pb-lbl::before{content:'';width:28px;height:1px;background:var(--gold)}
+.ck{font-size:12px;color:rgba(245,242,236,.4);letter-spacing:.06em;margin-bottom:.6rem;text-transform:uppercase}
+.ct{font-family:'DM Serif Display',serif;font-size:44px;line-height:1.05;color:#f5f2ec;margin-bottom:.75rem}
+.ct em{font-style:italic;color:var(--gold)}
+.cs{font-size:14px;color:rgba(245,242,236,.5);line-height:1.75;max-width:520px;margin-bottom:2.5rem}
+.cdiv{height:1px;background:linear-gradient(to right,rgba(184,146,42,.3),transparent);margin-bottom:1.75rem}
+.cmeta{display:flex;gap:0}
+.cmi{flex:1;padding:1.25rem 0;border-right:1px solid rgba(245,242,236,.06)}
+.cmi:last-child{border-right:none}
+.cmn{font-family:'DM Serif Display',serif;font-size:26px;color:var(--gold);display:block;margin-bottom:2px}
+.cml{font-size:10px;color:rgba(245,242,236,.3);letter-spacing:.08em;text-transform:uppercase}
+.cbar{height:3px;background:linear-gradient(to right,var(--gold),rgba(184,146,42,.15),var(--gold))}
+
+.nav-tabs{background:var(--dark);border-bottom:1px solid rgba(245,242,236,.06);display:flex;overflow-x:auto;scrollbar-width:none}
+.nav-tabs::-webkit-scrollbar{display:none}
+.nt{flex-shrink:0;padding:1rem 1.5rem;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:rgba(245,242,236,.35);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap;font-weight:500}
+.nt:hover{color:rgba(245,242,236,.65)}
+.nt.active{color:var(--gold);border-bottom-color:var(--gold)}
+
+.sec{display:none;padding:3rem 3.5rem;animation:fadeUp .3s ease}
+.sec.active{display:block}
+
+.ey{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:1rem;display:flex;align-items:center;gap:10px}
+.ey::after{content:'';flex:1;height:1px;background:linear-gradient(to right,var(--border),transparent)}
+.st{font-family:'DM Serif Display',serif;font-size:28px;color:var(--ink);line-height:1.2;margin-bottom:.6rem}
+.st em{font-style:italic;color:var(--gold)}
+.sl{font-size:14px;color:var(--muted);line-height:1.8;margin-bottom:2rem;max-width:580px}
+.bt{font-size:13px;color:var(--ink);line-height:1.8;margin-bottom:1.25rem}
+.bt strong{font-weight:600}
+
+.callout{border-left:3px solid var(--gold);padding:1rem 1.25rem;background:var(--gold-lt);border-radius:0 5px 5px 0;margin:1.5rem 0}
+.callout p{font-size:13px;color:var(--ink);line-height:1.7;font-style:italic}
+.callout span{font-size:10px;color:var(--muted);margin-top:6px;display:block;letter-spacing:.06em;text-transform:uppercase}
+
+.dc{background:var(--dark);border-radius:6px;padding:1.5rem 1.75rem;margin:1.75rem 0}
+.dc-t{font-family:'DM Serif Display',serif;font-size:18px;color:#f5f2ec;margin-bottom:.5rem}
+.dc-s{font-size:12px;color:rgba(245,242,236,.55);line-height:1.75}
+
+.cg{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:1.75rem 0}
+.cg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:1.75rem 0}
+.card{background:var(--white);border:1px solid var(--border);border-radius:6px;padding:1.25rem}
+.card.gb{border-color:var(--gold);border-width:2px}
+.cn{font-family:'DM Serif Display',serif;font-size:32px;color:var(--gold);margin-bottom:.35rem;line-height:1}
+.ctit{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:.4rem}
+.ctx{font-size:12px;color:var(--muted);line-height:1.65}
+.tag{display:inline-block;font-size:9px;letter-spacing:.08em;text-transform:uppercase;padding:2px 8px;border-radius:3px;margin-bottom:.6rem;font-weight:500}
+.tg{background:var(--green-lt);color:var(--green-dk)}
+.tr{background:var(--red-lt);color:var(--red-dk)}
+.ta{background:var(--amber-lt);color:var(--amber-dk)}
+.to{background:var(--gold-lt);color:var(--gold-dk)}
+.tb2{background:var(--blue-lt);color:var(--blue-dk)}
+
+/* PIPELINE DIAGRAM */
+.pipeline{margin:1.75rem 0;display:flex;flex-direction:column;gap:0}
+.pipe-stage{display:flex;gap:14px;align-items:stretch}
+.pipe-icon{width:44px;display:flex;flex-direction:column;align-items:center;flex-shrink:0}
+.pipe-dot{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;border:2px solid}
+.pipe-line{flex:1;width:2px;background:var(--border);margin:4px auto}
+.pipe-stage:last-child .pipe-line{display:none}
+.pipe-content{flex:1;padding-bottom:1.5rem}
+.pipe-title{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:4px;padding-top:10px}
+.pipe-text{font-size:12px;color:var(--muted);line-height:1.7}
+.pipe-check{font-size:11px;margin-top:8px;padding:6px 10px;background:var(--white);border:1px solid var(--border);border-radius:4px;color:var(--muted);display:inline-block}
+
+/* AUDIT MATRIX */
+.audit-matrix{margin:1.75rem 0;border:1px solid var(--border);border-radius:6px;overflow:hidden}
+.am-header{background:var(--dark);padding:.85rem 1.25rem;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:8px}
+.am-header span{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:rgba(245,242,236,.4);font-weight:500}
+.am-row{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:8px;padding:.85rem 1.25rem;border-top:1px solid var(--border);align-items:center;cursor:pointer;transition:background .15s}
+.am-row:hover{background:var(--gold-lt)}
+.am-name{font-size:12px;font-weight:500;color:var(--ink)}
+.am-sub{font-size:10px;color:var(--muted)}
+.am-status{font-size:10px;padding:3px 8px;border-radius:3px;text-align:center;font-weight:500;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;width:100%;transition:all .15s}
+.s-none{background:var(--red-lt);color:var(--red-dk)}
+.s-partial{background:var(--amber-lt);color:var(--amber-dk)}
+.s-live{background:var(--green-lt);color:var(--green-dk)}
+
+/* COMPARE TABLE */
+.ctable{width:100%;border-collapse:collapse;margin:1.75rem 0;font-size:12px}
+.ctable th{background:var(--dark);color:rgba(245,242,236,.6);font-weight:500;padding:10px 14px;text-align:left;font-size:10px;letter-spacing:.1em;text-transform:uppercase}
+.ctable th:first-child{border-radius:5px 0 0 0}.ctable th:last-child{border-radius:0 5px 0 0}
+.ctable td{padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.55;color:var(--ink)}
+.ctable tr:last-child td{border-bottom:none}
+.ctable tr:nth-child(even) td{background:rgba(245,242,236,.5)}
+.cg2{color:var(--green-dk);font-weight:500}.cb{color:var(--red-dk)}.cn2{color:var(--amber-dk)}
+
+.steps{display:flex;flex-direction:column;gap:0;margin:1.75rem 0;position:relative}
+.steps::before{content:'';position:absolute;left:19px;top:40px;bottom:40px;width:1px;background:var(--border)}
+.step{display:flex;gap:16px;padding:1rem 0}
+.sn{width:38px;height:38px;border-radius:50%;background:var(--dark);color:var(--gold);font-family:'DM Serif Display',serif;font-size:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0;position:relative;z-index:1;border:2px solid rgba(184,146,42,.3)}
+.s-title{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:4px;padding-top:6px}
+.s-text{font-size:12px;color:var(--muted);line-height:1.7}
+
+.pl-cl{list-style:none;display:flex;flex-direction:column;gap:8px;margin:1.25rem 0}
+.pl-cl li{display:flex;gap:10px;font-size:13px;color:var(--ink);line-height:1.6;padding:10px 12px;background:var(--white);border:1px solid var(--border);border-radius:4px;cursor:pointer;transition:all .15s;align-items:flex-start}
+.pl-cl li:hover{border-color:var(--gold)}
+.pl-cl li.checked{background:var(--green-lt);border-color:var(--green)}
+.pl-cl li.checked .chk{background:var(--green);border-color:var(--green);color:#fff}
+.chk{width:20px;height:20px;border-radius:4px;border:1.5px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;color:transparent;margin-top:1px;transition:all .15s}
+
+.divider{height:1px;background:var(--border);margin:2rem 0}
+
+.ns{background:var(--dark);margin:0 -3.5rem -3rem;padding:2rem 3.5rem;border-top:1px solid rgba(184,146,42,.15)}
+.ncs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:1.25rem}
+.nc{border:1px solid rgba(245,242,236,.08);border-radius:5px;padding:1.1rem}
+.nc.hl{border-color:var(--gold)}
+.nc-lbl{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:rgba(245,242,236,.3);margin-bottom:4px}
+.nc-t{font-size:13px;font-weight:500;color:#f5f2ec;margin-bottom:4px}
+.nc-d{font-size:11px;color:rgba(245,242,236,.4);line-height:1.6;margin-bottom:.85rem}
+.bg{display:block;background:var(--gold);color:#fff;text-align:center;padding:9px;border-radius:4px;font-size:11px;font-weight:500;cursor:pointer;border:none;width:100%;font-family:'DM Sans',sans-serif;transition:background .15s}
+.bg:hover{background:var(--gold-dk)}
+.bo{display:block;background:transparent;color:rgba(245,242,236,.6);text-align:center;padding:9px;border-radius:4px;font-size:11px;font-weight:500;cursor:pointer;border:1px solid rgba(245,242,236,.15);width:100%;font-family:'DM Sans',sans-serif;transition:all .15s}
+.bo:hover{border-color:rgba(245,242,236,.35);color:#f5f2ec}
+
+.pb{text-align:center;padding:.85rem;font-size:10px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;border-top:1px solid var(--border)}
+.pb a{color:var(--gold);text-decoration:none;cursor:pointer}
+
+@media(max-width:620px){
+  .ci{padding:2.5rem 1.75rem 0}.sec{padding:2rem 1.75rem}.ct{font-size:30px}
+  .cg,.cg3,.ncs{grid-template-columns:1fr}.ns{margin:0 -1.75rem -2rem;padding:1.75rem}
+  .am-header,.am-row{grid-template-columns:1fr 1fr;gap:6px}
+  .am-header span:nth-child(3),.am-header span:nth-child(4),.am-row .am-status:nth-child(3),.am-row .am-status:nth-child(4){display:none}
+}
+@media print{.nav-tabs,.ns,.pb{display:none}.sec{display:block!important}body{background:#fff}}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="cover">
+  <div class="cover-bg"></div><div class="cr1"></div><div class="cr2"></div>
+  <div class="ci">
+    <div class="pb-lbl a1">FR Advisory · Playbook 03</div>
+    <div class="ck a2">Operational Infrastructure</div>
+    <div class="ct a3">Metering<br>to <em>Money</em></div>
+    <div class="cs a4">How to build the telemetry, billing, and CPQ infrastructure that makes consumption pricing operationally viable — not just commercially desirable.</div>
+    <div class="cdiv a5"></div>
+    <div class="cmeta a5">
+      <div class="cmi"><span class="cmn">5</span><span class="cml">Chapters</span></div>
+      <div class="cmi"><span class="cmn">6</span><span class="cml">Infrastructure layers</span></div>
+      <div class="cmi"><span class="cmn">1</span><span class="cml">Audit matrix</span></div>
+      <div class="cmi"><span class="cmn">CTO</span><span class="cml">CFO · RevOps</span></div>
+    </div>
+  </div>
+  <div class="cbar" style="margin-top:1.75rem"></div>
+</div>
+
+<div class="nav-tabs">
+  <div class="nt active" onclick="ss('s1',this)">01 · The Stack</div>
+  <div class="nt" onclick="ss('s2',this)">02 · Telemetry</div>
+  <div class="nt" onclick="ss('s3',this)">03 · Billing</div>
+  <div class="nt" onclick="ss('s4',this)">04 · CPQ & Finance</div>
+  <div class="nt" onclick="ss('s5',this)">05 · Action Plan</div>
+</div>
+
+<!-- S1 -->
+<div class="sec active" id="s1">
+  <div class="ey">Chapter 01</div>
+  <div class="st">The infrastructure gap that <em>kills consumption pricing</em> before it launches</div>
+  <div class="sl">Most SaaS companies design a compelling consumption model — then discover their infrastructure can't support it. Billing systems built for fixed subscriptions. No real-time telemetry. CPQ with no consumption SKUs. The commercial model is ready. The operational stack is not.</div>
+
+  <div class="bt">Consumption pricing is operationally demanding in ways that seat pricing is not. Every billable action needs to be captured, attributed, aggregated, and invoiced — automatically, accurately, and in real time. Manual processes between metering and billing introduce errors at the worst possible moment: when a customer questions their invoice.</div>
+
+  <div class="callout"><p>"A consumption pricing model is only as good as the infrastructure underneath it. If you can't meter it reliably, you can't bill it credibly."</p><span>FR Advisory</span></div>
+
+  <div class="ey">The six infrastructure layers</div>
+
+  <div class="pipeline">
+    <div class="pipe-stage">
+      <div class="pipe-icon">
+        <div class="pipe-dot" style="background:var(--blue-lt);border-color:var(--blue);color:var(--blue-dk)">📡</div>
+        <div class="pipe-line"></div>
+      </div>
+      <div class="pipe-content">
+        <div class="pipe-title">Layer 1 — Event telemetry</div>
+        <div class="pipe-text">Every agent action, task completion, or billable event is captured as a structured event with timestamp, customer ID, and action type. This is the raw data layer — without it, nothing else works.</div>
+        <div class="pipe-check">Key question: Can you log every billable event in real time?</div>
+      </div>
+    </div>
+    <div class="pipe-stage">
+      <div class="pipe-icon">
+        <div class="pipe-dot" style="background:var(--green-lt);border-color:var(--green);color:var(--green-dk)">🔢</div>
+        <div class="pipe-line"></div>
+      </div>
+      <div class="pipe-content">
+        <div class="pipe-title">Layer 2 — Aggregation & metering</div>
+        <div class="pipe-text">Raw events are aggregated into consumption totals by customer, time period, and usage type. This layer answers the question: "how much has this customer used this month?"</div>
+        <div class="pipe-check">Key question: Can you aggregate usage without manual reconciliation?</div>
+      </div>
+    </div>
+    <div class="pipe-stage">
+      <div class="pipe-icon">
+        <div class="pipe-dot" style="background:var(--amber-lt);border-color:var(--amber);color:var(--amber-dk)">💳</div>
+        <div class="pipe-line"></div>
+      </div>
+      <div class="pipe-content">
+        <div class="pipe-title">Layer 3 — Billing engine</div>
+        <div class="pipe-text">Consumption totals flow into a billing engine that calculates charges, applies tier rates, handles overages, and generates invoices. Must support variable charges, credits, and commit drawdown.</div>
+        <div class="pipe-check">Key question: Does your billing platform handle variable consumption?</div>
+      </div>
+    </div>
+    <div class="pipe-stage">
+      <div class="pipe-icon">
+        <div class="pipe-dot" style="background:var(--gold-lt);border-color:var(--gold);color:var(--gold-dk)">🛒</div>
+        <div class="pipe-line"></div>
+      </div>
+      <div class="pipe-content">
+        <div class="pipe-title">Layer 4 — CPQ & contracts</div>
+        <div class="pipe-text">Sales teams need consumption SKUs they can quote, commit structures they can contract, and pricing calculators that show customers their expected spend. Without this layer, the sales team can't sell the model.</div>
+        <div class="pipe-check">Key question: Do consumption SKUs exist in your CPQ?</div>
+      </div>
+    </div>
+    <div class="pipe-stage">
+      <div class="pipe-icon">
+        <div class="pipe-dot" style="background:var(--red-lt);border-color:var(--red);color:var(--red-dk)">📊</div>
+        <div class="pipe-line"></div>
+      </div>
+      <div class="pipe-content">
+        <div class="pipe-title">Layer 5 — Customer visibility</div>
+        <div class="pipe-text">Customers need real-time dashboards showing their consumption, projected spend, and remaining allowance. Spend caps and alerts are not optional extras — they are the trust infrastructure that makes consumption pricing acceptable to enterprise buyers.</div>
+        <div class="pipe-check">Key question: Can customers see their usage in real time?</div>
+      </div>
+    </div>
+    <div class="pipe-stage">
+      <div class="pipe-icon">
+        <div class="pipe-dot" style="background:var(--paper);border-color:var(--border);color:var(--muted)">📈</div>
+        <div class="pipe-line"></div>
+      </div>
+      <div class="pipe-content">
+        <div class="pipe-title">Layer 6 — Finance reporting</div>
+        <div class="pipe-text">Revenue must be reported separately: base platform fees vs consumption revenue. Blended reporting hides the growth lever and makes investor conversations significantly harder.</div>
+        <div class="pipe-check">Key question: Can finance separate base from consumption revenue?</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ns">
+    <div style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:rgba(245,242,236,.35);margin-bottom:.5rem">Up next</div>
+    <div style="font-family:'DM Serif Display',serif;font-size:18px;color:#f5f2ec;margin-bottom:.5rem">Building reliable event telemetry</div>
+    <button class="bg" style="max-width:220px;margin-top:.85rem" onclick="ss('s2',document.querySelectorAll('.nt')[1])">Chapter 02 →</button>
+  </div>
+</div>
+
+<!-- S2 -->
+<div class="sec" id="s2">
+  <div class="ey">Chapter 02</div>
+  <div class="st">Telemetry: the foundation <em>everything else depends on</em></div>
+  <div class="sl">Without reliable event telemetry, consumption pricing is a commercial promise built on operational guesswork. Getting the data layer right is the most important infrastructure investment you'll make.</div>
+
+  <div class="bt">Most SaaS products already generate usage data — server logs, API call records, workflow completion events. The problem is that this data was never designed with billing in mind. It's inconsistent, incomplete, and not connected to customer identity in a way that can be used for invoicing.</div>
+
+  <div class="ey">What a billable event must contain</div>
+  <div class="cg">
+    <div class="card"><div class="tag tb2">Required</div><div class="ctit">Customer identifier</div><div class="ctx">A persistent, unambiguous ID that maps the event to a specific billing account — not a user ID or session ID that changes.</div></div>
+    <div class="card"><div class="tag tb2">Required</div><div class="ctit">Event timestamp</div><div class="ctx">UTC timestamp with millisecond precision. Critical for time-period aggregation and dispute resolution.</div></div>
+    <div class="card"><div class="tag tb2">Required</div><div class="ctit">Action type</div><div class="ctx">A defined taxonomy of billable action types. Must map directly to the customer-facing definition of what counts as billable.</div></div>
+    <div class="card"><div class="tag tb2">Required</div><div class="ctit">Completion status</div><div class="ctx">Whether the action completed successfully. Partial or failed actions must be handled by your billing rules — not ignored.</div></div>
+    <div class="card"><div class="tag to">Recommended</div><div class="ctit">Workflow context</div><div class="ctx">The workflow or use case that triggered the event. Enables per-workflow reporting and dispute handling.</div></div>
+    <div class="card"><div class="tag to">Recommended</div><div class="ctit">Resource consumed</div><div class="ctx">Compute, tokens, or processing time consumed. Useful for cost-to-serve analysis even if not exposed to customers.</div></div>
+  </div>
+
+  <div class="ey">The three telemetry failure modes</div>
+  <table class="ctable">
+    <thead><tr><th>Failure mode</th><th>What happens</th><th>The fix</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Event loss</strong><br><span style="font-size:10px;color:var(--muted)">Events dropped under load</span></td><td class="cb">Under-billing. Customers pay less than they owe. Revenue leakage compounds over time.</td><td class="cg2">Use a durable event queue (Kafka, SQS). Never log direct to DB in the critical path.</td></tr>
+      <tr><td><strong>Double counting</strong><br><span style="font-size:10px;color:var(--muted)">Retries logged as new events</span></td><td class="cb">Over-billing. Invoice disputes. Customer trust destroyed in one bad month.</td><td class="cg2">Idempotency keys on every event. Deduplication layer before aggregation.</td></tr>
+      <tr><td><strong>Attribution gaps</strong><br><span style="font-size:10px;color:var(--muted)">Events not linked to billing account</span></td><td class="cb">Unattributed consumption. Revenue recognised but no customer to bill.</td><td class="cg2">Customer ID injected at the SDK/API layer — never resolved post-hoc.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="dc"><div class="dc-t">The audit log is non-negotiable</div><div class="dc-s">Every billable event must be immutably logged with a customer-accessible audit trail. When a customer disputes a charge — and they will — your ability to show them the exact events that generated the invoice is the difference between a 10-minute resolution and a three-week escalation. Build the audit log before you bill the first consumption invoice.</div></div>
+
+  <div class="ns">
+    <div style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:rgba(245,242,236,.35);margin-bottom:.5rem">Up next</div>
+    <div style="font-family:'DM Serif Display',serif;font-size:18px;color:#f5f2ec;margin-bottom:.5rem">Billing engine requirements for consumption pricing</div>
+    <button class="bg" style="max-width:220px;margin-top:.85rem" onclick="ss('s3',document.querySelectorAll('.nt')[2])">Chapter 03 →</button>
+  </div>
+</div>
+
+<!-- S3 -->
+<div class="sec" id="s3">
+  <div class="ey">Chapter 03</div>
+  <div class="st">Billing: what your platform <em>needs to handle</em></div>
+  <div class="sl">Most SaaS billing platforms are built for fixed recurring revenue. Consumption billing requires a fundamentally different capability set — and the gap between "we have Stripe" and "we can bill consumption" is larger than most engineering teams expect.</div>
+
+  <div class="ey">Billing platform capability audit</div>
+  <div class="bt" style="margin-bottom:.5rem">Mark your current capability for each requirement. Use this as your infrastructure gap analysis.</div>
+
+  <div class="audit-matrix">
+    <div class="am-header">
+      <span>Capability</span><span>Not built</span><span>Partial</span><span>Live</span>
+    </div>
+    <div class="am-row" id="am-0">
+      <div><div class="am-name">Variable consumption charges</div><div class="am-sub">Bill based on units consumed, not fixed amount</div></div>
+      <button class="am-status s-none" onclick="setAM(0,'none',this)">Not built</button>
+      <button class="am-status" onclick="setAM(0,'partial',this)" style="background:var(--border);color:var(--muted)">Partial</button>
+      <button class="am-status" onclick="setAM(0,'live',this)" style="background:var(--border);color:var(--muted)">Live</button>
+    </div>
+    <div class="am-row" id="am-1">
+      <div><div class="am-name">Credit / prepay drawdown</div><div class="am-sub">Customers buy credits, consumption draws them down</div></div>
+      <button class="am-status s-none" onclick="setAM(1,'none',this)">Not built</button>
+      <button class="am-status" onclick="setAM(1,'partial',this)" style="background:var(--border);color:var(--muted)">Partial</button>
+      <button class="am-status" onclick="setAM(1,'live',this)" style="background:var(--border);color:var(--muted)">Live</button>
+    </div>
+    <div class="am-row" id="am-2">
+      <div><div class="am-name">Minimum commitment enforcement</div><div class="am-sub">Floor charge regardless of actual consumption</div></div>
+      <button class="am-status s-none" onclick="setAM(2,'none',this)">Not built</button>
+      <button class="am-status" onclick="setAM(2,'partial',this)" style="background:var(--border);color:var(--muted)">Partial</button>
+      <button class="am-status" onclick="setAM(2,'live',this)" style="background:var(--border);color:var(--muted)">Live</button>
+    </div>
+    <div class="am-row" id="am-3">
+      <div><div class="am-name">Overage billing at premium rate</div><div class="am-sub">Auto-charges above allowance at a higher per-unit rate</div></div>
+      <button class="am-status s-none" onclick="setAM(3,'none',this)">Not built</button>
+      <button class="am-status" onclick="setAM(3,'partial',this)" style="background:var(--border);color:var(--muted)">Partial</button>
+      <button class="am-status" onclick="setAM(3,'live',this)" style="background:var(--border);color:var(--muted)">Live</button>
+    </div>
+    <div class="am-row" id="am-4">
+      <div><div class="am-name">Spend caps & hard limits</div><div class="am-sub">Block consumption above a customer-set maximum</div></div>
+      <button class="am-status s-none" onclick="setAM(4,'none',this)">Not built</button>
+      <button class="am-status" onclick="setAM(4,'partial',this)" style="background:var(--border);color:var(--muted)">Partial</button>
+      <button class="am-status" onclick="setAM(4,'live',this)" style="background:var(--border);color:var(--muted)">Live</button>
+    </div>
+    <div class="am-row" id="am-5">
+      <div><div class="am-name">In-period usage alerts</div><div class="am-sub">Email/webhook when customer hits 70%, 90% of allowance</div></div>
+      <button class="am-status s-none" onclick="setAM(5,'none',this)">Not built</button>
+      <button class="am-status" onclick="setAM(5,'partial',this)" style="background:var(--border);color:var(--muted)">Partial</button>
+      <button class="am-status" onclick="setAM(5,'live',this)" style="background:var(--border);color:var(--muted)">Live</button>
+    </div>
+    <div class="am-row" id="am-6">
+      <div><div class="am-name">Automated telemetry-to-invoice pipeline</div><div class="am-sub">Zero manual steps from usage event to customer invoice</div></div>
+      <button class="am-status s-none" onclick="setAM(6,'none',this)">Not built</button>
+      <button class="am-status" onclick="setAM(6,'partial',this)" style="background:var(--border);color:var(--muted)">Partial</button>
+      <button class="am-status" onclick="setAM(6,'live',this)" style="background:var(--border);color:var(--muted)">Live</button>
+    </div>
+  </div>
+
+  <div class="callout"><p>If more than three capabilities are "Not built," resolve the infrastructure gaps before launching consumption pricing commercially. A billing failure in the first month of a new model is extremely hard to recover from.</p></div>
+
+  <div class="ey">Billing platform options by maturity</div>
+  <table class="ctable">
+    <thead><tr><th>Platform</th><th>Consumption support</th><th>Best for</th><th>Complexity</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Stripe Billing + Meters</strong></td><td class="cg2">Native metered billing, usage records API</td><td>SMB to mid-market, developer-led products</td><td class="cn2">Medium</td></tr>
+      <tr><td><strong>Zuora</strong></td><td class="cg2">Enterprise consumption, ramp deals, multi-currency</td><td>Enterprise SaaS with complex pricing</td><td class="cb">High</td></tr>
+      <tr><td><strong>Chargebee</strong></td><td class="cn2">Metered components on subscription plans</td><td>Mid-market, fast implementation</td><td class="cn2">Medium</td></tr>
+      <tr><td><strong>Orb</strong></td><td class="cg2">Purpose-built usage billing, real-time metering</td><td>Consumption-first products, high event volume</td><td class="cn2">Medium</td></tr>
+      <tr><td><strong>Lago (open source)</strong></td><td class="cg2">Full consumption billing, self-hosted option</td><td>Teams wanting infrastructure control</td><td class="cb">High</td></tr>
+    </tbody>
+  </table>
+
+  <div class="ns">
+    <div style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:rgba(245,242,236,.35);margin-bottom:.5rem">Up next</div>
+    <div style="font-family:'DM Serif Display',serif;font-size:18px;color:#f5f2ec;margin-bottom:.5rem">CPQ, contracts, and finance reporting</div>
+    <button class="bg" style="max-width:220px;margin-top:.85rem" onclick="ss('s4',document.querySelectorAll('.nt')[3])">Chapter 04 →</button>
+  </div>
+</div>
+
+<!-- S4 -->
+<div class="sec" id="s4">
+  <div class="ey">Chapter 04</div>
+  <div class="st">CPQ, contracts, and <em>finance reporting</em></div>
+  <div class="sl">Telemetry and billing solve the back-end. CPQ and finance reporting solve the front-end — the commercial infrastructure your sales team uses to sell and your finance team uses to report.</div>
+
+  <div class="ey">CPQ requirements</div>
+  <div class="bt">Sales teams can only sell what they can quote. If consumption SKUs don't exist in your CPQ, the model doesn't get sold — regardless of how well the commercial team understands it. CPQ for consumption pricing needs three specific capabilities:</div>
+
+  <div class="cg3">
+    <div class="card"><div class="tag tb2">Must have</div><div class="ctit">Consumption SKUs</div><div class="ctx">Defined SKUs for each tier's consumption allowance plus the overage rate. Not custom line items — actual product codes that feed into contract terms automatically.</div></div>
+    <div class="card"><div class="tag tb2">Must have</div><div class="ctit">Commitment calculator</div><div class="ctx">A tool reps can use in the deal to show customers their projected annual spend based on current and expected usage. Kills the "I can't forecast this" objection in the room.</div></div>
+    <div class="card"><div class="tag to">Important</div><div class="ctit">Tier upgrade logic</div><div class="ctx">Automated triggers when a customer's usage pattern suggests an upgrade conversation is warranted — typically at 80% consistent utilisation of their current allowance.</div></div>
+  </div>
+
+  <div class="ey">Finance reporting requirements</div>
+  <div class="bt">Blended revenue reporting — platform fees and consumption revenue combined — hides the growth story and complicates investor conversations. Finance needs to report separately on:</div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="sn">1</div>
+      <div>
+        <div class="s-title">Base ARR (platform commitments)</div>
+        <div class="s-text">The recurring, predictable component — minimum commitments across all active customers. This is your floor ARR and the number that supports your valuation multiple.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="sn">2</div>
+      <div>
+        <div class="s-title">Consumption revenue (above commitment)</div>
+        <div class="s-text">Variable revenue from usage above the included allowance. Track as a separate line with month-over-month growth rate — this is your expansion vector story.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="sn">3</div>
+      <div>
+        <div class="s-title">Consumption as % of total revenue</div>
+        <div class="s-text">The ratio that shows the model is working. As consumption revenue grows as a share of total, it validates that the hybrid model is capturing agentic value. Target: 20–35% within 18 months of launch.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="sn">4</div>
+      <div>
+        <div class="s-title">GRR and NRR by pricing model cohort</div>
+        <div class="s-text">Track retention and expansion separately for hybrid-model customers vs legacy seat customers. This is your proof that the transition is commercially justified.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dc"><div class="dc-t">The reporting gap is a board risk</div><div class="dc-s">Boards and investors increasingly understand hybrid models — but they need clean data to evaluate them. If your consumption revenue isn't separated in your reporting, the growth story gets buried in blended numbers. Build the reporting separation before your next board pack, not after the questions start.</div></div>
+
+  <div class="ns">
+    <div style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:rgba(245,242,236,.35);margin-bottom:.5rem">Up next</div>
+    <div style="font-family:'DM Serif Display',serif;font-size:18px;color:#f5f2ec;margin-bottom:.5rem">Your 45-day infrastructure action plan</div>
+    <button class="bg" style="max-width:220px;margin-top:.85rem" onclick="ss('s5',document.querySelectorAll('.nt')[4])">Chapter 05 →</button>
+  </div>
+</div>
+
+<!-- S5 -->
+<div class="sec" id="s5">
+  <div class="ey">Chapter 05</div>
+  <div class="st">Your 45-day <em>infrastructure action plan</em></div>
+  <div class="sl">Infrastructure work is sequenced differently from commercial work. The telemetry layer must come first — everything else depends on it. Don't start billing system work until event capture is reliable.</div>
+
+  <div class="cg">
+    <div class="card"><div class="cn">W1–2</div><div class="ctit">Telemetry audit</div><div class="ctx">Audit existing event logs. Identify gaps in customer attribution, event completeness, and real-time capability. Define the billable event schema.</div></div>
+    <div class="card"><div class="cn">W2–3</div><div class="ctit">Event pipeline build</div><div class="ctx">Implement durable event queue, idempotency keys, and deduplication. Build the immutable audit log. Test under load before billing goes live.</div></div>
+    <div class="card"><div class="cn">W3–4</div><div class="ctit">Billing platform config</div><div class="ctx">Configure consumption SKUs, credit models, overage rates, and spend cap logic in your billing platform. Run a parallel billing test against real usage data.</div></div>
+    <div class="card"><div class="cn">W4–6</div><div class="ctit">CPQ, reporting & customer dashboard</div><div class="ctx">Add consumption SKUs to CPQ. Build separated revenue reporting. Launch customer-facing usage dashboard with real-time consumption and alert thresholds.</div></div>
+  </div>
+
+  <div class="ey" style="margin-top:.5rem">45-day infrastructure checklist</div>
+  <ul class="pl-cl">
+    <li onclick="tc(this)"><div class="chk">✓</div>Audit existing usage logs — identify attribution gaps and missing event types</li>
+    <li onclick="tc(this)"><div class="chk">✓</div>Define billable event schema: customer ID, timestamp, action type, completion status</li>
+    <li onclick="tc(this)"><div class="chk">✓</div>Implement durable event queue with idempotency keys and deduplication layer</li>
+    <li onclick="tc(this)"><div class="chk">✓</div>Build immutable audit log — customer-accessible with dispute resolution workflow</li>
+    <li onclick="tc(this)"><div class="chk">✓</div>Load-test telemetry pipeline — verify zero event loss under peak conditions</li>
+    <li onclick="tc(this)"><div class="chk">✓</div>Configure billing platform: variable charges, credits, overage rates, spend caps</li>
+    <li onclick="tc(this)"><div class="chk">✓</div>Run parallel billing test: generate consumption invoices against real data before go-live</li>
+    <li onclick="tc(this)"><div class="chk">✓</div>Add consumption SKUs to CPQ with commitment calculator for sales team</li>
+    <li onclick="tc(this)"><div class="chk">✓</div>Build customer usage dashboard: real-time consumption, allowance remaining, spend alerts</li>
+    <li onclick="tc(this)"><div class="chk">✓</div>Separate base vs consumption revenue in finance reporting</li>
+    <li onclick="tc(this)"><div class="chk">✓</div>Set up 70% and 90% consumption alerts — test delivery before launch</li>
+    <li onclick="tc(this)"><div class="chk">✓</div>Full end-to-end test: event → aggregation → billing → invoice → customer dashboard</li>
+  </ul>
+
+  <div class="divider"></div>
+  <div class="bt">Operational infrastructure is the unsexy prerequisite. But it's the layer that determines whether your consumption model builds trust or destroys it. Every billing error in the first quarter of a new model sets the transition back by months. Build the pipeline before you launch the pricing.</div>
+
+  <div class="ns">
+    <div style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:rgba(245,242,236,.35);margin-bottom:.5rem">Ready to build?</div>
+    <div style="font-family:'DM Serif Display',serif;font-size:18px;color:#f5f2ec;margin-bottom:1.25rem">Get your full infrastructure readiness scored</div>
+    <div class="ncs">
+      <div class="nc"><div class="nc-lbl">Full Assessment</div><div class="nc-t">5-dimension diagnostic</div><div class="nc-d">Operational Infrastructure scored alongside all five dimensions. Prioritised roadmap within 48 hours.</div><div style="font-family:'DM Serif Display',serif;font-size:22px;color:var(--gold);margin-bottom:.85rem">£995</div><button class="bo" onclick="window.open('https://checkout.revolut.com/pay/5573f7d4-dd93-4f77-945b-42b90c28e058','_blank')">Get full report →</button></div>
+      <div class="nc hl"><div class="nc-lbl">Most valuable</div><div class="nc-t">Assessment + Advisor</div><div class="nc-d">Full report plus 2-hour 1:1 with Fessal. Infrastructure gap plan designed for your stack.</div><div style="font-family:'DM Serif Display',serif;font-size:22px;color:var(--gold);margin-bottom:.85rem">£2,495</div><button class="bg" onclick="window.location.href='mailto:fragenticadvisor@gmail.com?subject=Assessment + Advisor Package&body=Hi Fessal, I have read Playbook 03 and would like to book the Assessment + Advisor package.'">Book session →</button></div>
+    </div>
+  </div>
+</div>
+
+<div class="pb"><a onclick="window.print()">Save as PDF</a> &nbsp;·&nbsp; FR Advisory · Playbook 03 &nbsp;·&nbsp; fragenticadvisor@gmail.com</div>
+</div>
+
+<script>
+function ss(id,tab){
+  document.querySelectorAll('.sec').forEach(function(s){s.classList.remove('active')});
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.nt').forEach(function(t){t.classList.remove('active')});
+  if(tab)tab.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function tc(el){el.classList.toggle('checked')}
+function setAM(idx,status,btn){
+  var row=document.getElementById('am-'+idx);
+  var btns=row.querySelectorAll('.am-status');
+  btns.forEach(function(b){b.className='am-status';b.style.background='var(--border)';b.style.color='var(--muted)'});
+  if(status==='none'){btn.className='am-status s-none'}
+  else if(status==='partial'){btn.className='am-status s-partial'}
+  else{btn.className='am-status s-live'}
+}
+</script>
+</body>
+</html>
